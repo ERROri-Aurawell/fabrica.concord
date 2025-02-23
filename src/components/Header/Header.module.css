@@ -1,0 +1,37 @@
+.span {
+    color: black;
+}
+
+.titulo {
+    display: flex;
+    margin-top: 8px;
+}
+
+.dConcord {
+    text-align: right;
+    flex: 1;
+}
+
+.dImg {
+    flex: 1;
+}
+
+.header {
+    background: linear-gradient(to bottom, #5EECF5, #002244);
+    width: 100vw;
+    height: 80px;
+    display: flex;
+    justify-content: left;
+}
+
+.paragráfo {
+    color: white;
+    font-size: 18px;
+}
+
+.dVoltar{
+    margin-left:5%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}

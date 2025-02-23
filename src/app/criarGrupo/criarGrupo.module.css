@@ -1,0 +1,120 @@
+.body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #505050;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+
+.container {
+    width: 20%;
+    height: 500px;
+    margin-left: 40%;
+    margin-top: 10%;
+    background: #222;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+  
+.title {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+  
+.input_container {
+    text-align: left;
+    margin-bottom: 15px;
+}
+  
+.input_container label {
+    color: white;
+    font-size: 20px;
+    display: block;
+    margin-top: 5%;
+}
+  
+.input_container input {
+    width: 99%;
+    margin-top: 8%;
+    padding: 8px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+  
+.create_button {
+    width: 70%;
+    padding: 10px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 60px;
+    margin-top: 190px;
+}
+  
+.create_button:hover {
+    background-color: #b8b4b4;
+}
+.section{
+    justify-content: center;
+    align-items: center;
+    margin-left: 15%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.label {
+    font-size: 29px;
+    font-weight: bold;
+    margin-top: 65%;
+    color: #070707;
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+
+    .label {
+        font-size: 21px;
+    }
+
+
+    .button {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dFundo {
+        width: 90%;
+        height: auto;
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .label {
+        font-size: 21px;
+    }
+
+    .bbutton {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,134 @@
+.cor{
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+.centro{
+    display: flex;
+    flex-direction: column;
+}
+
+.pesquisa{
+    background-color: lightgray;
+    color: black;
+    width: 400px;
+    height: 45px;
+    border-radius: 30px;
+    font-size: 35px;
+}
+
+
+.lista{
+    width: 800px;
+    height: 300px;
+    background-color: #5C5C5C;
+    border-radius: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.arruma2{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+    width: 800px;
+}
+
+
+
+
+.pesfiltro{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.pesquisa2{
+    font-size: xx-large;
+    margin-bottom: 80px;
+    border-end-end-radius: 100px;
+    height: 40px;
+}
+
+.texfil{
+    font-size: larger;
+}
+
+.fil_sele{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+
+
+
+
+
+
+.filtros{
+    background-color: #818181;
+    overflow: scroll;
+    width: 250px;
+    height: 250px;
+}
+
+.filtro{
+    font-size: 100px;
+    margin-bottom: 15px;
+}
+
+.radioLabel{
+    font-size: x-large;
+    background-color: #535353;
+    color: black;
+    border-radius: 60px;
+}
+
+.fil{
+    list-style-type: none;
+}
+
+
+
+
+
+
+
+
+
+.arruma{
+    list-style-type: none;
+    font-size: 40px;
+    align-items: center;
+    gap: 10px;
+}
+
+.img{
+    width: 60px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

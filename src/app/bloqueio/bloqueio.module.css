@@ -1,0 +1,80 @@
+.comeco{
+    background: grey;
+    width: 700px;
+    height: 800px;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 35px;
+    border-radius: 30px;
+    flex-direction: column;
+    position: relative ;
+}
+
+.fundo{
+    display: flex;
+    justify-content: center;
+}
+
+
+.inicio{
+    display: flex;
+    justify-content: center;
+}
+.titulo{
+    font-size: 45px;
+    text-align: center;
+    padding-bottom: 100px;
+    padding-left: 90px;
+    padding-right: 90px;
+}
+
+.mensagem{
+    display: flex;
+    justify-content: center;
+}
+.texto{
+    font-size: xx-large;
+    text-align: center;
+    padding-bottom: 100px;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+
+
+
+
+.botoes{
+    display: flex;
+    justify-content: space-around;
+    width: auto;
+    height: auto;
+}
+
+.bc {
+    background-color: #000000;
+    color: #fff;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 5px;
+}
+.bc:hover{
+    background-color: #0056b3;
+}
+
+.bd{
+    background-color: red;
+    color: #fff;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 5px;
+}
+.bd:hover{
+    background-color: rgb(163, 9, 9);
+}

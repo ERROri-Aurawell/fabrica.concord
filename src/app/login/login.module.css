@@ -1,0 +1,89 @@
+.quadrado{
+    background: linear-gradient(to left, #5EECF5, #024751);
+    width: 900px;
+    height: 900px;
+    transform: rotate(-120deg);
+    border-radius: 130px;
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+}
+.fundo{
+    display: flex;
+    justify-content: center;
+}
+.arruma{
+    transform: rotate(120deg);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.arruma2{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 300px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.label{
+    font-size: 25px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.botao {
+    background-color: #000000;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 5px;
+}
+.botao:hover {
+    background-color: #0056b3;
+}
+
+.ls{
+    color: white;
+    font-size: 20px;
+    padding: 10px;
+}
+
+.a{
+    color: white;
+    font-size: medium;
+}
+
+.cadastrar{
+    display: flex;
+    justify-content: end;
+    margin-top: 50px;
+    width: auto;
+    height: auto;
+    font-size: 20px;
+}
+.lc{
+    color: cyan;
+    font-size: 20px;
+}
+
+.voltar{
+    display: flex;
+    justify-content: start;
+    width: auto;
+    width: auto;
+    margin-top: 100px;
+    padding-right: 200px;
+}
+.lv{
+    color: white;
+    font-size: 30px;
+}
