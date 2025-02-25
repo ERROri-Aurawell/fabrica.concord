@@ -4,6 +4,7 @@ import Link from "next/link";
 export default function cadastrar() {
     return (
         <section className={styles.main}>
+            <h1>Crie sua conta</h1>
             <div className={styles.dFundo}>
                 <section className={styles.section}>
 

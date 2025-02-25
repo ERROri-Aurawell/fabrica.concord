@@ -1,6 +1,8 @@
 .main{
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
     overflow: hidden;
 }
 
@@ -12,7 +14,7 @@
     border-radius: 130px;
     display: flex;
     justify-content: center;
-    margin-top: 15%;
+    margin-top: 12%;
     padding: 4%;
 }  
 .section{
