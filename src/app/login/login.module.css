@@ -1,28 +1,26 @@
-.quadrado{
+.main{
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.dFundo{
     background: linear-gradient(to left, #5EECF5, #024751);
     width: 900px;
     height: 900px;
-    transform: rotate(-120deg);
+    transform: rotate(-110deg);
     border-radius: 130px;
     display: flex;
     justify-content: center;
-    margin-top: 10%;
+    margin-top: 20%;
+    padding: 4%;
+}  
+.section{
+    transform: rotate(110deg);
 }
-.fundo{
+.dVoltar{
+    margin-top: 20px;
     display: flex;
-    justify-content: center;
-}
-.arruma{
-    transform: rotate(120deg);
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-.arruma2{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 300px;
 }
 
 .form{
@@ -34,7 +32,6 @@
 .label{
     font-size: 25px;
     text-align: center;
-    margin-top: 10px;
 }
 
 .botao {
@@ -45,45 +42,65 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
+
+
 .botao:hover {
     background-color: #0056b3;
 }
 
-.ls{
-    color: white;
-    font-size: 20px;
-    padding: 10px;
+@media (max-width: 1200px) {
+    .dFundo {
+        width: 700px;
+        height: 700px;
+    }
+
+    .label {
+        font-size: 20px;
+    }
+
+    .botao {
+        font-size: 14px;
+    }
 }
 
-.a{
-    color: white;
-    font-size: medium;
+@media (max-width: 768px) {
+    .dFundo {
+        width: 500px;
+        height: 500px;
+    }
+
+
+    .label {
+        font-size: 18px;
+    }
+
+    .botao {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dFundo {
+        width: 300px;
+        height: 300px;
+    }
+
+    .label {
+        font-size: 16px;
+    }
+
+    .botao {
+        font-size: 10px;
+    }
 }
 
 .cadastrar{
-    display: flex;
-    justify-content: end;
-    margin-top: 50px;
-    width: auto;
-    height: auto;
-    font-size: 20px;
-}
-.lc{
-    color: cyan;
-    font-size: 20px;
+    margin-top: 20px;
 }
 
-.voltar{
-    display: flex;
-    justify-content: start;
-    width: auto;
-    width: auto;
-    margin-top: 100px;
-    padding-right: 200px;
-}
-.lv{
-    color: white;
-    font-size: 30px;
+
+.checkbox{
+    margin-top: 10px;
 }

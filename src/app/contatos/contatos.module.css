@@ -2,11 +2,14 @@
     color: white;
     display: flex;
     justify-content: center;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .centro{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .pesquisa{
@@ -69,9 +72,6 @@
 }
 
 
-
-
-
 .link_nome{
     color: white;
 }
@@ -80,15 +80,15 @@
     font-size: small;
     color: #04b7c4;
     display: flex;
-    justify-content: end;
-    margin-right: 20px;
+    justify-content:left;
+    margin-left: 150px;
 }
 
 
 
 .arruma2{
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
     margin-top: 20px;
 }
@@ -108,7 +108,11 @@
 }
 
 
-
+.botoesDenovo{
+    display: flex;
+    justify-content: right;
+    margin-left: 10%;
+}
 
 .links{
     display: flex;
@@ -128,4 +132,12 @@
 
 .lbotao{
     margin-top: 10px;
+}
+
+.SCROLADIABO {
+    overflow-y: auto;
+    overflow-x: hidden; 
+    max-height: 500px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

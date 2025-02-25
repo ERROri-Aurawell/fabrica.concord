@@ -9,10 +9,10 @@
   }
 
 .container {
-    width: 20%;
+    width: 400px;
     height: 500px;
-    margin-left: 40%;
-    margin-top: 10%;
+    margin-left: 35%;
+    margin-top: 5%;
     background: #222;
     padding: 20px;
     border-radius: 10px;
@@ -21,24 +21,28 @@
 }
   
 .title {
+    font-family: Arial, sans-serif;
     color: white;
-    font-size: 24px;
+    font-size: 30px;
     margin-bottom: 20px;
 }
   
-.input_container {
+.input {
     text-align: left;
     margin-bottom: 15px;
+
+
+
 }
   
-.input_container label {
+.input label {
     color: white;
     font-size: 20px;
     display: block;
     margin-top: 5%;
 }
   
-.input_container input {
+.input input {
     width: 99%;
     margin-top: 8%;
     padding: 8px;
@@ -49,7 +53,8 @@
     font-size: 16px;
 }
   
-.create_button {
+.button {
+    font-size: 15%;
     width: 70%;
     padding: 10px;
     background-color: #555;
@@ -58,17 +63,17 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    margin-left: 60px;
-    margin-top: 190px;
+    margin-top: 150px;
 }
   
-.create_button:hover {
-    background-color: #b8b4b4;
+.button:hover {
+    background-color: #5EECF5;
 }
 .section{
     justify-content: center;
     align-items: center;
     margin-left: 15%;
+    margin-top: 10%;
 }
 
 .form {
@@ -82,7 +87,7 @@
 }
 
 .label {
-    font-size: 29px;
+    font-size: 30px;
     font-weight: bold;
     margin-top: 65%;
     color: #070707;
@@ -114,7 +119,7 @@
         font-size: 21px;
     }
 
-    .bbutton {
+    .button {
         font-size: 12px;
     }
 }

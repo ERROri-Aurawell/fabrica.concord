@@ -4,11 +4,11 @@ import Link from "next/link"
 
 export default function login() {
     return(
-        <section className={styles.fundo}>
-            <div className={styles.quadrado}>
+        <section className={styles.main}>
+            <div className={styles.dFundo}>
 
-                <div className={styles.arruma}>
-                    <div className={styles.arruma2}>
+                <div className={styles.section}>
+                    <div>
                         <form className={styles.form} action="/submit" method="post">
 
                         <label className={styles.label}>Email:</label>
@@ -17,11 +17,11 @@ export default function login() {
                         <label className={styles.label}>Senha:</label>
                         <input type="senha" id="senha" name="senha" required />
 
-                        <Link className={styles.ls} href="colocar sim">Lembrar senha?</Link>
+                        <p className={styles.checkbox}> <input type="checkbox" className={styles.ls}></input> Lembrar senha?</p>
 
                         <input type="submit" className={styles.botao} value="Entrar"/>
-
                         </form>
+                        <Link href='./contatos'> ** Use esse link enquanto a API não é implementada **</Link>
                     </div>
                     
                     
@@ -30,7 +30,7 @@ export default function login() {
                         </div>
                         
 
-                    <div className={styles.voltar}>
+                    <div className={styles.dVoltar}>
                         <Link className={styles.lv} href="./"><Image className={styles.img} src="/images/return.png" alt="sim" width={30} height={30}/> Voltar</Link>
                     </div>
                 </div>

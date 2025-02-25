@@ -22,7 +22,7 @@ const LoginPage = () => {
         </button>
 
         <p className={styles.link}>
-          Ainda não tem conta? <Link href="./cadastrar">Cadastrar-se</Link>
+          Ainda não tem conta? <Link href="./cadastrar">Cadastre-se</Link>
         </p>
       </main>
     </div>

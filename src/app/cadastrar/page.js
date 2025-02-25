@@ -1,10 +1,12 @@
 "Use Client"
 import styles from "./cadastrar.module.css";
+import Link from "next/link";
 export default function cadastrar() {
     return (
         <section className={styles.main}>
             <div className={styles.dFundo}>
                 <section className={styles.section}>
+
                     <form className={styles.form} action="/submit" method="post">
                         <label className={styles.label}>Nome:</label>
                         <input type="text" id="nome" name="nome" required />
@@ -19,9 +21,10 @@ export default function cadastrar() {
 
                         <input type="submit" className={styles.botao} value="Entrar"/>
                     </form>
+                    <Link href='./contatos'> ** Use esse link enquanto a API não é implementada **</Link>
 
                     <div className={styles.dVoltar}>
-                        <p>Você já possui conta? <a href="./login">Fazer login</a></p>
+                        <p>Você já possui conta? <Link href="./login">Fazer login</Link></p>
                     </div>
                 </section>
             </div>
