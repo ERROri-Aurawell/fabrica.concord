@@ -25,8 +25,7 @@ export default function Cadastrar() {
 
             const data = await resposta.json();
             Cookies.set('newAccount', data.newAccount, { expires: 1 });
-            Cookies.set('IsLogged', true);
-            Cookies.set('email, ')
+            Cookies.set('key', data.key)
 
             setAfterLogin(data.newAccount);
 

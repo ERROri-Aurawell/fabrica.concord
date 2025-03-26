@@ -8,7 +8,7 @@ const ProtectedRoute = ({ children }) => {
   const [userLoggedIn, setUserLoggedIn] = useState(null); 
 
   useEffect(() => {
-    const isLoggedIn = Cookies.get('IsLogged'); 
+    const isLoggedIn = Cookies.get('key'); 
 
     setUserLoggedIn(!!isLoggedIn); 
     if (userLoggedIn === false) {
