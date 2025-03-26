@@ -43,12 +43,64 @@
   line-height: 1.5;
 }
 
-.image-container img {
+.image-container  {
   max-width: 100%;
   height: auto;
   margin: 100px;
-}
 
+}
+.img {
+    position: relative;
+    left: 60%;
+  }
 .description{
   font-size: 30px;
+  position: absolute;
+  top: 50%;
+}
+
+.button{
+  margin-top: 40px;
+  display: inline-block;
+  padding: 0.5rem 2.8rem;
+  background-color: rgb(243, 243, 243);
+  border-radius: 4rem;
+  color: #000000;
+  letter-spacing: 0.3rem;
+  font-weight: 400;
+  border: 2px solid #57b1cc;
+  transition: 0.3s ease;
+  cursor: pointer;
+  position: absolute;
+  top: 58%;
+}
+  
+
+.button:hover{
+  background-color: rgb(25, 118, 124);
+}
+
+.title{
+  position: absolute;
+  top: 35%;
+  font-size: 70px;
+}
+
+.link{
+  position: absolute;
+  top: 68%;
+  color: aliceblue;
+}
+
+.link2 {
+  color: aliceblue;
+}
+
+
+.link2:hover{
+  color: rgb(25, 118, 124);
+}
+
+.link3{
+  color: rgb(3, 3, 3) ;
 }
