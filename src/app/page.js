@@ -15,12 +15,17 @@ const LoginPage = () => {
       <main className={styles.main_content}> 
         <h1  className={styles.title}>Bem-vindo</h1>
         <p className={styles.description}>
-          Aqui você encontrará um ambiente acolhedor e seguro para compartilhar ideias e se conectar com outras pessoas.
-        </p>
+        Estamos felizes por ter você aqui! O Concord é um espaço criado para conectar</p>
+        <p className={styles.description}>
+          pessoas, facilitar conversas e tornar a comunicação mais dinâmica e interativa.
+          </p>
+            Você encontrará um ambiente acolhedor e cheio de possibilidades.        
         <button className={styles.button}>
           <Link href="./login">Login</Link>
         </button>
-
+        <div className="image-container">
+        <Image className={styles.img} alt="img" src="/images/ilus.png" width={300} height={300} />
+      </div>
         <p className={styles.link}>
           Ainda não tem conta? <Link href="./cadastrar">Cadastre-se</Link>
         </p>
