@@ -1,32 +1,79 @@
-"Use Client"
+"use client"
 import styles from "./cadastrar.module.css";
 import Link from "next/link";
-export default function cadastrar() {
+import React from "react";
+import { useState, useEffect } from "react";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
+
+
+export default function Cadastrar() {
+    const [afterLogin, setAfterLogin] = useState(null);
+    
+    const router = useRouter();
+
+    async function adicionar(response) {
+        const requestOptions = {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ credential: response.credential })
+        }
+
+        try {
+            const resposta = await fetch('http://localhost:9000/cadastrar', requestOptions);
+
+            const data = await resposta.json();
+            Cookies.set('newAccount', data.newAccount, { expires: 1 });
+            Cookies.set('IsLogged', true);
+            Cookies.set('email, ')
+
+            setAfterLogin(data.newAccount);
+
+        } catch (error) {
+            throw new Error(error);
+        }
+
+
+    }
+
+    useEffect(() => {
+        console.log(Cookies.get());
+
+        const IsLogged = !!Cookies.get('IsLogged');
+        const newAccount = Cookies.get('newAccount');
+        if (afterLogin == null) {
+
+            if (IsLogged == true) {
+                router.push('/contatos');
+            }
+
+        } else {
+            if (newAccount == "true") {
+                router.push('/perfil'); //MUDAR ESSA ROTA QUE TÁ ERRADO PELO AMOR DE dEUS
+                
+            } else{
+                router.push('/contatos');
+            }
+        }
+
+    }, [afterLogin])
+
     return (
         <section className={styles.main}>
             <h1>Crie sua conta</h1>
             <div className={styles.dFundo}>
                 <section className={styles.section}>
 
-                    <form className={styles.form} action="/submit" method="post">
-                        <label className={styles.label}>Nome:</label>
-                        <input type="text" id="nome" name="nome" required />
+                    <React.StrictMode>
+                        <GoogleOAuthProvider clientId="427290146113-nv1kvo2d9e9iqk0g62n6pkkjoq2rp387.apps.googleusercontent.com">
+                            <GoogleLogin
+                                onSuccess={(response) => { adicionar(response) }}
+                                onError={() => { console.log("Login Failed.") }}
+                            />
+                        </GoogleOAuthProvider>
+                    </React.StrictMode>
 
-                        <label className={styles.label}>Senha:</label>
-                        <input type="senha" id="senha" name="senha" required />
-                        <label className={styles.label}>Email:</label>
-                        <input type="email" id="email" name="email" required />
-
-                        <label className={styles.label} htmlFor="celular">Celular:</label>
-                        <input type="celular" id="celular" name="celular" required />
-
-                        <input type="submit" className={styles.botao} value="Entrar"/>
-                    </form>
-                    <Link href='./contatos'> ** Use esse link enquanto a API não é implementada **</Link>
-
-                    <div className={styles.dVoltar}>
-                        <p>Você já possui conta? <Link href="./login">Fazer login</Link></p>
-                    </div>
                 </section>
             </div>
         </section>

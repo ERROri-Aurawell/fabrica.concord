@@ -3,8 +3,11 @@ import { useState } from "react";
 import styles from "./pesquisa.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import ProtectedRoute from "@/components/ProtectedRoute";
+
 
 export default function filtro() {
+
   const [nomes, setNomes] = useState(['Usuario 01', 'Usuario 02', 'Usuario 03', 'Usuario 04']);
   const [busca, setBusca] = useState(''); 
   const [filtro, setFiltro] = useState(['Alto', 'Baixo', 'Moreno', 'Homem', 'Mulher', 'Negro', 'Pardo', 'Branco' ])
@@ -26,6 +29,7 @@ export default function filtro() {
     };
 
   return (
+    <ProtectedRoute>
     <div className={styles.cor}>
       <div className={styles.centro}>
 
@@ -103,5 +107,6 @@ export default function filtro() {
             
       </div>
     </div>
+    </ProtectedRoute>
   );
 }
