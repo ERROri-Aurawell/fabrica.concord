@@ -22,7 +22,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: black;
+  background-color: rgb(19, 19, 19);
   color: white;
   padding: 20px;
 }
@@ -41,22 +41,33 @@
 .p {
   font-size: 1.2rem;
   line-height: 1.5;
+  
 }
 
 .image-container  {
   max-width: 100%;
   height: auto;
-  margin: 100px;
+  margin: 150px;
+
+
 
 }
 .img {
     position: relative;
     left: 60%;
   }
+   
+.description_para{
+  font-size: 30px;
+  position: absolute;
+  top: 54%;
+  margin: 15px;
+} 
 .description{
   font-size: 30px;
   position: absolute;
   top: 50%;
+  margin: 15px;
 }
 
 .button{
@@ -82,14 +93,17 @@
 
 .title{
   position: absolute;
-  top: 35%;
+  top: 36%;
   font-size: 70px;
+  margin: 15px;
 }
 
 .link{
   position: absolute;
   top: 68%;
   color: aliceblue;
+  font-size: 22px;
+  margin: 15px;
 }
 
 .link2 {
