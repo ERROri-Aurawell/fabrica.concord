@@ -3,8 +3,13 @@ import styles from "./page.module.css";
 import React from 'react';
 import Image from "next/image";
 import Link from "next/link";
+import Cookies from "js-cookie";
 
 const LoginPage = () => {
+
+  //Cookies.remove('key');
+  //Cookies.remove('newAccount');
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>

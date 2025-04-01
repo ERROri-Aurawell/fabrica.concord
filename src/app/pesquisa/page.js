@@ -8,25 +8,11 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function filtro() {
 
-  const [nomes, setNomes] = useState(['Usuario 01', 'Usuario 02', 'Usuario 03', 'Usuario 04']);
+
   const [busca, setBusca] = useState(''); 
   const [filtro, setFiltro] = useState(['Alto', 'Baixo', 'Moreno', 'Homem', 'Mulher', 'Negro', 'Pardo', 'Branco' ])
   const [busca2, setBusca2] = useState('');
   const [filtrosSelecionados, setFiltrosSelecionados] = useState([]);
-
-  const nomesBusca = nomes.filter((nome) =>
-    nome.toLowerCase().includes(busca.toLowerCase())
-  );
-
-  const filtroBusca = filtro.filter((filtro) =>
-    filtro.toLocaleLowerCase().includes(busca2.toLocaleLowerCase())
-    );
-
-    const toggleFiltro = (filtro) => {
-        setFiltrosSelecionados((prev) =>
-          prev.includes(filtro) ? prev.filter((f) => f !== filtro) : [...prev, filtro]
-        );
-    };
 
   return (
     <ProtectedRoute>
@@ -59,6 +45,7 @@ export default function filtro() {
 
                 <div className={styles.filtros}>
                     <ul className={styles.fil}>
+                    
                     {filtroBusca.map((filtro, index) => (
                         <li key={index} className={styles.itemFiltro}>
                         <label className={styles.radioLabel}>
@@ -73,6 +60,7 @@ export default function filtro() {
                         </label>
                         </li>
                     ))}
+                    
                     </ul>
                 </div>
 

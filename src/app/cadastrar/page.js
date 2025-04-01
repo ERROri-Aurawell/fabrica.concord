@@ -1,6 +1,5 @@
 "use client"
 import styles from "./cadastrar.module.css";
-import Link from "next/link";
 import React from "react";
 import { useState, useEffect } from "react";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
@@ -23,11 +22,14 @@ export default function Cadastrar() {
         try {
             const resposta = await fetch('http://localhost:9000/cadastrar', requestOptions);
 
-            const data = await resposta.json();
-            Cookies.set('newAccount', data.newAccount, { expires: 1 });
-            Cookies.set('key', data.key)
+            if (resposta.ok){
+                const data = await resposta.json();
+                Cookies.set('newAccount', data.newAccount, { expires: 1 });
+                Cookies.set('key', data.key)
+    
+                setAfterLogin(data.newAccount);
+            }
 
-            setAfterLogin(data.newAccount);
 
         } catch (error) {
             throw new Error(error);
@@ -39,7 +41,7 @@ export default function Cadastrar() {
     useEffect(() => {
         console.log(Cookies.get());
 
-        const IsLogged = !!Cookies.get('IsLogged');
+        const IsLogged = !!Cookies.get('key');
         const newAccount = Cookies.get('newAccount');
         if (afterLogin == null) {
 
