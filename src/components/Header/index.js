@@ -25,7 +25,7 @@ export default function Header() {
         <header className={`${styles.header} ${menuOpen ? styles.menuOpen : ''}`}>
             <div className={styles.logo}>
 
-                {<Image className={styles.img} src='/images/logo.png' alt="" width={100} height={50}/>}
+                {<Image className={styles.img} src='/images/logo.png' alt="Concord" width={100} height={50}/>}
                 
             </div>
 
@@ -40,24 +40,7 @@ export default function Header() {
                     <Link href="/" className={`${styles.Link}`}>Home</Link>
                     
                 </li>
-                <li className={styles.itemMenu}>
-                    <Link href=""className={`${styles.Link}`}>Médicos</Link>
-                    <ul className={styles.submenu}>
-                        <li className={styles.lista_submenu}>
-                            <a href="/listaMedicos">Listar</a>
-                        </li>
-                        <li  className={styles.lista_submenu}>
-                            <a href="#">Adicionar</a>
-                        </li>
-                        <li  className={styles.lista_submenu}>
-                            <a href="#">Editar</a>
-                        </li>
-                        <li  className={styles.lista_submenu}>
-                            <a href="#">Excluir</a>
-                        </li>
-                    </ul>
-                    
-                </li>
+
 
 
             </ul>

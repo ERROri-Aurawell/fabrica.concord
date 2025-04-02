@@ -40,13 +40,14 @@
 .header {
     background-color: #39373a;
     color: #f0f0f0;
-    border-bottom: 2px solid #ffffff;
+    border-bottom: 2px solid #131212;
     padding: 10px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-radius: 0px;
     display: flex
+    
   }
   
   .menuOpen {
@@ -78,7 +79,7 @@
   
   .Link:hover {
   
-    color: #fae0bd;
+    color: #000000;
     transform: scale(1.2); 
     transition: all;
   
@@ -132,6 +133,7 @@
     /* max-height: 0; */
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, .2);
     z-index: 1;
+    
     
   }
   
@@ -235,4 +237,8 @@
         display: flex;
     }
   }
-  
+.Link{
+  color: #f0f0f0;
+  margin: 1050%;
+  font-size: 50px;
+}
