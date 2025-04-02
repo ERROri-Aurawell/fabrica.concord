@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
 import styles from "./bloqueios.module.css";
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 export default function filtro() {
+
   const [nomes, setNomes] = useState(['Miguel', 'João', 'Caleb', 'Guilherme', 'Gabriel', 'Caio', 'Ana', 'Eduardo']);
   const [busca, setBusca] = useState('');
   const [novoNome, setNovoNome] = useState(''); // Estado para o novo nome
@@ -18,49 +20,51 @@ export default function filtro() {
   };
 
   return (
-    <div className={styles.cor}>
-      <div className={styles.centro}>
-
-            
-
-        <input
-          className={styles.pesquisa}
-          value={busca}
-          type="text"
-          onChange={(ev) => setBusca(ev.target.value)}
-          placeholder="Pesquisar contato bloqueado"
-        />
+    <ProtectedRoute>
+      <div className={styles.cor}>
+        <div className={styles.centro}>
 
 
-        <div className={styles.arruma3}>
-            
+
+          <input
+            className={styles.pesquisa}
+            value={busca}
+            type="text"
+            onChange={(ev) => setBusca(ev.target.value)}
+            placeholder="Pesquisar contato bloqueado"
+          />
+
+
+          <div className={styles.arruma3}>
+
             {/* Campo de entrada para o novo nome */}
             <input
-                className={styles.busca}
-                type="text"
-                value={novoNome}
-                onChange={(ev) => setNovoNome(ev.target.value)}
-                placeholder="Digite o contato"
+              className={styles.busca}
+              type="text"
+              value={novoNome}
+              onChange={(ev) => setNovoNome(ev.target.value)}
+              placeholder="Digite o contato"
             />
             {/* Botão para adicionar nome */}
             <button className={styles.adiciona} onClick={adicionarNome}>Bloquear</button>
 
-        </div>
+          </div>
 
-        <div className={styles.lista}>
-          <ul className={styles.arruma}>
-            {nomesBusca.map((nome, i) => (
-              <li key={i}>
-                <img className={styles.img} src="/images/human.png" alt={nome} />
-                {nome}
-              </li>
-            ))}
-          </ul>
-        </div>
-        
+          <div className={styles.lista}>
+            <ul className={styles.arruma}>
+              {nomesBusca.map((nome, i) => (
+                <li key={i}>
+                  <img className={styles.img} src="/images/human.png" alt={nome} />
+                  {nome}
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            
+
+
+        </div>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 }
