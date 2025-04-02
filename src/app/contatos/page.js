@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from "./contatos.module.css";
 import Link from "next/link";
 import Image from "next/image";
-import ProtectedRoute from "@/components/ProtectedRoute";
+//import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function filtro() {
 
@@ -16,7 +16,7 @@ export default function filtro() {
   );
 
   return (
-    <ProtectedRoute>
+    //<ProtectedRoute>
       <div className={styles.cor}>
         <div className={styles.centro}>
 
@@ -33,7 +33,7 @@ export default function filtro() {
 
               <div className={styles.ade}>
                 <Link className={styles.add_contato} href="./pesquisa">
-                  <Image className={styles.add} alt="img" src="/images/novoContato.png" width={60} height={50} />
+                  <Image className={styles.add} alt="img" src="/images/novoContato.png" width={60} height={55} />
                 </Link>
               </div>
 
@@ -78,6 +78,6 @@ export default function filtro() {
           </div>
         </div>
       </div>
-    </ProtectedRoute>
+    //</ProtectedRoute>
   );
 }
