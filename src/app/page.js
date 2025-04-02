@@ -7,8 +7,9 @@ import Cookies from "js-cookie";
 
 const LoginPage = () => {
 
-  //Cookies.remove('key');
-  //Cookies.remove('newAccount');
+  Cookies.remove('key');
+  Cookies.remove('newAccount');
+  console.log(Cookies.get());
 
   return (
     <div className={styles.container}>

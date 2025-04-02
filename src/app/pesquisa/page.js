@@ -1,29 +1,38 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./pesquisa.module.css";
 import Link from "next/link";
-import Image from "next/image";
 import ProtectedRoute from "@/components/ProtectedRoute";
-
+import Cookies from 'js-cookie';
 
 export default function filtro() {
 
+  const [usuarios, setUsuarios] = useState([])
 
-  const [busca, setBusca] = useState(''); 
-  const [filtro, setFiltro] = useState(['Alto', 'Baixo', 'Moreno', 'Homem', 'Mulher', 'Negro', 'Pardo', 'Branco' ])
-  const [busca2, setBusca2] = useState('');
-  const [filtrosSelecionados, setFiltrosSelecionados] = useState([]);
+  const getUsuarios = async () => {
+    const conteudo = await fetch(`http://localhost:9000/buscar/${Cookies.get('key')}`);
+    if (!conteudo.ok) {
+        throw new Error('Erro ao buscar:' + conteudo.statusText);
+    }
+    const data = await conteudo.json();
+    setUsuarios(data)
+}
+
+useEffect(() => {
+  getUsuarios();
+}, [])
+
 
   return (
     <ProtectedRoute>
-    <div className={styles.cor}>
-      <div className={styles.centro}>
+      <div className={styles.cor}>
+        <div className={styles.centro}>
 
-        
-        <div className={styles.lista}>
+
+          <div className={styles.lista}>
             <div className={styles.arruma2}>
 
-
+              {/* 
                 <div className={styles.pes_filtro}>
 
                     <input
@@ -63,38 +72,37 @@ export default function filtro() {
                     
                     </ul>
                 </div>
+                */}
 
 
-           
-            
+
             </div>
+          </div>
+{/*
+          <input
+            className={styles.pesquisa}
+            value={busca}
+            type="text"
+            onChange={(ev) => setBusca(ev.target.value)}
+            placeholder="Pesquisar usuário"
+          />
+*/}
+
+          <ul className={styles.arruma}>
+            {usuarios.map(usuario => (
+              <li key={usuario.id}>
+
+                <p>{usuario.foto} </p> 
+                <Link href="perfil" >{usuario.nome}</Link>
+
+              </li>
+            ))}
+          </ul>
+
+
+
         </div>
-
-            <input
-                className={styles.pesquisa}
-                value={busca}
-                type="text"
-                onChange={(ev) => setBusca(ev.target.value)}
-                placeholder="Pesquisar usuário"
-                />
-
-          
-            <ul className={styles.arruma}>
-              {nomesBusca.map((nome, i) => (
-                <li key={i}>
-
-                    
-                    <img className={styles.img} src="/images/human.png" alt={nome} />
-                    <Link href="perfil" >{nome}</Link>
-                    
-                </li>
-              ))}
-            </ul>
-
-              
-            
       </div>
-    </div>
     </ProtectedRoute>
   );
 }
