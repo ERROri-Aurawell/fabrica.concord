@@ -1,13 +1,15 @@
-.container {
-  background-color: black;
-  color: white;
-  text-align: center;
-  height: 100vh;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 90px;
+@media (max-width: 768px) {
+  .welcome-container {
+    flex-direction: column; /* Muda para coluna em telas pequenas */
+    text-align: center;
+  }
+
+  .text-container, .image-container {
+    width: 100%;
+  }
 }
+
+
 
 .header {
   display: flex;
@@ -15,54 +17,104 @@
   align-items: center;
   justify-content: center;
 }
-
-.logo {
-  width: 150px;
+.welcome-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: rgb(19, 19, 19);
+  color: white;
+  padding: 20px;
 }
 
-.subtitle {
-  color: lightgray;
+.text-container {
+  max-width: 50%;
+  text-align: left;
+  
 }
 
-.main-content {
-  margin-top: 20px;
-}
-
-.title {
-  font-size: 39px;
+.h1 {
+  font-size: 2.5rem;
   font-weight: bold;
 }
 
-.description {
-  margin: 10px 0;
-  font-size: 30px;
+.p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  
 }
 
-.button {
-  background-color: cyan;
-  color: black;
-  padding: 10px 20px;
-  border: none;
+.image-container  {
+  max-width: 100%;
+  height: auto;
+  margin: 150px;
+
+
+
+}
+.img {
+    position: relative;
+    left: 60%;
+  }
+   
+.description_para{
+  font-size: 30px;
+  position: absolute;
+  top: 54%;
+  margin: 15px;
+} 
+.description{
+  font-size: 30px;
+  position: absolute;
+  top: 50%;
+  margin: 15px;
+}
+
+.button{
+  margin-top: 40px;
+  display: inline-block;
+  padding: 0.5rem 2.8rem;
+  background-color: rgb(243, 243, 243);
+  border-radius: 4rem;
+  color: #000000;
+  letter-spacing: 0.3rem;
+  font-weight: 400;
+  border: 2px solid #57b1cc;
+  transition: 0.3s ease;
   cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
-  border-radius: 25px;
+  position: absolute;
+  top: 58%;
+}
+  
+
+.button:hover{
+  background-color: rgb(25, 118, 124);
 }
 
-.link {
-  margin-top: 10px;
-  font-size: 30px;
+.title{
+  position: absolute;
+  top: 36%;
+  font-size: 70px;
+  margin: 15px;
 }
 
-.link a {
-  color: cyan;
-  text-decoration: none;
+.link{
+  position: absolute;
+  top: 68%;
+  color: aliceblue;
+  font-size: 22px;
+  margin: 15px;
 }
 
-.h1{
-  font-size: 100px;
-  font-family: Arial, Helvetica, sans-serif ;
+.link2 {
+  color: aliceblue;
 }
-.span{
-  color: aqua;
+
+
+.link2:hover{
+  color: rgb(25, 118, 124);
+}
+
+.link3{
+  color: rgb(3, 3, 3) ;
 }
