@@ -1,48 +1,41 @@
 "use client";
+import styles from "./test.module.css";
 import { useState, useEffect } from "react";
-import styles from "./pesquisa.module.css";
-import Link from "next/link";
-import ProtectedRoute from "@/components/ProtectedRoute";
-import Cookies from 'js-cookie';
 
-export default function filtro() {
-  const [busca, setBusca] = useState(''); 
-  const [filtro, setFiltro] = useState(['1', '2', '3', '4', '5', '6', '7', '8', '9']);
-  const [busca2, setBusca2] = useState('');
-  const [filtrosSelecionados, setFiltrosSelecionados] = useState([]);
-  const [usuarios, setUsuarios] = useState([])
+export default function Filtro() {
+    const [busca, setBusca] = useState(''); 
+    const [filtro, setFiltro] = useState(['1', '2', '3', '4', '5', '6', '7', '8', '9']);
+    const [busca2, setBusca2] = useState('');
+    const [filtrosSelecionados, setFiltrosSelecionados] = useState([]);
 
-  const getUsuarios = async () => {
-    const conteudo = await fetch(`http://localhost:9000/buscar/${Cookies.get('key')}`);
-    if (!conteudo.ok) {
-        throw new Error('Erro ao buscar:' + conteudo.statusText);
-    }
-    const data = await conteudo.json();
-    setUsuarios(data)
-}
+    const arrayTeste = [
+        { id: 1, nome: "quadrado", filtros: ['1', '4', '7'] },
+        { id: 2, nome: "retangulo", filtros: ['9', '2', '8'] },
+        { id: 3, nome: "circulo", filtros: ['4', '5', '7'] }
+    ];
 
-useEffect(() => {
-  getUsuarios();
-}, [])
+    const [usuarios, setUsuarios] = useState([]);
 
+    useEffect(() => {
+        setUsuarios(arrayTeste);
+    }, []);
 
-const nomesBusca = usuarios.filter(usuario =>
-  (busca === '' || usuario.nome.toLowerCase().includes(busca.toLowerCase())) &&
-  (filtrosSelecionados.length === 0 ||
-  filtrosSelecionados.every(filtro => usuario.filtros.includes(filtro)))
-);
+    const nomesBusca = usuarios.filter(usuario =>
+        (busca === '' || usuario.nome.toLowerCase().includes(busca.toLowerCase())) &&
+        (filtrosSelecionados.length === 0 ||
+        filtrosSelecionados.every(filtro => usuario.filtros.includes(filtro)))
+    );
 
-const filtroBusca = filtro.filter(f => f.includes(busca2));
+    const filtroBusca = filtro.filter(f => f.includes(busca2));
 
-const toggleFiltro = (filtro) => {
-  setFiltrosSelecionados(prev =>
-      prev.includes(filtro) ? prev.filter(f => f !== filtro) : [...prev, filtro]
-  );
-};
+    const toggleFiltro = (filtro) => {
+        setFiltrosSelecionados(prev =>
+            prev.includes(filtro) ? prev.filter(f => f !== filtro) : [...prev, filtro]
+        );
+    };
 
-  return (
-    <ProtectedRoute>
- <div className={styles.cor}>
+    return (
+        <div className={styles.cor}>
             <div className={styles.centro}>
                 <div className={styles.pes_filtro}>
                     <input
@@ -95,6 +88,5 @@ const toggleFiltro = (filtro) => {
                 </div>
             </div>
         </div>
-    </ProtectedRoute>
-  );
+    );
 }
