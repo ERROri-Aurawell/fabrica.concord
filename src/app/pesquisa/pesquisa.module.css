@@ -70,10 +70,17 @@
 }
 
 
+.adicioarAmigo{
+    width: 30px;
+    height: 30px;
+    background-color: red;
 
+}
 
-
-
+.divDosUsuarios{
+    background-color: black;
+    border: 5px solid white ;
+}
 
 .filtros{
     background-color: #818181;
