@@ -354,7 +354,7 @@ input:checked + .sliderNT:before {
 .containerMUD {
     width: 1450px;
     height: 900px;
-    background: #1e1e1e;
+    background: #2a2a2a;
     color: white;
     padding: 20px;
     border-radius: 8px;
@@ -436,4 +436,15 @@ input:checked + .sliderNT:before {
   
 .buttonMUD:hover {
     background-color: #ce7575;
+}
+
+.miniperfil{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 120%;
+}
+
+.p{
+    font-size: 30px;
 }

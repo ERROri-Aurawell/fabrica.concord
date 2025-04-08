@@ -114,9 +114,14 @@ export default function Config() {
                     {div1 && (
                         <div className={styles.divSu}>
                             <section className={styles.mainCN}>
+                            <div className={styles.miniperfil}>
+                                                <img width={90} height={90} alt="perfil" src={selectedAvatar}></img>
+                                                <p className={styles.p}>Nome</p>
+                            </div>
                                 <div className={styles.dFundoCN}>
                                     <section className={styles.sectionCN}>
                                         <form className={styles.formCN} action="/submit" method="post">
+
                                             <h1 className={styles.h1CN}>Conta</h1>
                                             <label className={styles.labelCN}>Nome:</label>
                                             <input type="text" id="nome" name="nome" required />
@@ -240,7 +245,7 @@ export default function Config() {
                             <div className={styles.containerNT}>
                                 <div className={styles.headerNT}>
                                     <h1>Notificações</h1>
-                                    
+
                                 </div>
 
                                 <div className={styles.sectionNT}>
