@@ -14,7 +14,7 @@ export default function filtro() {
   const nomesBusca = nomes.filter((nome) =>
     nome.toLowerCase().includes(busca.toLowerCase())
   );
-//a
+
   return (
     <ProtectedRoute>
       <div className={styles.cor}>
