@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from "./contatos.module.css";
 import Link from "next/link";
 import Image from "next/image";
-//import ProtectedRoute from "@/components/ProtectedRoute";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function filtro() {
 
@@ -14,9 +14,9 @@ export default function filtro() {
   const nomesBusca = nomes.filter((nome) =>
     nome.toLowerCase().includes(busca.toLowerCase())
   );
-
+//a
   return (
-    //<ProtectedRoute>
+    <ProtectedRoute>
       <div className={styles.cor}>
         <div className={styles.centro}>
 
@@ -78,6 +78,6 @@ export default function filtro() {
           </div>
         </div>
       </div>
-    //</ProtectedRoute>
+    </ProtectedRoute>
   );
 }
