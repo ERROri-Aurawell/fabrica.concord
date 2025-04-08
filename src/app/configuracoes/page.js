@@ -140,8 +140,8 @@ export default function Config() {
 
                     {div2 && (
                         <div className={styles.divSu}>
-                            <h2>Visto por Último</h2>
-                            <p>Quem pode ver meu "visto por último"?</p>
+                            <h2 className={styles.h2}>Visto por Último</h2>
+                            <p className={styles.p}>Quem pode ver meu "visto por último"?</p>
                             <label className={styles.label}>
                                 <input className={styles.label}
                                     type="radio"
@@ -175,8 +175,8 @@ export default function Config() {
 
                             <hr />
 
-                            <h2>Quem pode ver quando está online</h2>
-                            <p>Quem pode ver quando está online?</p>
+                            <h2 className={styles.h2}>Quem pode ver quando está online</h2>
+                            <p className={styles.p}>Quem pode ver quando está online?</p>
                             <label className={styles.label}>
                                 <input className={styles.label}
                                     type="radio"
@@ -239,15 +239,8 @@ export default function Config() {
                         <div className={styles.divSu}>
                             <div className={styles.containerNT}>
                                 <div className={styles.headerNT}>
-                                    <Link href="./configuracoes" className={styles.arrow}>←</Link> Ativar Notificações
-                                    <label className={styles.switchNT}>
-                                        <input
-                                            type="checkbox"
-                                            checked={notificationsEnabled}
-                                            onChange={() => setNotificationsEnabled(!notificationsEnabled)}
-                                        />
-                                        <span className={styles.sliderNT}></span>
-                                    </label>
+                                    <h1>Notificações</h1>
+                                    
                                 </div>
 
                                 <div className={styles.sectionNT}>
@@ -271,7 +264,7 @@ export default function Config() {
                                                 checked={messageVibration}
                                                 onChange={() => setMessageVibration(!messageVibration)}
                                             />
-                                            <span className={styles.liderNT}></span>
+                                            <span className={styles.sliderNT}></span>
                                         </label>
                                     </div>
                                 </div>
