@@ -140,8 +140,8 @@ export default function Config() {
 
                     {div2 && (
                         <div className={styles.divSu}>
-                            <h2>Visto por Último</h2>
-                            <p>Quem pode ver meu "visto por último"?</p>
+                            <h1>Visto por Último</h1>
+                            <h3>Quem pode ver meu "visto por último"?</h3>
                             <label className={styles.label}>
                                 <input className={styles.label}
                                     type="radio"
@@ -175,8 +175,8 @@ export default function Config() {
 
                             <hr />
 
-                            <h2>Quem pode ver quando está online</h2>
-                            <p>Quem pode ver quando está online?</p>
+                            <h2>Quem pode ver quando está online?</h2>
+                            
                             <label className={styles.label}>
                                 <input className={styles.label}
                                     type="radio"
@@ -237,74 +237,55 @@ export default function Config() {
 
                     {div4 && (
                         <div className={styles.divSu}>
-                            <div className={styles.containerNT}>
-                                <div className={styles.headerNT}>
-                                    <Link href="./configuracoes" className={styles.arrow}>←</Link> Ativar Notificações
-                                    <label className={styles.switchNT}>
-                                        <input
-                                            type="checkbox"
-                                            checked={notificationsEnabled}
-                                            onChange={() => setNotificationsEnabled(!notificationsEnabled)}
-                                        />
-                                        <span className={styles.sliderNT}></span>
-                                    </label>
-                                </div>
+                            <h1>Notificações</h1>
+                            <h2>Mensagens</h2>
+                            <label className={styles.label}>
+                                <input className={styles.label}
+                                    type="radio"
+                                    name="vistoPorUltimo"
+                                    value="todos"
+                                    checked={vistoPorUltimo === "todos"}
+                                    onChange={() => setVistoPorUltimo("todos")}
+                                />
+                                Sons de Notifição
+                            </label>
+                            <label className={styles.label}>
+                                <input className={styles.label}
+                                    type="radio"
+                                    name="vistoPorUltimo"
+                                    value="contatos"
+                                    checked={vistoPorUltimo === "contatos"}
+                                    onChange={() => setVistoPorUltimo("contatos")}
+                                />
+                                Vibração
+                            </label>
 
-                                <div className={styles.sectionNT}>
-                                    <h3>Mensagens</h3>
-                                    <div className={styles.optionNT}>
-                                        Sons de Notificação
-                                        <label className={styles.switchNT}>
-                                            <input
-                                                type="checkbox"
-                                                checked={messageSounds}
-                                                onChange={() => setMessageSounds(!messageSounds)}
-                                            />
-                                            <span className={styles.sliderNT}></span>
-                                        </label>
-                                    </div>
-                                    <div className={styles.optionNT}>
-                                        Vibração
-                                        <label className={styles.switchNT}>
-                                            <input
-                                                type="checkbox"
-                                                checked={messageVibration}
-                                                onChange={() => setMessageVibration(!messageVibration)}
-                                            />
-                                            <span className={styles.liderNT}></span>
-                                        </label>
-                                    </div>
-                                </div>
+                            <hr />
 
-                                <div className={styles.sectionNT}>
-                                    <h3>Grupos</h3>
-                                    <div className={styles.optionNT}>
-                                        Sons de Notificação
-                                        <label className={styles.switchNT}>
-                                            <input
-                                                type="checkbox"
-                                                checked={groupSounds}
-                                                onChange={() => setGroupSounds(!groupSounds)}
-                                            />
-                                            <span className={styles.sliderNT}></span>
-                                        </label>
-                                    </div>
-                                    <div className={styles.optionNT}>
-                                        Vibração
-                                        <label className={styles.switchNT}>
-                                            <input
-                                                type="checkbox"
-                                                checked={groupVibration}
-                                                onChange={() => setGroupVibration(!groupVibration)}
-                                            />
-                                            <span className={styles.sliderNT}></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                            <h2>Grupos</h2>
+                           
+                            <label className={styles.label}>
+                                <input className={styles.label}
+                                    type="radio"
+                                    name="onlineVisivel"
+                                    value="todos"
+                                    checked={onlineVisivel === "todos"}
+                                    onChange={() => setOnlineVisivel("todos")}
+                                />
+                                Sons de Notifição
+                            </label>
+                            <label className={styles.label}>
+                                <input className={styles.label}
+                                    type="radio"
+                                    name="onlineVisivel"
+                                    value="mesmosVistoUltimo"
+                                    checked={onlineVisivel === "mesmosVistoUltimo"}
+                                    onChange={() => setOnlineVisivel("mesmosVistoUltimo")}
+                                />
+                                Vibração
+                            </label>
                         </div>
                     )}
-
                     {div5 && (
                         <div className={styles.divSu}>
                             <div className={styles.tabela_medicDL}>

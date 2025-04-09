@@ -48,6 +48,7 @@
 .label {
     display: flex;
     margin-bottom: 10px ;
+    font-size: 20px;
 }
 
 .input[type="radio"] {
