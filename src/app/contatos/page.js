@@ -30,50 +30,55 @@ export default function filtro() {
                 onChange={(ev) => setBusca(ev.target.value)}
                 placeholder="Pesquisar contato"
               />
-
-              <div className={styles.ade}>
-                <Link className={styles.add_contato} href="./pesquisa">
-                  <Image className={styles.add} alt="img" src="/images/novoContato.png" width={60} height={55} />
-                </Link>
-              </div>
-
-              <div className={styles.botoesDenovo}>
-                <Link className={styles.botoes} href="./criarGrupo">
-                  <Image className={styles.lbotao} alt="criarGrupo" src="/images/contatos.png" width={60} height={60} ></Image>
-                </Link>
-
-                <Link className={styles.botoes} href="./bloqueios">
-                  <Image className={styles.lbotao} alt="img" src="/images/block.png" width={60} height={60} />
-                </Link>
-
-                <Link className={styles.botoes} href="./configuracoes">
-                  <Image className={styles.lbotao} alt="img" src="/images/config.png" width={60} height={60} />
-                </Link>
-              </div>
             </div>
 
 
+            <div className={styles.principal}>
+            
+              <div className={styles.SCROLADIABO}>
+                <ul className={styles.arruma}>
+                  {nomesBusca.map((nome, i) => (
+                    <li key={i}>
 
-            <div className={styles.SCROLADIABO}>
-              <ul className={styles.arruma}>
-                {nomesBusca.map((nome, i) => (
-                  <li key={i}>
+                      <Link className={styles.link_nome} href="./chat" >
 
-                    <p className={styles.visto}>
-                      visto há 12m
-                    </p>
+                        <img className={styles.img} src="/images/human.png" alt={nome} />
+                        {nome}
 
-                    <Link className={styles.link_nome} href="./chat" >
+                      </Link>
 
-                      <img className={styles.img} src="/images/human.png" alt={nome} />
-                      {nome}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
+              <div className={styles.lateral}>
+
+                <div className={styles.botoesDenovo}>
+
+                    <Link className={styles.botoes} href="./pesquisa">
+                      <Image className={styles.add} alt="img" src="/images/novoContato.png" width={60} height={55} />
                     </Link>
 
-                  </li>
-                ))}
-              </ul>
+                    <Link className={styles.botoes} href="./criarGrupo">
+                      <Image className={styles.lbotao} alt="criarGrupo" src="/images/contatos.png" width={60} height={60} ></Image>
+                    </Link>
+
+                    <Link className={styles.botoes} href="./bloqueios">
+                      <Image className={styles.lbotao} alt="img" src="/images/block.png" width={60} height={60} />
+                    </Link>
+
+                    <Link className={styles.botoes} href="./configuracoes">
+                      <Image className={styles.lbotao} alt="img" src="/images/config.png" width={60} height={60} />
+                    </Link>
+
+                    
+                </div>
             </div>
+
+            </div>
+
+            
 
           </div>
         </div>
