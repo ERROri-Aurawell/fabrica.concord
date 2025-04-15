@@ -20,6 +20,14 @@
     margin-top: 30px;
     display: flex;
     flex-direction: column;
+    padding-left: 100px;
+}
+
+.arruma2{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
 }
 
 .pesquisa{
@@ -32,37 +40,23 @@
     margin-left: 10px;
 }
 
-.busca{
-    background-color: lightgray;
-    color: black;
-    width: 300px;
-    height: 43px;
-    border-radius: 30px;
-    font-size: x-large;
-}
-
-
-.adiciona{
-    background-color: lightgray;
-    color: black;
-    width: 120px;
-    height: 50px;
-    border-radius: 90px;
-    font-size: x-large;
-}
-
-
-.arruma3{
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
+.logo{
+    margin-right: 10%;
+    width: 100px;
+    height: 80px;
 }
 
 .arruma{
     list-style-type: none;
-    font-size: 40px;
+    font-size: 50px;
     align-items: center;
     gap: 10px;
+}
+
+.principal{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
 }
 
 
@@ -73,6 +67,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
     width: 900px;
+    border-left: 2px solid #55d2db;
 }
 
 .img{
@@ -87,56 +82,36 @@
 }
 
 
-.arruma2{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.ade{
-    background: linear-gradient(to bottom, #5EECF5, #002244);
-    width: 80px;
-    height: 80px;
-    border-radius: 50px;
-    margin-left: 20px;
-    margin-right: 5px;
-    text-align: center;
-}
 .add{
     margin-top: 13px;
     margin-right: 5px;
 }
 
 
-.botoesDenovo{
-    display: flex;
-    justify-content: top;
+
+.lateral{
+    max-width: 30%;
+    margin-right: 10%;
 }
 
-.links{
+.botoesDenovo{
     display: flex;
-    justify-content: end;
+    flex-direction: column;
+    gap: 25px;
 }
 
 .botoes{
     background: linear-gradient(to bottom, #5EECF5, #002244);
     border-radius: 90px;
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     text-align: center;
-    margin-left: 10px;
-    margin-right: 20px;
-    margin-bottom: 10px;
 }
 
 .lbotao{
     margin-top: 10px;
 }
 
-.lateral{
-    max-width: 30%;
-}
 
 
 @media (max-width: 400px){
@@ -150,7 +125,7 @@
 
     .arruma{
         list-style-type: none;
-        font-size: 70px;
+        font-size: 65px;
         align-items: center;
         margin-bottom: 10px;
         gap: 10px;
@@ -158,10 +133,26 @@
 
     .arruma2{
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
         margin-top: 20px;
         position: relative;
+    }
+
+    .logo{
+        margin-right: 10%;
+        width: 100px;
+        height: 80px;
+    }
+
+    .pesquisa{
+        background-color: lightgray;
+        color: black;
+        width: 470px;
+        height: 55px;
+        border-radius: 30px;
+        font-size: 50px;
+        margin-left: 10px;
     }
 
     .centro{
@@ -189,15 +180,37 @@
         -ms-overflow-style: none;
         scrollbar-width: none;
         max-width: 80%;
-        margin-left: 20px;
+        margin-left: 10px;
+        border-left: 5px solid #55d2db;
     }
 
+
+
+    .botoes{
+        background: linear-gradient(to bottom, #5EECF5, #002244);
+        border-radius: 100px;
+        width: 100px;
+        height: 100px;
+        text-align: center;
+        padding-top: 5px;
+    }
+
+    .lateral{
+        max-width: 30%;
+        margin-right: 10%;
+    }
 
     .botoesDenovo{
         display: flex;
         flex-direction: column;
+        gap: 50px;
     }
 
+    .img{
+        width: 70px;
+        margin-right: 10px;
+        margin-top: 10px;
+    }
 
 
 }

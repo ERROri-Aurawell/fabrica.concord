@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     const isLoggedIn = Cookies.get('key'); 
 
-    setUserLoggedIn(!!true); 
+    setUserLoggedIn(!!isLoggedIn); 
     if (userLoggedIn === false) {
       router.push('/'); 
     }

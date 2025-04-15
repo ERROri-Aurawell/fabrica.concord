@@ -30,6 +30,7 @@ export default function filtro() {
                 onChange={(ev) => setBusca(ev.target.value)}
                 placeholder="Pesquisar contato"
               />
+              <Image className={styles.logo} alt="logo" src="/images/logo.png" width={70} height={60}/>
             </div>
 
 
@@ -57,19 +58,19 @@ export default function filtro() {
                 <div className={styles.botoesDenovo}>
 
                     <Link className={styles.botoes} href="./pesquisa">
-                      <Image className={styles.add} alt="img" src="/images/novoContato.png" width={60} height={55} />
+                      <Image className={styles.add} alt="img" src="/images/novoContato.png" width={70} height={65} />
                     </Link>
 
                     <Link className={styles.botoes} href="./criarGrupo">
-                      <Image className={styles.lbotao} alt="criarGrupo" src="/images/contatos.png" width={60} height={60} ></Image>
+                      <Image className={styles.lbotao} alt="criarGrupo" src="/images/contatos.png" width={70} height={70} ></Image>
                     </Link>
 
                     <Link className={styles.botoes} href="./bloqueios">
-                      <Image className={styles.lbotao} alt="img" src="/images/block.png" width={60} height={60} />
+                      <Image className={styles.lbotao} alt="img" src="/images/block.png" width={70} height={70} />
                     </Link>
 
                     <Link className={styles.botoes} href="./configuracoes">
-                      <Image className={styles.lbotao} alt="img" src="/images/config.png" width={60} height={60} />
+                      <Image className={styles.lbotao} alt="img" src="/images/config.png" width={70} height={70} />
                     </Link>
 
                     
