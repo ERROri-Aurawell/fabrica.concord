@@ -15,7 +15,7 @@
 
 .parteVisivel {
     width: 30%;
-
+    border-radius: 8px;
     border-right: 2px solid #333;
 }
 
@@ -47,6 +47,12 @@
     height: 100%;
 }
 
+.divSuMUD{
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 8px;
+    height: 100%;
+}
 .h2{
     margin-top: 3%;
 }
@@ -286,9 +292,8 @@ input:checked + .sliderNT:before {
 
 .h1CN{
     font-size: 45px;
-    margin-bottom: 20%;
+    margin-bottom: 30%;
     color:  #5EECF5, #002244;
-    margin-top: 5%;
   
 }
 
@@ -354,7 +359,7 @@ input:checked + .sliderNT:before {
 .containerMUD {
     width: 1450px;
     height: 900px;
-    background: #2a2a2a;
+    
     color: white;
     padding: 20px;
     border-radius: 8px;
@@ -439,12 +444,15 @@ input:checked + .sliderNT:before {
 }
 
 .miniperfil{
-    display: flex;
+
     align-items: center;
     gap: 10px;
-    margin-right: 120%;
+
 }
 
 .p{
     font-size: 30px;
+    margin-left: 95px;
+    margin-top: 5%;
 }
+

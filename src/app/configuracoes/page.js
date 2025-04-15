@@ -113,33 +113,34 @@ export default function Config() {
 
                     {div1 && (
                         <div className={styles.divSu}>
-                            <section className={styles.mainCN}>
                             <div className={styles.miniperfil}>
-                                                <img width={90} height={90} alt="perfil" src={selectedAvatar}></img>
-                                                <p className={styles.p}>Nome</p>
+                                <img width={90} height={90} alt="perfil" src={selectedAvatar}></img>
+                                <p className={styles.p}>Nome</p>
+                            
+                                <section className={styles.mainCN}>
+                                    <div className={styles.dFundoCN}>
+                                        <section className={styles.sectionCN}>
+                                            <form className={styles.formCN} action="/submit" method="post">
+
+                                                <h1 className={styles.h1CN}>Conta</h1>
+                                                <label className={styles.labelCN}>Nome:</label>
+                                                <input type="text" id="nome" name="nome" required />
+                                                <p className={styles.noteCN}>Esse não é seu nome de usuário nem seu PIN. Esse nome será exibido para seus contatos Concord.</p>
+
+                                                <label className={styles.labelCN}>Descrição:</label>
+                                                <input type="descrição" id="descrição" name="descrição" required />
+                                                <label className={styles.labelCN}>Email:</label>
+                                                <input type="email" id="email" name="email" required />
+
+                                                <label className={styles.labelCN} htmlFor="celular">Celular:</label>
+                                                <input type="celular" id="celular" name="celular" required />
+
+                                                <input type="submit" className={styles.botaoCN} value="Atualizar seu perfil" />
+                                            </form>
+                                        </section>
+                                    </div>
+                                </section>
                             </div>
-                                <div className={styles.dFundoCN}>
-                                    <section className={styles.sectionCN}>
-                                        <form className={styles.formCN} action="/submit" method="post">
-
-                                            <h1 className={styles.h1CN}>Conta</h1>
-                                            <label className={styles.labelCN}>Nome:</label>
-                                            <input type="text" id="nome" name="nome" required />
-                                            <p className={styles.noteCN}>Esse não é seu nome de usuário nem seu PIN. Esse nome será exibido para seus contatos Concord.</p>
-
-                                            <label className={styles.labelCN}>Descrição:</label>
-                                            <input type="descrição" id="descrição" name="descrição" required />
-                                            <label className={styles.labelCN}>Email:</label>
-                                            <input type="email" id="email" name="email" required />
-
-                                            <label className={styles.labelCN} htmlFor="celular">Celular:</label>
-                                            <input type="celular" id="celular" name="celular" required />
-
-                                            <input type="submit" className={styles.botaoCN} value="Atualizar seu perfil" />
-                                        </form>
-                                    </section>
-                                </div>
-                            </section>
                         </div>
                     )}
 
