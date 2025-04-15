@@ -84,7 +84,7 @@ export default function Config() {
                     </div>
                     <div className={styles.Gbotoes}>
                         <button onClick={() => mudardiv("1")} className={styles.botao}>
-                            Conta
+                            Atualizar Perfil
                         </button>
                     </div>
                     <div className={styles.Gbotoes}>
@@ -115,27 +115,27 @@ export default function Config() {
                         <div className={styles.divSu}>
                             <div className={styles.miniperfil}>
                                 <img width={90} height={90} alt="perfil" src={selectedAvatar}></img>
-                                <p className={styles.p}>Nome</p>
+                                <p className={styles.nome}>Nome</p>
                             
                                 <section className={styles.mainCN}>
                                     <div className={styles.dFundoCN}>
                                         <section className={styles.sectionCN}>
                                             <form className={styles.formCN} action="/submit" method="post">
 
-                                                <h1 className={styles.h1CN}>Conta</h1>
+                                                <h1 className={styles.h1CN}>Atualizar Perfil</h1>
                                                 <label className={styles.labelCN}>Nome:</label>
-                                                <input type="text" id="nome" name="nome" required />
+                                                <input className={styles.input} type="text" id="nome" name="nome" required />
                                                 <p className={styles.noteCN}>Esse não é seu nome de usuário nem seu PIN. Esse nome será exibido para seus contatos Concord.</p>
 
                                                 <label className={styles.labelCN}>Descrição:</label>
-                                                <input type="descrição" id="descrição" name="descrição" required />
+                                                <input className={styles.input} type="descrição" id="descrição" name="descrição" required />
                                                 <label className={styles.labelCN}>Email:</label>
-                                                <input type="email" id="email" name="email" required />
+                                                <input className={styles.input} type="email" id="email" name="email" required />
 
                                                 <label className={styles.labelCN} htmlFor="celular">Celular:</label>
-                                                <input type="celular" id="celular" name="celular" required />
+                                                <input className={styles.input} type="celular" id="celular" name="celular" required />
 
-                                                <input type="submit" className={styles.botaoCN} value="Atualizar seu perfil" />
+                                                <input  type="submit" className={styles.botaoCN} value="Atualizar seu perfil" />
                                             </form>
                                         </section>
                                     </div>
