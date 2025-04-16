@@ -15,6 +15,8 @@ export default function filtro() {
     nome.toLowerCase().includes(busca.toLowerCase())
   );
 
+  const [links, setLinks] = useState(false);
+
   return (
     <ProtectedRoute>
       <div className={styles.cor}>
@@ -55,24 +57,38 @@ export default function filtro() {
 
               <div className={styles.lateral}>
 
-                <div className={styles.botoesDenovo}>
+                <div className={`${styles.botoesDenovo} ${links ? styles.expanded : styles.collapsed}`}>
 
-                    <Link className={styles.botoes} href="./pesquisa">
-                      <Image className={styles.add} alt="img" src="/images/novoContato.png" width={70} height={65} />
-                    </Link>
+                    <button className={styles.butao} onClick={() => setLinks(!links)}>
+                      <Image src="/images/logo.png" alt="sim" width={70} height={70} />
+                    </button>
+                    
 
-                    <Link className={styles.botoes} href="./criarGrupo">
-                      <Image className={styles.lbotao} alt="criarGrupo" src="/images/contatos.png" width={70} height={70} ></Image>
-                    </Link>
+                    <div className={`${styles.nav} ${links ? styles.show : styles.hide}`}>
 
-                    <Link className={styles.botoes} href="./bloqueios">
-                      <Image className={styles.lbotao} alt="img" src="/images/block.png" width={70} height={70} />
-                    </Link>
+                      <ul className={styles.lis_bot}>
+                        
+                          <Link className={styles.botoes} href="./pesquisa">
+                            <Image className={styles.add} alt="img" src="/images/novoContato.png" width={70} height={65} />
+                          </Link>
+                        
+                          <Link className={styles.botoes} href="./criarGrupo">
+                            <Image className={styles.lbotao} alt="criarGrupo" src="/images/contatos.png" width={70} height={70} ></Image>
+                          </Link>
+                        
+                          <Link className={styles.botoes} href="./bloqueios">
+                            <Image className={styles.lbotao} alt="img" src="/images/block.png" width={70} height={70} />
+                          </Link>
 
-                    <Link className={styles.botoes} href="./configuracoes">
-                      <Image className={styles.lbotao} alt="img" src="/images/config.png" width={70} height={70} />
-                    </Link>
+                          <Link className={styles.botoes} href="./configuracoes">
+                            <Image className={styles.lbotao} alt="img" src="/images/config.png" width={70} height={70} />
+                          </Link>
+                        
+                      </ul>
 
+                    </div>
+                    
+                    
                     
                 </div>
             </div>
