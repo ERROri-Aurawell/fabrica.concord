@@ -72,6 +72,10 @@ export default function Config() {
         <ProtectedRoute>
             <section className={styles.section}>
                 <section className={styles.parteVisivel}>
+                    <div>
+                        <Link className={styles.link2} href="./cadastrar"><Image  className={styles.img} alt="img" src="/images/aaaa.png" width={40} height={40}></Image></Link>
+                        
+                    </div>
                     <div className={styles.miniPerfil}>
                         <img width={tm} height={tm} alt="perfil" src={selectedAvatar}></img>
                         <p>Nome do usuário</p>
@@ -114,7 +118,9 @@ export default function Config() {
                     {div1 && (
                         <div className={styles.divSu}>
                             <div className={styles.miniperfil}>
-                                <img width={90} height={90} alt="perfil" src={selectedAvatar}></img>
+                                <img width={90} height={90} alt="perfil" src={selectedAvatar}>
+                                    
+                                </img>
                                 <p className={styles.nome}>Nome</p>
                             
                                 <section className={styles.mainCN}>

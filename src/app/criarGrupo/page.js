@@ -3,11 +3,16 @@ import styles from "./criarGrupo.module.css";
 import { useState } from 'react';
 import Link from "next/link";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import Image from "next/image";
 
 function App() {
 
   return (
     <ProtectedRoute>
+      <div>
+        <Link className={styles.link2} href="./cadastrar"><Image  className={styles.img} alt="img" src="/images/aaaa.png" width={40} height={40}></Image></Link>
+                        
+      </div>
       <div className={styles.container}>
         <h2 className={styles.title}>Criar grupo</h2>
         <div className={styles.input}>

@@ -2,6 +2,8 @@
 import { useState } from "react";
 import styles from "./bloqueios.module.css";
 import ProtectedRoute from '@/components/ProtectedRoute';
+import Link from "next/link";
+import Image from "next/image";
 
 export default function filtro() {
 
@@ -22,6 +24,10 @@ export default function filtro() {
   return (
     <ProtectedRoute>
       <div className={styles.cor}>
+        <div>
+          <Link className={styles.link2} href="./cadastrar"><Image  className={styles.img} alt="img" src="/images/aaaa.png" width={40} height={40}></Image></Link>
+                        
+        </div>
         <div className={styles.centro}>
 
 

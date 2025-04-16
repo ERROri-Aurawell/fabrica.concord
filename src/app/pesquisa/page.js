@@ -4,6 +4,7 @@ import styles from "./pesquisa.module.css";
 import Link from "next/link";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Cookies from 'js-cookie';
+import Image from "next/image";
 
 export default function Filtro() {
     const [busca, setBusca] = useState('');
@@ -58,6 +59,10 @@ export default function Filtro() {
     return (
         <ProtectedRoute>
             <div className={styles.cor}>
+            <div>
+          <Link className={styles.link2} href="./cadastrar"><Image  className={styles.img} alt="img" src="/images/aaaa.png" width={40} height={40}></Image></Link>
+                        
+        </div>
                 <div className={styles.centro}>
                     <div className={styles.pes_filtro}>
                         <input
