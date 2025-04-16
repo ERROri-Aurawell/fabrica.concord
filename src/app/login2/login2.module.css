@@ -1,0 +1,470 @@
+.section {
+    display: flex;
+    background-color: #1e1e1e;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.miniPerfil{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.parteVisivel {
+    width: 30%;
+    border-radius: 8px;
+    border-right: 2px solid #333;
+}
+
+.parteSumivel {
+    width: 70%;
+    padding-left: 20px;
+}
+
+.Gbotoes {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.botao {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+}
+
+
+.divSu {
+    background-color: #000000;
+    padding: 20px;
+    border-radius: 8px;
+    height: 100%;
+}
+
+.divSuMUD{
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 8px;
+    height: 100%;
+}
+.h2{
+    margin-top: 3%;
+}
+
+
+.label {
+    display: flex;
+    margin-bottom: 10px ;
+    font-size: 20px;
+}
+
+.input[type="radio"] {
+    margin-right: 8px;
+}
+
+.Gbotoes{
+    height: 40px;
+    margin-bottom: 5%;
+    display: flex;
+    align-items: top;
+}
+
+.botao{
+    background-color: rgb(37, 37, 37);
+    cursor: pointer;
+    color: white;
+    width: 90%;
+    height: 100%;
+}
+
+.parteVisivel{
+    width:20%;
+    height: 80vw;
+    background-color: #505050;
+    display: flex;
+    flex-direction: column;
+}
+
+.parteSumivel{
+    width: 80%;
+}
+
+
+
+.section{
+    background-color: gray;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+
+
+
+
+.containerNT {
+    width: 400px;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    font-family:unset;
+}
+  
+.headerNT {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+  
+.arrowNT {
+    cursor: pointer;
+    margin-right: 10px;
+}
+  
+.sectionNT {
+
+    margin-top: 40px;
+    font-size: 20px;
+}
+  
+.h3NT {
+    text-align: left;
+    font-size: 16px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+  
+.optionNT {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+}
+  
+  /* Estilização do switch */
+.switchNT {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+}
+  
+.switchNT input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+.sliderNT {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #666;
+    border-radius: 20px;
+    transition: 0.4s;
+}
+  
+.sliderNT:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+  
+input:checked + .sliderNT {
+    background-color: #00aaff;
+}
+  
+input:checked + .sliderNT:before {
+    transform: translateX(14px);
+}
+
+
+
+
+
+.headerDL {
+    background: linear-gradient(to right, #00aaff, #0055ff);
+    padding: 10px;
+    text-align: left;
+    border-radius: 6px;
+    color: white;
+    font-size: 18px;
+}
+  
+.logoDL {
+    font-weight: bold;
+}
+  
+  .subtitleDL {
+    font-size: 12px;
+    margin-left: 10px;
+}
+  
+.contentDL {
+    margin-top: 20px;
+}
+  
+.h2DL {
+    font-size: 30px;
+    margin-bottom: 15px;
+    color: #bbb;
+}
+  
+.warningDL{
+    display: flex;
+    align-items: center;
+    background: rgba(255, 0, 0, 0.2);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    cursor: default;
+}
+  
+.iconDL {
+    font-size: 70px;
+    margin-right: 10px;
+    color: antiquewhite;
+}
+  
+.textDL {
+    color: #ff5555;
+    font-weight: bold;
+    font-size: 35px;
+}
+  
+.pDL {
+    color: #bbb;
+    margin-bottom: 10px;
+    margin-top: 5%;
+    font-size: 25px;
+}
+  
+.deleteDL {
+    width: 40%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #ff4444;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 20%;
+}
+  
+.deleteDL:hover {
+    background: #cc0000;
+}
+.tabela_medicDL{
+
+    width: 600px;
+    height: 600px;
+    border-collapse: collapse;
+}
+
+
+
+
+
+
+.h1CN{
+    font-size: 45px;
+    font-family:unset;
+    margin-top: -50px;
+    margin-bottom: 20%;
+    color:  #5EECF5, #002244;
+  
+}
+
+
+.sectionCN{
+    margin-top: 10%;
+    justify-content: center;
+    align-items: center;
+    margin-left: 8%;
+}
+
+.formCN {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.labelCN {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.inputCN {
+    width: 120%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+
+.botaoCN {
+    background-color: #424141;
+    color: #fff;
+    padding: 10px ;
+    border: none;
+    border-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10%;
+}
+
+.noteCN {
+    font-size: 20px;
+    color: #5EECF5;
+}
+
+.botaoCN:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+.containerMUD {
+    width: 1450px;
+    height: 900px;
+    
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    font-family:unset;
+    text-align: center;
+}
+  
+.headerMUD {
+    font-size: 18px;
+
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 20px;
+}
+  
+.arrowMUD {
+    cursor: pointer;
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+
+  
+.sectionMUD {
+    margin-bottom: 20px;
+}
+  
+.h3MUD {
+    text-align: left;
+    font-size: 30px;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    margin-left: 45%;
+}
+  
+.currentMUD img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #333;
+    padding: 5px;
+}
+  
+.gridMUD {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+  
+.optionMUD {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+  
+.avatarMUD:hover {
+    transform: scale(1.1);
+}
+  
+.selectedMUD {
+    border: 3px solid #00aaff;
+}
+
+.buttonMUD {
+    width: 20%;
+    padding: 10px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-left: 25px;
+    margin-top: 10px;
+}
+  
+.buttonMUD:hover {
+    background-color: #ce7575;
+}
+
+.miniperfil{
+
+    align-items: center;
+    gap: 10px;
+
+}
+
+
+.nome{
+    font-size: 30px;
+    position: absolute;
+    left: 28%;
+    top: 4.5%;
+
+}
+.input{
+    height: 15px;
+    width: 250px;
+}
+
+.img {
+    margin-top: -25%;
+    margin-left: 60%;
+  }
+   
