@@ -299,13 +299,13 @@ export default function Config() {
 
                                 <div className={styles.warningDL}>
                                     <span className={styles.iconDL}>⚠</span>
-                                    <span className={styles.textDL}>Ao apagar essa conta:</span>
+                                    <span className={styles.textDL}>Ao deletar essa conta:</span>
                                 </div>
                                 <p className={styles.pDL}>A conta será apagada do Concord e removida de todos os dispositivos.</p>
                                 <p className={styles.pDL}>Seu histórico de mensagens será apagado.</p>
                                 <p className={styles.pDL}>Você sairá de todos os grupos.</p>
                                 <button className={styles.deleteDL}>
-                                    <Link href="./"> Apagar conta </Link>
+                                    <Link className={styles.pDL} href="./"> Apagar conta </Link>
                                 </button>
                             </div>
                         </div>
