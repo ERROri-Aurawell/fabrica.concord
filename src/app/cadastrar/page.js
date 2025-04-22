@@ -20,7 +20,7 @@ export default function Cadastrar() {
         }
 
         try {
-            const resposta = await fetch('http://localhost:9000/cadastrar', requestOptions);
+            const resposta = await fetch('https://apiconcord.dev.vilhena.ifro.edu.br/cadastrar', requestOptions);
 
             if (resposta.ok){
                 const data = await resposta.json();
