@@ -14,7 +14,7 @@ const login2 = () => {
 
                                     <label className={styles.labelCN}>Nome:</label>
                                     <input className={styles.input} type="text" id="nome" name="nome" required />
-                                    <p className={styles.noteCN}>Esse não é seu nome de usuário nem seu PIN. Esse nome será exibido para seus contatos Concord.</p>
+                                    
 
                                     <label className={styles.labelCN}>Descrição:</label>
                                     <input className={styles.input} type="descrição" id="descrição" name="descrição" required />

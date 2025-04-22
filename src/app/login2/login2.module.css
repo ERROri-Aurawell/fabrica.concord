@@ -66,6 +66,7 @@
 
 .input[type="radio"] {
     margin-right: 8px;
+   
 }
 
 .Gbotoes{
@@ -302,6 +303,7 @@ input:checked + .sliderNT:before {
     justify-content: center;
     align-items: center;
     margin-left: 8%;
+
 }
 
 .formCN {
@@ -316,7 +318,7 @@ input:checked + .sliderNT:before {
 }
 
 .labelCN {
-    font-size: 26px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 10px;
     color: #ffffff;
