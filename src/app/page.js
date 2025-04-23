@@ -11,6 +11,8 @@ const LoginPage = () => {
   //Cookies.remove('newAccount');
   //console.log(Cookies.get());
 
+
+
   return (
     <div className={styles.container}>
 

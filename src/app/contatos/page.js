@@ -60,7 +60,7 @@ export default function filtro() {
                 <div className={`${styles.botoesDenovo} ${links ? styles.expanded : styles.collapsed}`}>
 
                     <button className={styles.butao} onClick={() => setLinks(!links)}>
-                      <Image src="/images/logo.png" alt="sim" width={70} height={70} />
+                      <Image src="/images/logo.png" alt="sim" width={90} height={80} />
                     </button>
                     
 
