@@ -30,7 +30,7 @@ function App() {
           </section>
         </div>
         <div className={styles.img1}>
-          <Image className={styles.img1} alt="img" src="/images/i1.jpg" width={700} height={700}></Image>
+          <Image className={styles.img1} alt="img" src="/images/image.png" width={700} height={700}></Image>
         </div>
       </div>
     </ProtectedRoute>
