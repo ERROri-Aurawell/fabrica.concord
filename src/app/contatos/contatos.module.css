@@ -4,18 +4,16 @@
     justify-content: center;
     max-width: 100%;
     max-height: 100%;
-    position: relative;
 }
 
 .centro{
     display: flex;
     flex-direction: column;
     width: 100%;
-    position: relative;
 }
 
 .lista{
-    width: 100%;
+    width: 95%;
     height: 1000px;
     background-color: rgb(37, 37, 37);
     border-radius: 50px;
@@ -133,29 +131,30 @@
         color: white;
         display: flex;
         justify-content: center;
-        position: relative;
-        max-width: 100%;
-        max-height: 100%;
     }
 
-    .principal{
+    .centro{
         display: flex;
-        justify-content: space-between;
-        margin-top: 50px;
-    }    
+        flex-direction: column;
+    }
 
     .lista{
-        width: 200%;
+        width: 180%;
         height: auto;
         background-color: rgb(37, 37, 37);
         border-radius: 50px;
         margin-top: 30px;
         display: flex;
         flex-direction: column;
-        position: relative;
-        padding-left: 30px;
+        padding: 0;
+        overflow-x: hidden;
     }
 
+    .principal{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
+    }
 
     .arruma{
         list-style-type: none;
@@ -192,11 +191,7 @@
         position: relative;
     }
 
-    .centro{
-        width: 110%;
-        display: flex;
-        justify-self: center;
-    }
+    
 
     
 

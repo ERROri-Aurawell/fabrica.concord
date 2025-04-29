@@ -18,8 +18,7 @@ const login2 = () => {
 
                                     <label className={styles.labelCN}>Descrição:</label>
                                     <input className={styles.input} type="descrição" id="descrição" name="descrição" required />
-                                    <label className={styles.labelCN}>Email:</label>
-                                    <input className={styles.input} type="email" id="email" name="email" required />
+                                    
 
                                     <label className={styles.labelCN} htmlFor="celular">Filtros:</label>
                                     <input className={styles.input} type="celular" id="celular" name="celular" required />
