@@ -14,14 +14,17 @@ export default function Filtro() {
     const [usuarios, setUsuarios] = useState([]);
 
     const getUsuarios = async () => {
-    const conteudo = await fetch(`http://localhost:9000/buscar/${Cookies.get('key')}`);
+    const conteudo = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/buscar/${Cookies.get('key')}`);
         if (!conteudo.ok) {
             throw new Error('Erro ao buscar:' + conteudo.statusText);
         }
         const data = await conteudo.json();
         setFiltro(data.filtros);
         setUsuarios(data.usuarios);
+
+        console.log(data.filtros)
     };
+
 
     const adicionar = async (id, key) => {
         const conteudo = await fetch('')
@@ -112,15 +115,17 @@ export default function Filtro() {
                             onChange={(ev) => setBusca(ev.target.value)}
                             placeholder="Pesquisar usuário"
                         />
-                        <div className={styles.arruma2}></div>
-                        <ul className={styles.arruma}>
-                            {nomesBusca.map(usuario => (
+                        <div className={styles.arruma2}>
+
+                        {nomesBusca.map(usuario => (
                                 <div className={styles.divDosUsuarios} key={usuario.id}>
                                     <button className={styles.adicioarAmigo} onClick={() => { adicionarAmigo(usuario.id) }}></button>
                                     <p>{usuario.nome}</p>
                                 </div>
-                            ))}
-                        </ul>
+                        ))}
+
+                        </div>
+                            
                     </div>
                 </div>
             </div>

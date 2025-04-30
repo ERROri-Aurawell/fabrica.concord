@@ -14,33 +14,15 @@
     scrollbar-width: none;
 }
 
-.pesquisa{
-    background-color: lightgray;
-    color: black;
-    width: 400px;
-    height: 45px;
-    border-radius: 30px;
-    font-size: 35px;
-}
 
 
-.lista{
-    width: 100%;
-    height: 300px;
-    background-color: #5C5C5C;
-    border-radius: 50px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    display: flex;
-    justify-content: space-between;
+
+.img{
+    width: 60px;
+    margin-right: 10px;
+    margin-top: 10px;
 }
 
-.arruma2{
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 20px;
-    width: 100%;
-}
 
 
 
@@ -77,10 +59,7 @@
 
 }
 
-.divDosUsuarios{
-    background-color: black;
-    border: 5px solid white ;
-}
+
 
 .filtros{
     background-color: #818181;
@@ -113,37 +92,51 @@
 
 
 
+.lista{
+    width: 50%;
+    height: 350px;
+    background-color: #5C5C5C;
+    border-radius: 50px;
+    border: 3px solid var(--degrade);
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.pesquisa{
+    background-color: lightgray;
+    color: black;
+    width: 400px;
+    height: 50px;
+    border-radius: 30px;
+    font-size: 40px;
+    margin-top: 10px;
+    padding-left: 10px;
+}
 
 
-
-.arruma{
+.arruma2{
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    margin-top: 20px;
+    width: 100%;
+    height: 250px;
     list-style-type: none;
     font-size: 40px;
-    align-items: center;
+    align-items: right;
     gap: 10px;
+    /* --- scrol ---*/
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
-.img{
-    width: 60px;
-    margin-right: 10px;
-    margin-top: 10px;
+.divDosUsuarios{
+    background-color: black;
+    border: 5px solid linear-gradient(to bottom, #5EECF5, #002244) ;
+    height: 100px;
+    width: 600px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
