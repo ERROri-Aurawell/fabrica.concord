@@ -75,58 +75,72 @@ export default function Filtro() {
                             onChange={(ev) => setBusca2(ev.target.value)}
                             placeholder="Pesquisar filtro"
                         />
-                        <div className={styles.fil_sele}>
-                            <p className={styles.texfil}>
-                                Filtros selecionados: <strong>
-                                    {filtrosSelecionados.length > 0
-                                        ? filtrosSelecionados
-                                            .map(id => filtro.find(f => f.id === id)?.filtro || id)
-                                            .join(", ")
-                                        : "Nenhum"}
-                                </strong>
-                            </p>
+
+                        <div className={styles.organiza}>
+
+                            <div className={styles.filtros}>
+                                <ul className={styles.fil}>
+                                    {filtroBusca.map((f, index) => (
+                                        <li key={index} className={styles.itemFiltro}>
+                                            <label className={styles.radioLabel}>
+                                                <input
+                                                    className={styles.filtro}
+                                                    type="checkbox"
+                                                    value={f.id}
+                                                    checked={filtrosSelecionados.includes(f.id)}
+                                                    onChange={() => toggleFiltro(f.id)}
+                                                />
+                                                {f.filtro}
+                                            </label>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <div className={styles.fil_sele}>
+                                <p className={styles.texfil}>
+                                    Filtros selecionados: <strong>
+                                        {filtrosSelecionados.length > 0
+                                            ? filtrosSelecionados
+                                                .map(id => filtro.find(f => f.id === id)?.filtro || id)
+                                                .join(", ")
+                                            : "Nenhum"}
+                                    </strong>
+                                </p>
+                            </div>
+
                         </div>
+                        
+
                     </div>
 
-                    <div className={styles.filtros}>
-                        <ul className={styles.fil}>
-                            {filtroBusca.map((f, index) => (
-                                <li key={index} className={styles.itemFiltro}>
-                                    <label className={styles.radioLabel}>
-                                        <input
-                                            className={styles.filtro}
-                                            type="checkbox"
-                                            value={f.id}
-                                            checked={filtrosSelecionados.includes(f.id)}
-                                            onChange={() => toggleFiltro(f.id)}
-                                        />
-                                        {f.filtro}
-                                    </label>
-                                </li>
+                    
+                    
+                    <div className={styles.borda_lista}>
+
+                        <div className={styles.lista}>
+                            <input
+                                className={styles.pesquisa}
+                                value={busca}
+                                type="text"
+                                onChange={(ev) => setBusca(ev.target.value)}
+                                placeholder="Pesquisar usuário"
+                            />
+                            <div className={styles.arruma2}>
+
+                            {nomesBusca.map(usuario => (
+                                    <div className={styles.divDosUsuarios} key={usuario.id}>
+                                        <button className={styles.adicioarAmigo} onClick={() => { adicionarAmigo(usuario.id) }}></button>
+                                        <p>{usuario.nome}</p>
+                                    </div>
                             ))}
-                        </ul>
-                    </div>
 
-                    <div className={styles.lista}>
-                        <input
-                            className={styles.pesquisa}
-                            value={busca}
-                            type="text"
-                            onChange={(ev) => setBusca(ev.target.value)}
-                            placeholder="Pesquisar usuário"
-                        />
-                        <div className={styles.arruma2}>
-
-                        {nomesBusca.map(usuario => (
-                                <div className={styles.divDosUsuarios} key={usuario.id}>
-                                    <button className={styles.adicioarAmigo} onClick={() => { adicionarAmigo(usuario.id) }}></button>
-                                    <p>{usuario.nome}</p>
-                                </div>
-                        ))}
-
+                            </div>
+                                
                         </div>
-                            
+
                     </div>
+                    
                 </div>
             </div>
         </ProtectedRoute>

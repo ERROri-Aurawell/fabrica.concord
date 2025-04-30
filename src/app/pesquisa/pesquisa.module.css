@@ -15,8 +15,6 @@
 }
 
 
-
-
 .img{
     width: 60px;
     margin-right: 10px;
@@ -24,15 +22,9 @@
 }
 
 
-
-
-
-.pesfiltro{
-    display: flex;
-    flex-direction: column;
+.pes_filtro{
+    margin-left: 1%;
 }
-
-
 
 .pesquisa2{
     font-size: xx-large;
@@ -41,9 +33,14 @@
     height: 40px;
 }
 
-.texfil{
-    font-size: larger;
+
+.organiza{
+    display: flex;
+    justify-content: baseline;
+    align-items: center;
+    background: #002244;
 }
+
 
 .fil_sele{
     display: flex;
@@ -51,26 +48,24 @@
     width: 400px;
 }
 
-
-.adicioarAmigo{
-    width: 30px;
-    height: 30px;
-    background-color: red;
-
+.texfil{
+    font-size: larger;
 }
 
 
 
 .filtros{
     background-color: #818181;
-    overflow-x: scroll;
-    width: 40%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    width: 25%;
     height: 250px;
 }
 
-.filtro{
-    font-size: 100px;
-    margin-bottom: 15px;
+.fil{
+    list-style-type: none;
 }
 
 .radioLabel{
@@ -80,28 +75,36 @@
     border-radius: 60px;
 }
 
-.fil{
-    list-style-type: none;
-}
-
-.pes_filtro{
-    margin-left: 8%;
+.filtro{
+    font-size: 100px;
+    margin-bottom: 15px;
 }
 
 
 
 
+.borda_lista{
+    background: linear-gradient(45deg, #5EECF5, #002244);
+    width: 50%;
+    height: 380px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    border-radius: 70px;
+    position: relative;
+}
 
 .lista{
-    width: 50%;
+    width: 95%;
     height: 350px;
-    background-color: #5C5C5C;
-    border-radius: 50px;
-    border: 3px solid var(--degrade);
-    margin-top: 20px;
+    background-color: #5C5C5C; /* #373737*/
+    border: 5px solid transparent;
+    border-radius: 60px;
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     padding-left: 20px;
+    position: absolute;
 }
 
 .pesquisa{
@@ -114,7 +117,6 @@
     margin-top: 10px;
     padding-left: 10px;
 }
-
 
 .arruma2{
     display: flex;
@@ -136,7 +138,18 @@
 
 .divDosUsuarios{
     background-color: black;
-    border: 5px solid linear-gradient(to bottom, #5EECF5, #002244) ;
-    height: 100px;
+    border: 5px solid;
+    border-image: linear-gradient(45deg, #5EECF5, #002244) 1;
+    padding-top: 10px;
+    padding-bottom: 10px;
     width: 600px;
+    display: flex;
+    align-items: center;
+}
+
+.adicioarAmigo{
+    width: 30px;
+    height: 30px;
+    background-color: red;
+
 }
