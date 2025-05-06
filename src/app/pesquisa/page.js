@@ -68,6 +68,10 @@ export default function Filtro() {
         </div>
                 <div className={styles.centro}>
                     <div className={styles.pes_filtro}>
+                        
+
+                        <div className={styles.organiza}>
+
                         <input
                             className={styles.pesquisa2}
                             value={busca2}
@@ -75,8 +79,6 @@ export default function Filtro() {
                             onChange={(ev) => setBusca2(ev.target.value)}
                             placeholder="Pesquisar filtro"
                         />
-
-                        <div className={styles.organiza}>
 
                             <div className={styles.filtros}>
                                 <ul className={styles.fil}>
@@ -86,19 +88,25 @@ export default function Filtro() {
                                                 <input
                                                     className={styles.filtro}
                                                     type="checkbox"
+                                                    id="custom-checkbox"
+                                                    style={{display: 'none'}}
                                                     value={f.id}
                                                     checked={filtrosSelecionados.includes(f.id)}
                                                     onChange={() => toggleFiltro(f.id)}
                                                 />
+                                                <label htmlFor="custom-checkbox" style={{ cursor: 'pointer' }}>
+                                                
+                                                </label>
                                                 {f.filtro}
                                             </label>
+                                            
                                         </li>
                                     ))}
                                 </ul>
                             </div>
 
                             <div className={styles.fil_sele}>
-                                <p className={styles.texfil}>
+                                <p className={styles.text_fil}>
                                     Filtros selecionados: <strong>
                                         {filtrosSelecionados.length > 0
                                             ? filtrosSelecionados

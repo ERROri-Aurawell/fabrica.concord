@@ -21,9 +21,34 @@
     margin-top: 10px;
 }
 
+.organiza{
+    display: flex;
+    justify-content: baseline;
+    align-items: top;
+    background: rgb(34, 34, 34);/*#5C5C5C*/
+    width: 70%;
+    border: 6px transparent solid;
+    border-image: linear-gradient(45deg, #5EECF5, #002244);
+    border-image-slice: 1;
+}
+
 
 .pes_filtro{
-    margin-left: 1%;
+    font-size: larger;
+    font-weight: bold;
+}
+.text_fil{
+    font-size: larger;
+    font-weight: bold;
+    color: #5EECF5;
+}
+
+.fil_sele{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-top: 4%;
+    margin-left: 15%;
 }
 
 .pesquisa2{
@@ -31,37 +56,23 @@
     margin-bottom: 80px;
     border-end-end-radius: 100px;
     height: 40px;
+    position: absolute;
+    border: black 4px solid;
 }
-
-
-.organiza{
-    display: flex;
-    justify-content: baseline;
-    align-items: center;
-    background: #002244;
-}
-
-
-.fil_sele{
-    display: flex;
-    flex-direction: column;
-    width: 400px;
-}
-
-.texfil{
-    font-size: larger;
-}
-
 
 
 .filtros{
-    background-color: #818181;
     overflow-y: auto;
     overflow-x: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
     width: 25%;
-    height: 250px;
+    height: 300px;
+    display: flex;
+    justify-content: left;
+    position: relative;
+    margin-top: 4%;
+    margin-bottom: 1%;
 }
 
 .fil{
@@ -69,10 +80,15 @@
 }
 
 .radioLabel{
-    font-size: x-large;
-    background-color: #535353;
-    color: black;
-    border-radius: 60px;
+    font-size: xx-large;
+    background: linear-gradient(#5EECF5, #002244);
+    color: white;
+    display: flex;
+    align-items: center;
+    border: black 3px solid;
+    border-radius: 50px;
+    margin-bottom: 5px;
+    padding: 5px;
 }
 
 .filtro{
@@ -97,7 +113,7 @@
 .lista{
     width: 95%;
     height: 350px;
-    background-color: #5C5C5C; /* #373737*/
+    background-color: rgb(34, 34, 34);
     border: 5px solid transparent;
     border-radius: 60px;
     margin-top: 10px;
@@ -108,7 +124,7 @@
 }
 
 .pesquisa{
-    background-color: lightgray;
+    background-color: white;
     color: black;
     width: 400px;
     height: 50px;
@@ -116,6 +132,7 @@
     font-size: 40px;
     margin-top: 10px;
     padding-left: 10px;
+    border: black 4px solid;
 }
 
 .arruma2{
@@ -151,5 +168,4 @@
     width: 30px;
     height: 30px;
     background-color: red;
-
 }
