@@ -107,7 +107,7 @@ export default function Filtro() {
 
                             <div className={styles.fil_sele}>
                                 <p className={styles.text_fil}>
-                                    Filtros selecionados: <strong>
+                                    Filtros selecionados: <strong className={styles.fil_cor}>
                                         {filtrosSelecionados.length > 0
                                             ? filtrosSelecionados
                                                 .map(id => filtro.find(f => f.id === id)?.filtro || id)

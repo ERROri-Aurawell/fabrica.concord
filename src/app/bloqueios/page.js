@@ -28,48 +28,52 @@ export default function filtro() {
           <Link className={styles.link2} href="./cadastrar"><Image  className={styles.img} alt="img" src="/images/aaaa.png" width={40} height={40}></Image></Link>
                         
         </div>
-        <div className={styles.centro}>
+
+        
+
+          <div className={styles.centro}>
+            <div className={styles.coluna}>
+
+              <input
+                className={styles.pesquisa}
+                value={busca}
+                type="text"
+                onChange={(ev) => setBusca(ev.target.value)}
+                placeholder="Pesquisar contato bloqueado"
+              />
 
 
+              <div className={styles.arruma}>
 
-          <input
-            className={styles.pesquisa}
-            value={busca}
-            type="text"
-            onChange={(ev) => setBusca(ev.target.value)}
-            placeholder="Pesquisar contato bloqueado"
-          />
+                {/* Campo de entrada para o novo nome */}
+                <input
+                  className={styles.busca}
+                  type="text"
+                  value={novoNome}
+                  onChange={(ev) => setNovoNome(ev.target.value)}
+                  placeholder="Digite o contato"
+                />
+                {/* Botão para adicionar nome */}
+                <button className={styles.bloquear} onClick={adicionarNome}>Bloquear</button>
 
+              </div>
 
-          <div className={styles.arruma3}>
+            </div>
+            
 
-            {/* Campo de entrada para o novo nome */}
-            <input
-              className={styles.busca}
-              type="text"
-              value={novoNome}
-              onChange={(ev) => setNovoNome(ev.target.value)}
-              placeholder="Digite o contato"
-            />
-            {/* Botão para adicionar nome */}
-            <button className={styles.adiciona} onClick={adicionarNome}>Bloquear</button>
+            <div className={styles.lista}>
+              <ul className={styles.arruma2}>
+                {nomesBusca.map((nome, i) => (
+                  <li key={i}>
+                    <img className={styles.img} src="/images/human.png" alt={nome} />
+                    {nome}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
           </div>
-
-          <div className={styles.lista}>
-            <ul className={styles.arruma}>
-              {nomesBusca.map((nome, i) => (
-                <li key={i}>
-                  <img className={styles.img} src="/images/human.png" alt={nome} />
-                  {nome}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-
-
-        </div>
+       
       </div>
     </ProtectedRoute>
   );

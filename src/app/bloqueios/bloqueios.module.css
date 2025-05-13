@@ -4,11 +4,13 @@
     justify-content: center;
 }
 
+
 .centro{
     display: flex;
-    flex-direction: column;
+    justify-content: space-around;
     width: 100%;
     align-items: center;
+    margin-top: 5%;
 }
 
 .pesquisa{
@@ -30,42 +32,58 @@
 }
 
 
-.adiciona{
-    background-color: lightgray;
-    color: black;
+.bloquear{
+    background-color: red;
+    color: white;
     width: 120px;
     height: 50px;
     border-radius: 90px;
     font-size: x-large;
+    cursor: pointer;
 }
 
-.arruma3{
+.coluna{
+    display: flex;
+    flex-direction: column;
+}
+
+.arruma{
     display: flex;
     justify-content: center;
     margin-top: 10px;
 }
 
-.arruma{
-    list-style-type: none;
-    font-size: 40px;
-    align-items: center;
-    gap: 10px;
-
-}
-
-.img{
-    width: 40px;
-    margin-right: 10px;
-}
 
 .lista{
-    width: 100%;
+    width: 40%;
     height: 500px;
     background-color: rgb(37, 37, 37);
     border-radius: 50px;
     margin-top: 30px;
     display: flex;
+    justify-content: start;
     overflow: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+.arruma2{
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    list-style-type: none;
+
+    font-size: 50px;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding-left: 10px;
+    border-left: 3px solid #55d2db;
+}
+
+.img{
+    width: 50px;
+    margin-right: 10px;
+}
+

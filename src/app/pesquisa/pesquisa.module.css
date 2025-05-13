@@ -30,6 +30,7 @@
     border: 6px transparent solid;
     border-image: linear-gradient(45deg, #5EECF5, #002244);
     border-image-slice: 1;
+    margin-top: 1%;
 }
 
 
@@ -41,6 +42,10 @@
     font-size: larger;
     font-weight: bold;
     color: #5EECF5;
+}
+
+.fil_cor{
+    color: white;
 }
 
 .fil_sele{
