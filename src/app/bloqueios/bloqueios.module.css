@@ -13,53 +13,97 @@
     margin-top: 5%;
 }
 
-.pesquisa{
-    background-color: lightgray;
-    color: black;
-    width: 500px;
-    height: 40px;
-    border-radius: 30px;
+.coluna{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    height: 500px;
+    margin-top: 30px;
+    gap: 10px;
+}
+
+.comentario{
     font-size: xx-large;
+    font-weight: bold;
+    color: #5EECF5;
+}
+.span{
+    color: red;
+    font-weight: bold;
+}
+
+.pesquisa{
+    background-color: white;
+    color: black;
+    width: 60%;
+    height: 45px;
+    border-radius: 30px;
+    border: black 3px solid;
+    font-size: xx-large;
+    margin-bottom: 5%;
+}
+.pesquisa:hover{
+    background-color: rgb(228, 227, 227);
 }
 
 .busca{
-    background-color: lightgray;
+    background-color: white;
     color: black;
-    width: 300px;
-    height: 43px;
+    width: 100%;
+    height: 45px;
     border-radius: 30px;
-    font-size: x-large;
+    border: black 3px solid;
+    font-size: xx-large;
+    margin-right: 10px;
+}
+.busca:hover{
+    background-color: rgb(228, 227, 227);
 }
 
 
 .bloquear{
     background-color: red;
     color: white;
-    width: 120px;
-    height: 50px;
-    border-radius: 90px;
+    display: flex;
+    align-items: right;
+    width: 15%;
+    height: 100%;
+    border-radius: 100px;
     font-size: x-large;
     cursor: pointer;
+    padding: 0;
+    border: 3px solid black;
 }
-
-.coluna{
-    display: flex;
-    flex-direction: column;
+.bloquear:hover{
+    background-color: rgb(163, 9, 9);
 }
 
 .arruma{
     display: flex;
     justify-content: center;
     margin-top: 10px;
+    align-items: center;
 }
 
 
-.lista{
+.borda{
+    display: flex;
+    justify-content: center;
     width: 40%;
     height: 500px;
-    background-color: rgb(37, 37, 37);
-    border-radius: 50px;
     margin-top: 30px;
+    background: linear-gradient(45deg, #5EECF5, #002244);
+    border-radius: 50px;
+}
+
+.lista{
+    width: 99%;
+    height:490px;
+    background-color: rgb(34, 34, 34);
+    border-radius: 50px;
+    margin-top: 5px;
     display: flex;
     justify-content: start;
     overflow: scroll;
@@ -79,7 +123,7 @@
     gap: 10px;
     width: 100%;
     padding-left: 10px;
-    border-left: 3px solid #55d2db;
+    border-left: 4px solid red;
 }
 
 .img{

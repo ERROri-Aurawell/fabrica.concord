@@ -29,10 +29,12 @@ export default function filtro() {
                         
         </div>
 
-        
 
           <div className={styles.centro}>
+
             <div className={styles.coluna}>
+
+              <p className={styles.comentario}>Pesquise o contato <span className={styles.span}>Bloqueado</span></p>
 
               <input
                 className={styles.pesquisa}
@@ -42,10 +44,12 @@ export default function filtro() {
                 placeholder="Pesquisar contato bloqueado"
               />
 
+              <p className={styles.comentario}> Digite o contado que deseja <span className={styles.span}>BLOQUEAR</span></p>
 
               <div className={styles.arruma}>
 
                 {/* Campo de entrada para o novo nome */}
+                
                 <input
                   className={styles.busca}
                   type="text"
@@ -54,24 +58,25 @@ export default function filtro() {
                   placeholder="Digite o contato"
                 />
                 {/* Botão para adicionar nome */}
-                <button className={styles.bloquear} onClick={adicionarNome}>Bloquear</button>
+                <button className={styles.bloquear} onClick={adicionarNome}><Image alt="bloqueio" src="/images/Block.png" width={60} height={60}/></button>
 
               </div>
 
             </div>
             
-
-            <div className={styles.lista}>
-              <ul className={styles.arruma2}>
-                {nomesBusca.map((nome, i) => (
-                  <li key={i}>
-                    <img className={styles.img} src="/images/human.png" alt={nome} />
-                    {nome}
-                  </li>
-                ))}
-              </ul>
+            <div className={styles.borda}>
+              <div className={styles.lista}>
+                <ul className={styles.arruma2}>
+                  {nomesBusca.map((nome, i) => (
+                    <li key={i}>
+                      <img className={styles.img} src="/images/human.png" alt={nome} />
+                      {nome}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-
+            
           </div>
        
       </div>
