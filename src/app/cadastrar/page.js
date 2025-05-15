@@ -21,12 +21,12 @@ export default function Cadastrar() {
 
         try {
             const resposta = await fetch('https://apiconcord.dev.vilhena.ifro.edu.br/cadastrar/google', requestOptions);
-console.log(resposta)
-
             if (resposta.ok){
                 const data = await resposta.json();
                 Cookies.set('newAccount', data.newAccount, { expires: 1 });
                 Cookies.set('key', data.key)
+
+                console.log(data)
     
                 setAfterLogin(data.newAccount);
             }
@@ -40,8 +40,6 @@ console.log(resposta)
     }
 
     useEffect(() => {
-        console.log(Cookies.get());
-
         const IsLogged = !!Cookies.get('key');
         const newAccount = Cookies.get('newAccount');
         if (afterLogin == null) {
@@ -52,7 +50,7 @@ console.log(resposta)
 
         } else {
             if (newAccount == "true") {
-                router.push('/perfil'); //MUDAR ESSA ROTA QUE TÁ ERRADO PELO AMOR DE dEUS
+                router.push('/login2'); 
                 
             } else{
                 router.push('/contatos');
