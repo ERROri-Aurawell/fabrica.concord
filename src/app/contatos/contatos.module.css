@@ -32,11 +32,12 @@
 }
 
 .pesquisa{
-    background-color: lightgray;
+    background-color: white;
     color: black;
     width: 470px;
     height: 50px;
     border-radius: 30px;
+    border: 3px solid black;
     font-size: 40px;
     margin-left: 10px;
 }
@@ -181,11 +182,12 @@
     }
 
     .pesquisa{
-        background-color: lightgray;
+        background-color: white;
         color: black;
         width: 470px;
         height: 55px;
         border-radius: 30px;
+        border: 3px solid black;
         font-size: 50px;
         margin-left: 10px;
         position: relative;
