@@ -10,7 +10,8 @@ import socket from "./socket";
 
 export default function Chat() {
 
-  const [chatID, setChatID] = useState(JSON.parse(Cookies.get('chatID')))
+  const chatIDCookie = Cookies.get('chatID');
+  const [chatID, setChatID] = useState(chatIDCookie ? JSON.parse(chatIDCookie) : null);
   console.log("ID:", chatID.id, "Nome:", chatID.nome, "Foto:", chatID.foto);
 
   const [nomes, setNomes] = useState([]);

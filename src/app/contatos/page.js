@@ -28,7 +28,7 @@ export default function filtro() {
     }
 
     try {
-      const resposta = await fetch(`http://localhost:9000/chats/${key}`, requestOptions);
+      const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/chats/${key}`, requestOptions);
       if (resposta.ok) {
         const data = await resposta.json();
         console.log(data)
@@ -93,7 +93,7 @@ export default function filtro() {
 
                       <Link className={styles.link_nome} href="./chat" onClick={() => {
                         // Set the cookie as a JSON string
-                        Cookies.set('chatID', JSON.stringify({ id: nome.id, nome: nome.nome, foto: nome.foto }), { expires: 0.05 });
+                        Cookies.set('chatID', JSON.stringify({ id: nome.id, nome: nome.chatNome, foto: nome.foto }), { expires: 0.05 });
 
                         // Get and parse the cookie
                         const chatID = JSON.parse(Cookies.get('chatID'));
