@@ -12,8 +12,6 @@ export default function Chat() {
 
   const chatIDCookie = Cookies.get('chatID');
   const [chatID, setChatID] = useState(chatIDCookie ? JSON.parse(chatIDCookie) : null);
-  console.log("ID:", chatID.id, "Nome:", chatID.nome, "Foto:", chatID.foto);
-
   const [nomes, setNomes] = useState([]);
   const [busca, setBusca] = useState('');
   const [novoNome, setNovoNome] = useState('');
@@ -32,7 +30,7 @@ export default function Chat() {
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      adicionarNome();
+      enviarMensagem();
     }
   };
 
@@ -46,16 +44,27 @@ export default function Chat() {
 
   const [data, setData] = useState({
     "key": `${Cookies.get('key')}`,
-    "nome": ``,
-    "mensagem": "Oitava? mensagem por outro protocolo",
-    "chatID": 1
+    "mensagem": "",
+    "chatID": chatID.id
   })
 
-  //socket.emit("addMessage", data);
+  function enviarMensagem() {
+    data.mensagem = novoNome;
+    if (data.mensagem.trim() !== '') {
+      socket.emit("addMessage", data);
+      console.log("Mensagem enviada:", data);
+      setNovoNome("");
+      setData({
+        ...data,
+        mensagem: ""
+      });
+    }
+  }
 
   const [response, setResponse] = useState("");
 
   useEffect(() => {
+    console.log("ID:", chatID.id, "Nome:", chatID.nome, "Foto:", chatID.foto);
     socket.connect();
 
     socket.on("argumento", (data) => {
@@ -73,7 +82,7 @@ export default function Chat() {
 
   return (
     <ProtectedRoute>
-      <ChatRoute>
+      <ChatRoute className={styles.divsao}>
 
         <div>
           <button onClick={sendMessage}>Enviar mensagem</button>
@@ -103,6 +112,8 @@ export default function Chat() {
                   </ul>
                 </div>
               </div>
+
+
               <div className={styles.arruma3}>
                 <input
                   className={styles.busca}
@@ -112,7 +123,7 @@ export default function Chat() {
                   onKeyPress={handleKeyPress}
                   placeholder="Mensagem"
                 />
-                <button className={styles.adiciona} onClick={adicionarNome}>
+                <button className={styles.adiciona} onClick={enviarMensagem}>
                   <Image className={styles.enviar} src="/images/enviar.png" width={70} height={65} alt="sim" />
                 </button>
               </div>
