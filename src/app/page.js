@@ -28,7 +28,7 @@ const LoginPage = () => {
           Você encontrará um ambiente acolhedor.</p>
     
         <div className="image-container">
-        <Image className={styles.img} alt="img" src="/images/i4.jpg" width={700} height={700} />
+        <Image className={styles.img} alt="img" src="/images/i4.png" width={700} height={700} />
       </div>
   
         <p className={styles.link}>
