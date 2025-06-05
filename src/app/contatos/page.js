@@ -28,7 +28,9 @@ export default function filtro() {
     }
 
     try {
-      const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/chats/${key}`, requestOptions);
+      const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
+      //const rota = "http://localhost:9000";
+      const resposta = await fetch(`${rota}/chats/${key}`, requestOptions);
       if (resposta.ok) {
         const data = await resposta.json();
         console.log(data)
