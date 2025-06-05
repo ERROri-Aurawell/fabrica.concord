@@ -15,18 +15,31 @@ export default function Chat() {
   const [nomes, setNomes] = useState([]);
   const [busca, setBusca] = useState('');
   const [novoNome, setNovoNome] = useState('');
+  const [mensagens, setMensagens] = useState([]);
   const listaRef = useRef(null);
 
-  const nomesBusca = nomes.filter((nome) =>
-    nome.toLowerCase().includes(busca.toLowerCase())
-  );
+  const [data, setData] = useState({})
+
+  //const nomesBusca = nomes;
 
   const adicionarNome = () => {
-    if (novoNome.trim() !== '') {
-      setNomes([...nomes, novoNome]);
-      setNovoNome('');
-    }
+    const data = new Date();
+    const hora = data.getHours();
+    const minutos = data.getMinutes();
+    const segundos = data.getSeconds();
+    setNomes([...nomes, { mensagem: `${hora} : ${minutos} : ${segundos}`, remetente: "LocalTest" }]);
   };
+
+  /*
+    .filter((nome) =>
+      nome.toLowerCase().includes(busca.toLowerCase())
+    )
+  */
+
+  socket.on("historico", async (response) => {
+    console.log("Nova mensagem recebida:", response.response);
+    setNomes(response.response);
+  });
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -34,26 +47,12 @@ export default function Chat() {
     }
   };
 
-
-  useEffect(() => {
-    if (listaRef.current) {
-      listaRef.current.scrollTop = listaRef.current.scrollHeight;
-    }
-  }, [nomes]);
-
-
-  const [data, setData] = useState({
-    "key": `${Cookies.get('key')}`,
-    "mensagem": "",
-    "chatID": chatID.id
-  })
-
   function enviarMensagem() {
-    data.mensagem = novoNome;
+    data.mensagem = mensagens;
     if (data.mensagem.trim() !== '') {
       socket.emit("addMessage", data);
       console.log("Mensagem enviada:", data);
-      setNovoNome("");
+      setMensagens("");
       setData({
         ...data,
         mensagem: ""
@@ -65,11 +64,20 @@ export default function Chat() {
 
   useEffect(() => {
     console.log("ID:", chatID.id, "Nome:", chatID.nome, "Foto:", chatID.foto);
+
+    setData({
+      "key": `${Cookies.get('key')}`,
+      "mensagem": "",
+      "chatID": chatID.id
+    })
+
     socket.connect();
 
     socket.on("argumento", (data) => {
       setResponse(data.message);
     });
+
+    socket.emit("todas", { key: Cookies.get('key'), chatID: chatID.id });
 
     return () => {
       socket.disconnect();
@@ -80,12 +88,20 @@ export default function Chat() {
     socket.emit("teste", { mensagem: "Olá, servidor!" });
   };
 
+  useEffect(() => {
+    console.log("Adicionando nome:", nomes);
+    if (listaRef.current) {
+      listaRef.current.scrollTop = listaRef.current.scrollHeight;
+    }
+  }, [nomes]);
+
   return (
     <ProtectedRoute>
       <ChatRoute className={styles.divsao}>
 
         <div>
           <button onClick={sendMessage}>Enviar mensagem</button>
+          <button onClick={adicionarNome}> Test Button</button>
           <p>Resposta do servidor: {response}</p>
         </div>
 
@@ -103,10 +119,10 @@ export default function Chat() {
                 </div>
                 <div className={styles.flow} ref={listaRef} style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                   <ul className={styles.arruma}>
-                    {nomesBusca.map((nome, i) => (
+                    {nomes.map((nome, i) => (
                       <li className={styles.conversa} key={i}>
-                        {nome}
-                        <img className={styles.img} src="/images/human.png" alt={nome} />
+                        {nome.mensagem} {/* or another property like nome.remetente */}
+                        <img className={styles.img} src="/images/human.png" alt={nome.remetente} />
                       </li>
                     ))}
                   </ul>
@@ -118,8 +134,8 @@ export default function Chat() {
                 <input
                   className={styles.busca}
                   type="text"
-                  value={novoNome}
-                  onChange={(ev) => setNovoNome(ev.target.value)}
+                  value={mensagens}
+                  onChange={(ev) => setMensagens(ev.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Mensagem"
                 />
