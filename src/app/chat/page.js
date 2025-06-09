@@ -41,6 +41,13 @@ export default function Chat() {
     setNomes(response.response);
   });
 
+  socket.on("newMessage", (response) => {
+    console.log("Nova mensagem recebida:", response.response);
+    if (response.response.mensagem != "" && response.response.mensagem != undefined) {
+      setNomes([...nomes, response.response]);
+    }
+  });
+
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       enviarMensagem();
