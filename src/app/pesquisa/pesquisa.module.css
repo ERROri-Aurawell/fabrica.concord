@@ -94,6 +94,7 @@
     border-radius: 50px;
     margin-bottom: 5px;
     padding: 5px;
+    cursor: pointer;
 }
 
 .filtro{
@@ -162,13 +163,15 @@
     border-image: linear-gradient(45deg, #5EECF5, #002244) 1;
     padding-top: 10px;
     padding-bottom: 10px;
+    padding-left: 10px;
     width: 600px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
 .adicioarAmigo{
-    width: 30px;
-    height: 30px;
-    background-color: red;
+    background-color: black;
+    border: 0px;
+    cursor: pointer;
 }

@@ -138,8 +138,8 @@ export default function Filtro() {
 
                             {nomesBusca.map(usuario => (
                                     <div className={styles.divDosUsuarios} key={usuario.id}>
-                                        <button className={styles.adicioarAmigo} onClick={() => { adicionarAmigo(usuario.id) }}></button>
                                         <p>{usuario.nome}</p>
+                                        <button className={styles.adicioarAmigo} onClick={() => { adicionarAmigo(usuario.id) }}> <Image alt="img" src="/images/amizade.png" width={40} height={40}/></button>
                                     </div>
                             ))}
 
