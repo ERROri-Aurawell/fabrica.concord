@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation';
 
 export default function login() {
     const [afterLogin, setAfterLogin] = useState(null);
-    const [SalvarSenha, setSalvarSenha] = useState(null);
     const router = useRouter();
 
     async function search(formData) {
@@ -23,6 +22,8 @@ export default function login() {
     }
 
     async function adicionar(dados) {
+        console.log(dados[3] == "on")
+
         const requestOptions = {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
@@ -38,7 +39,7 @@ export default function login() {
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();
-                if(dados[4] == "ok"){
+                if(dados[4] == "on"){
                     Cookies.set('key', data.key)
                 }else{
                     Cookies.set('key', data.key, { expires: 1 })
