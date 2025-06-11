@@ -22,12 +22,11 @@ export default function Cadastrar() {
         try {
             const resposta = await fetch('https://apiconcord.dev.vilhena.ifro.edu.br/cadastrar/google', requestOptions);
             if (resposta.ok){
+                // mano?
                 const data = await resposta.json();
                 Cookies.set('newAccount', data.newAccount, { expires: 1 });
                 Cookies.set('key', data.key)
 
-                console.log(data)
-    
                 setAfterLogin(data.newAccount);
             }
 
