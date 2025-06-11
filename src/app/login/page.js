@@ -1,10 +1,82 @@
+"use client"
 import styles from "./login.module.css"
 import Image from "next/image"
 import Link from "next/link"
+import Cookies from 'js-cookie';
+import { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
 
 export default function login() {
+    const [afterLogin, setAfterLogin] = useState(null);
+    const [SalvarSenha, setSalvarSenha] = useState(null);
+    const router = useRouter();
 
-    return(
+    async function search(formData) {
+        console.log(formData.get("nome"))
+        console.log(formData.get("email"))
+        console.log(formData.get("senha"))
+        console.log(formData.get("caxinhaDoDiabo"))
+
+        const dados = [formData.get("nome"), formData.get("email"), formData.get("senha"), formData.get("caxinhaDoDiabo")]
+
+        adicionar(dados)
+    }
+
+    async function adicionar(dados) {
+        const requestOptions = {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: {
+                "nome": `${dados[0]}`,
+                "email": `${dados[1]}`,
+                "senha": `${dados[2]}`
+            }
+        }
+
+        try {
+            const resposta = await fetch('https://apiconcord.dev.vilhena.ifro.edu.br/cadastrar', requestOptions);
+            if (resposta.ok) {
+                // mano?
+                const data = await resposta.json();
+                if(dados[4] == "ok"){
+                    Cookies.set('key', data.key)
+                }else{
+                    Cookies.set('key', data.key, { expires: 1 })
+                }
+
+                setAfterLogin(data.newAccount);
+            }
+
+
+        } catch (error) {
+            throw new Error(error);
+        }
+
+
+    }
+
+    Cookies.remove('key');
+
+    useEffect(() => {
+        const IsLogged = !!Cookies.get('key');
+        const newAccount = Cookies.get('newAccount');
+        if (afterLogin == null) {
+
+            if (IsLogged == true) {
+                router.push('/contatos');
+            }
+
+        } else {
+            if (newAccount == "true") {
+                router.push('/login2');
+
+            } else {
+                router.push('/contatos');
+            }
+        }
+
+    }, [afterLogin])
+    return (
         <section className={styles.main}>
 
             <h1>Bem vindo de volta! </h1>
@@ -12,31 +84,32 @@ export default function login() {
 
                 <div className={styles.section}>
                     <div>
-                        <form className={styles.form} action="/submit" method="post">
+                        <form className={styles.form} action={search}>
 
-                        <label className={styles.label}>Email:</label>
-                        <input type="email" id="email" name="email" required />
+                            <label className={styles.label}>Nome:</label>
+                            <input type="nome" id="nome" name="nome" required />
 
-                        <label className={styles.label}>Senha:</label>
-                        <input type="senha" id="senha" name="senha" required />
+                            <label className={styles.label}>Email:</label>
+                            <input type="email" id="email" name="email" required />
 
-                        <p className={styles.checkbox}> <input type="checkbox" className={styles.ls}></input> Lembrar senha?</p>
+                            <label className={styles.label}>Senha:</label>
+                            <input type="senha" id="senha" name="senha" required />
 
-                        <input type="submit" className={styles.botao} value="Entrar"/>
+                            <p className={styles.checkbox}> <input name="caxinhaDoDiabo" type="checkbox" className={styles.ls}></input> Manter conectado?</p>
+                            <input type="submit" className={styles.botao} value="Entrar" />
+
                         </form>
-                        <Link href='./contatos'> ** Use esse link enquanto a API não é implementada **</Link>
 
-                        
                     </div>
-                    
-                    
+
+
                     <div className={styles.cadastrar}>
-                            <p>Não possui uma conta? <Link className={styles.lc} href="./cadastrar">Cadastrar-se</Link></p>
-                        </div>
-                        
+                        <p>Não possui uma conta? <Link className={styles.lc} href="./cadastrar">Cadastrar-se</Link></p>
+                    </div>
+
 
                     <div className={styles.dVoltar}>
-                        <Link className={styles.lv} href="./"><Image className={styles.img} src="/images/return.png" alt="sim" width={30} height={30}/> Voltar</Link>
+                        <Link className={styles.lv} href="./"><Image className={styles.img} src="/images/return.png" alt="sim" width={30} height={30} /> Voltar</Link>
                     </div>
                 </div>
 
