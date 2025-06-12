@@ -1,15 +1,15 @@
 import { io } from 'socket.io-client';
 
-const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
-//const rota = "http://localhost:9000"
+//const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
+const rota = "http://localhost:9000"
 
 const URL = process.env.NODE_ENV === "production" ? undefined : rota;
 export const socket = io(URL, {
   autoConnect: false,
   reconnection: true,               
   reconnectionAttempts: 3,          
-  reconnectionDelay: 2000,          
-  reconnectionDelayMax: 5000       
+  reconnectionDelay: 5000,          
+  reconnectionDelayMax: 10000       
 });
 
 socket.on('connect_error', (err) => {

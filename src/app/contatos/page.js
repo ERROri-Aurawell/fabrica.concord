@@ -11,13 +11,8 @@ export default function filtro() {
 
   const [amigos, setAmigos] = useState([]);
   const [key, setKey] = useState(Cookies.get('key'));
-
-  const [nomes, setNomes] = useState(['Miguel', 'João', 'Grupo1', 'Guilherme', 'Caio', 'Ana', 'Grupo2']);
   const [busca, setBusca] = useState('');
-
   const [links, setLinks] = useState(false);
-
-
   const [amigosOriginal, setAmigosOriginal] = useState([]); // Store the original list
 
   async function adicionar() {

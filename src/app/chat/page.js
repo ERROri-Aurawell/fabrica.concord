@@ -9,18 +9,15 @@ import Cookies from 'js-cookie';
 import socket from "./socket";
 
 export default function Chat() {
-
+  const [conectado, setConectado] = useState(true);
   const chatIDCookie = Cookies.get('chatID');
   const [chatID, setChatID] = useState(chatIDCookie ? JSON.parse(chatIDCookie) : null);
   const [nomes, setNomes] = useState([]);
-  const [busca, setBusca] = useState('');
-  const [novoNome, setNovoNome] = useState('');
   const [mensagens, setMensagens] = useState([]);
   const listaRef = useRef(null);
 
   const [data, setData] = useState({})
 
-  //const nomesBusca = nomes;
 
   const adicionarNome = () => {
     const data = new Date();
@@ -30,11 +27,6 @@ export default function Chat() {
     setNomes([...nomes, { mensagem: `${hora} : ${minutos} : ${segundos}`, remetente: "LocalTest" }]);
   };
 
-  /*
-    .filter((nome) =>
-      nome.toLowerCase().includes(busca.toLowerCase())
-    )
-  */
 
   socket.on("historico", async (response) => {
     console.log("Nova mensagem recebida:", response.response);
@@ -67,9 +59,12 @@ export default function Chat() {
     }
   }
 
-  const [response, setResponse] = useState("");
-
   useEffect(() => {
+    if (!chatID) {
+      console.error("Chat ID não encontrado. Redirecionando para contatos.");
+      window.location.href = "/contatos"; // Redireciona para a página de contatos
+      return;
+    }
     console.log("ID:", chatID.id, "Nome:", chatID.nome, "Foto:", chatID.foto);
 
     setData({
@@ -79,6 +74,7 @@ export default function Chat() {
     })
 
     socket.connect();
+    console.log("Conectado ao servidor Socket.IO");
 
     socket.on("argumento", (data) => {
       setResponse(data.message);
@@ -89,11 +85,8 @@ export default function Chat() {
     return () => {
       socket.disconnect();
     };
+    
   }, []);
-
-  const sendMessage = () => {
-    socket.emit("teste", { mensagem: "Olá, servidor!" });
-  };
 
   useEffect(() => {
     console.log("Adicionando nome:", nomes);
@@ -102,19 +95,38 @@ export default function Chat() {
     }
   }, [nomes]);
 
+  socket.on('disconnect', () => {
+    setConectado(false);
+  });
+
+  socket.on("reconnect", (attemptNumber) => {
+    socket.emit("reconnect", { key: Cookies.get('key'), chatID: chatID.id });
+    console.log("Evento 'reconnect' emitido automaticamente após reconexão", attemptNumber);
+  });
+
   return (
     <ProtectedRoute>
       <ChatRoute className={styles.divsao}>
-
         <div>
-          <button onClick={sendMessage}>Enviar mensagem</button>
-          <button onClick={adicionarNome}> Test Button</button>
-          <p>Resposta do servidor: {response}</p>
+          <button onClick={() => { socket.disconnect(), setConectado(false) }}>Desconectar do servidor</button>
         </div>
 
 
+        {!conectado && (
+          <div>
+            <p> A conexão com o servidor foi perdida. </p>
+            <p> Por favor, reconecte-se para continuar usando o chat. </p>
+            <button
+              onClick={() => {
+                window.location.reload(); // Recarrega a página para tentar reconectar
+              }}
+            >
+              Reconectar
+            </button>
+          </div>
+        )}
         <div>
-          <Link className={styles.link2} href="./cadastrar"><Image className={styles.img} alt="img" src="/images/aaaa.png" width={40} height={40}></Image></Link>
+          <Link className={styles.link2} href="./contatos"><Image className={styles.img} alt="img" src="/images/aaaa.png" width={40} height={40}></Image></Link>
 
         </div>
         <div className={styles.cor}>
@@ -127,9 +139,18 @@ export default function Chat() {
                 <div className={styles.flow} ref={listaRef} style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                   <ul className={styles.arruma}>
                     {nomes.map((nome, i) => (
+
                       <li className={styles.conversa} key={i}>
-                        {nome.mensagem} {/* or another property like nome.remetente */}
-                        <img className={styles.img} src="/images/human.png" alt={nome.remetente} />
+                        <p className={nome.remetente != Cookies.get('key').split("-")[0] ? styles.nomeDoCara : styles.nada}>
+                          {nome.mensagem}
+                        </p>
+
+                        <div className={styles.flowPodcast}>
+                          <img className={styles.img} src={nome.foto == 0 ? "/images/human.png" : `/images/eclipse${nome.foto}.png`} alt={nome.nome} />
+                          <p className={styles.nomeDoUsuario}>
+                            {nome.nome.length > 10 ? nome.nome.slice(0, 10) + "..." : nome.nome}
+                          </p>
+                        </div>
                       </li>
                     ))}
                   </ul>
@@ -137,7 +158,7 @@ export default function Chat() {
               </div>
 
 
-              <div className={styles.arruma3}>
+              {conectado && <div className={styles.arruma3}>
                 <input
                   className={styles.busca}
                   type="text"
@@ -149,7 +170,7 @@ export default function Chat() {
                 <button className={styles.adiciona} onClick={enviarMensagem}>
                   <Image className={styles.enviar} src="/images/enviar.png" width={70} height={65} alt="sim" />
                 </button>
-              </div>
+              </div>}
             </div>
           </div>
         </div>
