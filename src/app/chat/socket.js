@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
 
-//const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
-const rota = "http://localhost:9000"
+const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
+//const rota = "http://localhost:9000"
 
 const URL = process.env.NODE_ENV === "production" ? undefined : rota;
 export const socket = io(URL, {
