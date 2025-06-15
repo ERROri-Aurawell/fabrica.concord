@@ -11,31 +11,23 @@ export default function login() {
     const router = useRouter();
 
     async function search(formData) {
-        console.log(formData.get("nome"))
-        console.log(formData.get("email"))
-        console.log(formData.get("senha"))
-        console.log(formData.get("caxinhaDoDiabo"))
-
-        const dados = [formData.get("nome"), formData.get("email"), formData.get("senha"), formData.get("caxinhaDoDiabo")]
+        const dados = [ formData.get("email"), formData.get("senha"), formData.get("caxinhaDoDiabo")]
 
         adicionar(dados)
     }
 
     async function adicionar(dados) {
-        console.log(dados[3] == "on")
-
         const requestOptions = {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
-            body: {
-                "nome": `${dados[0]}`,
-                "email": `${dados[1]}`,
-                "senha": `${dados[2]}`
-            }
+            body: JSON.stringify({
+                "email": `${dados[0]}`,
+                "senha": `${dados[1]}`
+            })
         }
 
         try {
-            const resposta = await fetch('https://apiconcord.dev.vilhena.ifro.edu.br/cadastrar', requestOptions);
+            const resposta = await fetch('https://apiconcord.dev.vilhena.ifro.edu.br/login', requestOptions);
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();
@@ -55,8 +47,6 @@ export default function login() {
 
 
     }
-
-    Cookies.remove('key');
 
     useEffect(() => {
         const IsLogged = !!Cookies.get('key');
@@ -86,10 +76,6 @@ export default function login() {
                 <div className={styles.section}>
                     <div>
                         <form className={styles.form} action={search}>
-
-                            <label className={styles.label}>Nome:</label>
-                            <input type="nome" id="nome" name="nome" required />
-
                             <label className={styles.label}>Email:</label>
                             <input type="email" id="email" name="email" required />
 
