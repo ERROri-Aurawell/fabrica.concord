@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 export default function filtro() {
 
   const [amigos, setAmigos] = useState([]);
+  const [vazio, setVazio] = useState(false);
   const [key, setKey] = useState(Cookies.get('key'));
   const [busca, setBusca] = useState('');
   const [links, setLinks] = useState(false);
@@ -26,9 +27,20 @@ export default function filtro() {
       const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
       //const rota = "http://localhost:9000";
       const resposta = await fetch(`${rota}/chats/${key}`, requestOptions);
+
+      console.log("Resposta do servidor:", resposta);
+
       if (resposta.ok) {
         const data = await resposta.json();
         console.log(data)
+
+        if(data.response == "Nenhum chat encontrado."){
+          setAmigos([]);
+          setAmigosOriginal([]);
+          setVazio(true);
+          return;
+        }
+
         setAmigos(data);
         setAmigosOriginal(data); // Store the original data
 
@@ -85,6 +97,12 @@ export default function filtro() {
               <div className={styles.SCROLADIABO}>
                 <ul className={styles.arruma}>
 
+                  {vazio &&
+                    <div className={styles.vazio}>
+                      <Image className={styles.imgVazio} src="/images/copo vazio.jpg" alt="vazio" width={500} height={500} />
+                      <p className={styles.pVazio}>Nenhum contato encontrado</p>
+                    </div>
+                  }
                   {amigos.map((nome) => (
                     <li key={nome.id}>
 

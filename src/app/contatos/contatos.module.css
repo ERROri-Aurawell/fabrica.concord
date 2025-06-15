@@ -299,3 +299,34 @@
         height: 200px;
     }
 }
+
+.vazio{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.vazio img{
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.imgVazio{
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+
+.pVazio{
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin-top: 20px;
+}
