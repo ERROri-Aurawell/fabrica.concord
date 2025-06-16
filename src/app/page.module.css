@@ -52,7 +52,7 @@
 }
 .img {
     position: relative;
-    left: 60%;
+    left: 70%;
   }
    
 .description_para{
@@ -97,11 +97,12 @@
 }
 
 .link{
-  position: absolute;
-  top: 68%;
+  position: relative;
+  bottom: 66%;
   color: aliceblue;
   font-size: 22px;
   margin: 15px;
+
 }
 
 .link2 {
@@ -115,4 +116,10 @@
 
 .link3{
   color: rgb(3, 3, 3) ;
+}
+
+.botoes{
+  display: flex;
+  flex-direction: column;
+  Vertical-align: top;
 }

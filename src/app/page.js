@@ -28,12 +28,19 @@ const LoginPage = () => {
           Você encontrará um ambiente acolhedor.</p>
     
         <div className="image-container">
-        <Image className={styles.img} alt="img" src="/images/i4.png" width={700} height={700} />
+        <Image className={styles.img} alt="img" src="/images/i4.png" width={650} height={650} />
       </div>
+
+    <div className={styles.botoes}>
+      <p className={styles.link}>
+          <Link className={styles.link2} href="./login">Entrar</Link>
+        </p>
   
         <p className={styles.link}>
           Ainda não tem conta? <Link className={styles.link2} href="./cadastrar">Cadastre-se</Link>
         </p>
+    </div>
+
       </main>
     </div>
   );
