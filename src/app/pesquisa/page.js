@@ -116,6 +116,16 @@ export default function Filtro() {
                                     </strong>
                                 </p>
                             </div>
+                            <div className={styles.fil_sele}>
+                                <select onChange={(e) => console.log(e.target.value)}>
+                                <option value="todos">Todos</option>
+                                <option value="emAndamento">Em andamento</option>
+                                <option value="naoIniciados">Não iniciados</option>
+                                <option value="encerrados">Encerrados</option>
+                                <option value="favoritos">Favoritos</option>
+                                <option value="removido">Removido da visualização</option>
+                            </select>
+                            </div>
 
                         </div>
                         
