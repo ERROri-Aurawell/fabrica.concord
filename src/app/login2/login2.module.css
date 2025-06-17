@@ -470,3 +470,40 @@ input:checked + .sliderNT:before {
     margin-left: 60%;
   }
    
+
+  .filtros{
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    width: 25%;
+    height: 300px;
+    display: flex;
+    justify-content: left;
+    position: relative;
+    margin-top: 4%;
+    margin-bottom: 1%;
+    
+    color: #0056b3;
+}
+
+.fil{
+    list-style-type: none;
+}
+
+.filtro{
+    font-size: 100px;
+    margin-bottom: 15px;
+}
+
+.fil_cor{
+    color: white;
+}
+
+.fil_sele{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-top: 4%;
+    margin-left: 15%;
+}

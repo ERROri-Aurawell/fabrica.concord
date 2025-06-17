@@ -13,6 +13,11 @@ export default function Config() {
     const [groupSounds, setGroupSounds] = useState(true);
     const [groupVibration, setGroupVibration] = useState(true);
 
+    async function search(formData) {
+        const dados = [ formData.get("nome"), formData.get("descrição")]
+        console.log(dados)
+    }
+
     const avatars = [
         "/images/eclipse1.png",
         "/images/eclipse2.png",
@@ -126,7 +131,7 @@ export default function Config() {
                                 <section className={styles.mainCN}>
                                     <div className={styles.dFundoCN}>
                                         <section className={styles.sectionCN}>
-                                            <form className={styles.formCN} action="/submit" method="post">
+                                            <form className={styles.formCN} action={search}>
 
                                                 <h1 className={styles.h1CN}>Atualizar Perfil</h1>
                                                 <label className={styles.labelCN}>Nome:</label>
@@ -135,12 +140,6 @@ export default function Config() {
 
                                                 <label className={styles.labelCN}>Descrição:</label>
                                                 <input className={styles.input} type="descrição" id="descrição" name="descrição" required />
-                                                <label className={styles.labelCN}>Email:</label>
-                                                <input className={styles.input} type="email" id="email" name="email" required />
-
-                                                <label className={styles.labelCN} htmlFor="celular">Celular:</label>
-                                                <input className={styles.input} type="celular" id="celular" name="celular" required />
-
                                                 <input  type="submit" className={styles.botaoCN} value="Atualizar seu perfil" />
                                             </form>
                                         </section>

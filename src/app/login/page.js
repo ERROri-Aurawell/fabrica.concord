@@ -70,7 +70,7 @@ export default function login() {
     return (
         <section className={styles.main}>
 
-            <h1>Bem vindo de volta! </h1>
+            <h1>Bem vindo de volta!</h1>
             <div className={styles.dFundo}>
 
                 <div className={styles.section}>
