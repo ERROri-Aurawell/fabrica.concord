@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import socket from "./socket";
 
 export default function Chat() {
+  const [apaputaquepariu, setVTMNC] = useState(false)
   const [conectado, setConectado] = useState(true);
   const chatIDCookie = Cookies.get('chatID');
   const [chatID, setChatID] = useState(chatIDCookie ? JSON.parse(chatIDCookie) : null);
@@ -85,7 +86,7 @@ export default function Chat() {
     return () => {
       socket.disconnect();
     };
-    
+
   }, []);
 
   useEffect(() => {
@@ -105,11 +106,12 @@ export default function Chat() {
   });
 
   return (
+    
     <ProtectedRoute>
       <ChatRoute className={styles.divsao}>
-        <div>
-          <button onClick={() => { socket.disconnect(), setConectado(false) }}>Desconectar do servidor</button>
-        </div>
+        
+        
+        
 
 
         {!conectado && (
@@ -123,6 +125,7 @@ export default function Chat() {
             >
               Reconectar
             </button>
+            <p> a</p>
           </div>
         )}
         <div>
@@ -178,3 +181,9 @@ export default function Chat() {
     </ProtectedRoute>
   );
 }
+
+/*
+<div>
+  <button onClick={() => { socket.disconnect(), setConectado(false) }}>Desconectar do servidor</button>
+</div>
+*/
