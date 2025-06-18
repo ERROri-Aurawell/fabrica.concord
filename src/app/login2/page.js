@@ -40,51 +40,7 @@ const login2 = () => {
         <div className={styles.divSu}>
             <div className={styles.organiza}>
 
-<input
-    className={styles.pesquisa2}
-    value={busca2}
-    type="text"
-    onChange={(ev) => setBusca2(ev.target.value)}
-    placeholder="Pesquisar filtro"
-/>
-
-    <div className={styles.filtros}>
-        <ul className={styles.fil}>
-            {filtroBusca.map((f, index) => (
-                <li key={index} className={styles.itemFiltro}>
-                    <label className={styles.radioLabel}>
-                        <input
-                            className={styles.filtro}
-                            type="checkbox"
-                            id="custom-checkbox"
-                            style={{display: 'none'}}
-                            value={f.id}
-                            checked={filtrosSelecionados.includes(f.id)}
-                            onChange={() => toggleFiltro(f.id)}
-                        />
-                        <label htmlFor="custom-checkbox" style={{ cursor: 'pointer' }}>
-                        
-                        </label>
-                        {f.filtro}
-                    </label>
-                    
-                </li>
-            ))}
-        </ul>
-    </div>
-
-    <div className={styles.fil_sele}>
-        <p className={styles.text_fil}>
-            Filtros selecionados: <strong className={styles.fil_cor}>
-                {filtrosSelecionados.length > 0
-                    ? filtrosSelecionados
-                        .map(id => filtro.find(f => f.id === id)?.filtro || id)
-                        .join(", ")
-                    : "Nenhum"}
-            </strong>
-        </p>
-    </div>
-
+ 
 </div>
             <div className={styles.miniperfil}>
 
@@ -102,7 +58,17 @@ const login2 = () => {
 
 
                                 <label className={styles.labelCN} htmlFor="celular">Filtros:</label>
-                                <input className={styles.input} type="celular" id="celular" name="celular" required />
+                                <div className={styles.fil_sele}>
+                                    <select onChange={(e) => console.log(e.target.value)}>
+                                    <option value="todos">Todos</option>
+                                    <option value="emAndamento">Em andamento</option>
+                                    <option value="naoIniciados">Não iniciados</option>
+                                    <option value="encerrados">Encerrados</option>
+                                    <option value="favoritos">Favoritos</option>
+                                    <option value="removido">Removido da visualização</option>
+                                    </select>
+        </div>
+ 
 
                                 <input type="submit" className={styles.botaoCN} value="Atualizar seu perfil" />
                             </form>
