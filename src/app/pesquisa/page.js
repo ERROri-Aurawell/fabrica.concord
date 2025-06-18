@@ -41,7 +41,8 @@ export default function Filtro() {
             body: JSON.stringify({
                 "id": id,
                 "tipo": 2,
-                "conteudo": `{ \"key\" : ${splitKEY(key)[0]}}`
+                "conteudo": `{ \"key\" : ${splitKEY(key)[0]},
+                              \"nome\" : }`
             })
         }
         const conteudo = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/notific/${key}`, requestOptions)

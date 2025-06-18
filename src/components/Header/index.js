@@ -20,9 +20,6 @@ export default function Header() {
                 "conteudo": conteudo
             })
         }
-
-        
-
         try {
             const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/addfriend/${isLoggedIn}`, requestOptions);
             if (resposta.ok) {
@@ -138,7 +135,7 @@ export default function Header() {
                                 {mensagem.tipo == 2 && 
                                 <div>
 
-
+                                    <p></p>
                                 
                                 </div>}
                             </div>
