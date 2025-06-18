@@ -96,7 +96,7 @@ export default function login() {
 
 
                     <div className={styles.dVoltar}>
-                        <Link className={styles.lv} href="./"><Image className={styles.img} src="/images/return.png" alt="sim" width={30} height={30} /> Voltar</Link>
+                        <Link className={styles.lv} href="./contatos"><Image className={styles.img} src="/images/return.png" alt="sim" width={30} height={30} /> Voltar</Link>
                     </div>
                 </div>
 

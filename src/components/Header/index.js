@@ -5,25 +5,94 @@ import { useState, useEffect } from 'react';
 import Image from "next/image"
 import Cookies from "js-cookie";
 export default function Header() {
-
     const [menuOpen, setMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [notific, setNotific] = useState(false)
+    const [ntfcs, setNtfcs] = useState([])
+    const [userLoggedIn, setUserLoggedIn] = useState(null);
+    const [isLoggedIn, setisLogged] = useState(Cookies.get('key'))
+
+    async function addFriend(conteudo){
+        const requestOptions = {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                "conteudo": conteudo
+            })
+        }
+
+        
+
+        try {
+            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/addfriend/${isLoggedIn}`, requestOptions);
+            if (resposta.ok) {
+                // mano?
+                console.log("adicionado!")
+            }
+
+
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    async function adicionar() {
+        try {
+            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/notific/${isLoggedIn}`);
+            if (resposta.ok) {
+                // mano?
+                const data = await resposta.json();
+                setNtfcs(data)
+                console.log(data)
+
+
+            }
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    function refresh() {
+        adicionar();
+    }
+
+    function splitKEY(key) {
+        const [id, ...rest] = key.split("-");
+        const after = rest.join("-");
+        const [email, ...rest2] = after.split("-");
+        const senha = rest2.join('-');
+
+        return [id, email, senha];
+    }
+
+    function validateEmail(email) {
+        var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+
+
 
     const openMenu = () => setMenuOpen(true);
     const closeMenu = () => setMenuOpen(false);
 
-    const [notific, setNotific] = useState(false)
-
-    const [userLoggedIn, setUserLoggedIn] = useState(null); 
-
     useEffect(() => {
-        const isLoggedIn = Cookies.get('key'); 
-  
-        setUserLoggedIn(!!isLoggedIn); 
+        setUserLoggedIn(!!isLoggedIn);
         if (userLoggedIn === false) {
-          setNotific(false)
-        }else{
-          setNotific(true)
+            setNotific(false)
+        } else {
+            try {
+                const [a, b, c] = splitKEY(isLoggedIn)
+
+                if (!Number.isNaN(a), validateEmail(b), c.length > 8) {
+                    setNotific(true)
+                    console.log(!Number.isNaN(a), validateEmail(b), c.length > 8)
+                    adicionar();
+                }
+            } catch {
+                Cookies.remove('key');
+                throw new Error("Tem algum erro na Key");
+
+            }
         }
 
         const handleResize = () => {
@@ -36,27 +105,54 @@ export default function Header() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    useEffect(() =>{
+
+
+
+    }, [notific])
+
     return (
         <header className={`${styles.header} ${menuOpen ? styles.menuOpen : ''}`}>
             <div className={styles.arrumaAi}>
-            <div >
+                <div >
 
-                {<Image className={styles.img} src='/images/logo.png' alt="Concord" width={40} height={40} />}
+                    {<Image className={styles.img} src='/images/logo.png' alt="Concord" width={40} height={40} />}
 
-            </div>
-            <div className={styles.dConcord}>
-                <h1 className={styles.h1}>Con<span className={styles.span}>cord</span></h1>
-                <p className={styles.paragráfo}>Chat online</p>
-            </div>
+                </div>
+                <div className={styles.dConcord}>
+                    <h1 className={styles.h1}>Con<span className={styles.span}>cord</span></h1>
+                    <p className={styles.paragráfo}>Chat online</p>
+                </div>
             </div>
             {notific &&
-                <div>
-                    <p>Usuário logado</p>
-                </div>
+                <section>
+                    <div>
+                        <p>Usuário logado</p>
+                        <button onClick={refresh}><Image src="/images/refresh.256x256.png" width={50} height={50} alt="Refresh"></Image> </button>
+                    </div>
+
+                    <div>
+                        {ntfcs.map((mensagem, id) =>(
+                            <div key={id}> 
+                                {mensagem.tipo == 1 && <p>{mensagem.conteudo}</p>}
+                                {mensagem.tipo == 2 && 
+                                <div>
+
+
+                                
+                                </div>}
+                            </div>
+                        ))}
+                    </div>
+
+                </section>
             }
-
-
 
         </header>
     );
 }
+
+
+//Tipos: 1-MSG; 2-Friend request; 3-Chat request; 4-Server MSG;
+// ID : Quem recebe
+// conteudo : O que vai ser enviado 
