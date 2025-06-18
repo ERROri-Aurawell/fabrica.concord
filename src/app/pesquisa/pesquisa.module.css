@@ -155,6 +155,7 @@
     overflow-x: hidden;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    position: relative;
 }
 
 .divDosUsuarios{
@@ -168,6 +169,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 .adicioarAmigo{
