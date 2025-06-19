@@ -1,7 +1,7 @@
 'use client'
 import styles from "./Header.module.css"
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import Image from "next/image"
 import Cookies from "js-cookie";
 export default function Header() {
@@ -9,10 +9,10 @@ export default function Header() {
     const [isMobile, setIsMobile] = useState(false);
     const [notific, setNotific] = useState(false)
     const [ntfcs, setNtfcs] = useState([])
-    const [userLoggedIn, setUserLoggedIn] = useState(null);
-    const [isLoggedIn, setisLogged] = useState(Cookies.get('key'))
+    const [userData, setUserData] = useState(Cookies.get("userData"));
+    const [isLoggedIn, setIsLogged] = useState(Cookies.get("key"))
 
-    async function addFriend(conteudo){
+    async function addFriend(conteudo) {
         const requestOptions = {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
@@ -24,7 +24,27 @@ export default function Header() {
             const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/addfriend/${isLoggedIn}`, requestOptions);
             if (resposta.ok) {
                 // mano?
-                console.log("adicionado!")
+
+            }
+
+
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    async function getData() {
+        const requestOptions = {
+            method: 'GET',
+            headers: { "Content-Type": "application/json" },
+        }
+        try {
+            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/user/${splitKEY(isLoggedIn)[0]}`, requestOptions);
+            if (resposta.ok) {
+                // mano?
+                const data = await resposta.json();
+                Cookies.set("userData", JSON.stringify(data))
+
             }
 
 
@@ -39,8 +59,9 @@ export default function Header() {
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();
-                setNtfcs(data)
                 console.log(data)
+                setNtfcs(data)
+
 
 
             }
@@ -73,21 +94,26 @@ export default function Header() {
     const closeMenu = () => setMenuOpen(false);
 
     useEffect(() => {
-        setUserLoggedIn(!!isLoggedIn);
-        if (userLoggedIn === false) {
+        if (isLoggedIn == undefined) {
             setNotific(false)
         } else {
             try {
+                if (userData == undefined && isLoggedIn != undefined) {
+                    const func = async () => { await getData() };
+                    func();
+                }
+
+
                 const [a, b, c] = splitKEY(isLoggedIn)
 
-                if (!Number.isNaN(a), validateEmail(b), c.length > 8) {
+                if (!Number.isNaN(a), validateEmail(b), c.length > 1) {
                     setNotific(true)
-                    console.log(!Number.isNaN(a), validateEmail(b), c.length > 8)
+
                     adicionar();
                 }
             } catch {
                 Cookies.remove('key');
-                throw new Error("Tem algum erro na Key");
+                //throw new Error("Tem algum erro na Key");
 
             }
         }
@@ -102,7 +128,7 @@ export default function Header() {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    useEffect(() =>{
+    useEffect(() => {
 
 
 
@@ -122,22 +148,37 @@ export default function Header() {
                 </div>
             </div>
             {notific &&
-                <section>
+                <section className={styles.menu}> 
                     <div>
-                        <p>Usuário logado</p>
-                        <button onClick={refresh}><Image src="/images/refresh.256x256.png" width={50} height={50} alt="Refresh"></Image> </button>
+                        <button onClick={refresh}><Image src="/images/refresh.256x256.png" width={25} height={25} alt="Refresh"></Image> </button>
                     </div>
 
                     <div>
-                        {ntfcs.map((mensagem, id) =>(
-                            <div key={id}> 
+                        {ntfcs.map((mensagem, id) => (
+                            <div key={id}>
                                 {mensagem.tipo == 1 && <p>{mensagem.conteudo}</p>}
-                                {mensagem.tipo == 2 && 
-                                <div>
-
-                                    <p></p>
-                                
-                                </div>}
+                                {mensagem.tipo == 2 &&
+                                    <div className={styles.notificacaoAmigo}>
+                                        {(() => {
+                                            let conteudoObj;
+                                            try {
+                                                conteudoObj = JSON.parse(mensagem.conteudo);
+                                                console.log(conteudoObj);
+                                            } catch {
+                                                conteudoObj = { erro: "Conteúdo inválido" };
+                                            }
+                                            return (
+                                                <div>
+                                                    <p>Nome: {conteudoObj.nome}</p>
+                                                    <p>Foto: {conteudoObj.foto}</p>
+                                                    <p>Descrição: {conteudoObj.descricao}</p>
+                                                    {/* Adicione outros campos conforme necessário */}
+                                                    <button onClick={() => addFriend(mensagem.conteudo)}>Adicionar Amigo</button>
+                                                </div>
+                                            );
+                                        })()}
+                                    </div>
+                                }
                             </div>
                         ))}
                     </div>

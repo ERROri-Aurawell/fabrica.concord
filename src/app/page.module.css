@@ -1,10 +1,12 @@
 @media (max-width: 768px) {
   .welcome-container {
-    flex-direction: column; /* Muda para coluna em telas pequenas */
+    flex-direction: column;
+    /* Muda para coluna em telas pequenas */
     text-align: center;
   }
 
-  .text-container, .image-container {
+  .text-container,
+  .image-container {
     width: 100%;
   }
 }
@@ -15,6 +17,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .welcome-container {
   display: flex;
   align-items: center;
@@ -28,7 +31,7 @@
 .text-container {
   max-width: 50%;
   text-align: left;
-  
+
 }
 
 .h1 {
@@ -39,36 +42,51 @@
 .p {
   font-size: 1.2rem;
   line-height: 1.5;
-  
+
 }
 
-.image-container  {
-  max-width: 100%;
+.image-container {
+  width: 50%;
   height: auto;
   margin: 150px;
 
 
 
 }
+
 .img {
-    position: relative;
-    left: 70%;
-  }
-   
-.description_para{
-  font-size: 30px;
-  position: absolute;
-  top: 54%;
-  margin: 15px;
-} 
-.description{
-  font-size: 30px;
-  position: absolute;
-  top: 50%;
-  margin: 15px;
+ 
 }
 
-.button{
+.VAIPROLADO{
+  display: flex;
+  flex-direction: row;
+  max-height: 20%;
+}
+
+.main_content {
+  gap: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.description_para {
+  margin-left: 8%;
+  width: 100%;
+  font-size: 30px;
+  top: 54%;
+  ;
+}
+
+.description {
+  margin-bottom: 20px;
+  margin-left: 8%;
+  width: 100%;
+  font-size: 30px;
+  top: 50%;
+}
+
+.button {
   margin-top: 40px;
   display: inline-block;
   padding: 0.5rem 2.8rem;
@@ -80,25 +98,21 @@
   border: 2px solid #57b1cc;
   transition: 0.3s ease;
   cursor: pointer;
-  position: absolute;
   top: 58%;
 }
-  
 
-.button:hover{
+
+.button:hover {
   background-color: rgb(25, 118, 124);
 }
 
 .title{
-  position: absolute;
   top: 36%;
   font-size: 70px;
   margin: 15px;
 }
 
-.link{
-  position: relative;
-  bottom: 66%;
+.link {
   color: aliceblue;
   font-size: 22px;
   margin: 15px;
@@ -110,15 +124,16 @@
 }
 
 
-.link2:hover{
+.link2:hover {
   color: rgb(25, 118, 124);
 }
 
-.link3{
-  color: rgb(3, 3, 3) ;
+.link3 {
+  color: rgb(3, 3, 3);
 }
 
-.botoes{
+.botoes {
+  margin-top: 20% ;
   display: flex;
   flex-direction: column;
   Vertical-align: top;

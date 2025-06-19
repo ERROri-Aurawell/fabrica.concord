@@ -256,3 +256,18 @@ font-size: 50px;
   display: flex;
   flex-direction: row;
 }
+
+.notificacaoAmigo{
+  width: auto;
+  height: 90px;
+}
+
+.menu{
+  display: flex;
+  flex-direction: row;
+  justify-content: right ;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+  gap: 20px;
+}

@@ -12,6 +12,7 @@ export default function Filtro() {
     const [busca2, setBusca2] = useState('');
     const [filtrosSelecionados, setFiltrosSelecionados] = useState([]);
     const [usuarios, setUsuarios] = useState([]);
+    const [dados, setDados] = useState(Cookies.get('userData'));
 
     const getUsuarios = async () => {
         const conteudo = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/buscar/${Cookies.get('key')}`);
@@ -22,7 +23,6 @@ export default function Filtro() {
         setFiltro(data.filtros);
         setUsuarios(data.usuarios);
 
-        console.log(data.filtros)
     };
 
     function splitKEY(key) {
@@ -35,14 +35,18 @@ export default function Filtro() {
     }
 
     const adicionar = async (id, key) => {
+        const data = JSON.parse(dados);
+        
+
+        console.log(`{ \"key\" : ${splitKEY(key)[0]}, \"nome\" : ${data.nome}, \"foto\" : ${data.foto}, \"descricao\" : ${data.descricao} }`);
+
         const requestOptions = {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 "id": id,
                 "tipo": 2,
-                "conteudo": `{ \"key\" : ${splitKEY(key)[0]},
-                              \"nome\" : }`
+                "conteudo": `{ \"key\" : ${splitKEY(key)[0]}, \"nome\" : \"${data.nome}\", \"foto\" : ${data.foto}, \"descricao\" : \"${data.descricao}\" }`
             })
         }
         const conteudo = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/notific/${key}`, requestOptions)
@@ -73,8 +77,6 @@ export default function Filtro() {
     function adicionarAmigo(id) {
         console.log(`vou tentar adicionar o caba com id ${id}`)
         const key = Cookies.get('key')
-        console.log(splitKEY(key)[0])
-
         adicionar(id, key);
     }
 
@@ -82,7 +84,7 @@ export default function Filtro() {
         <ProtectedRoute>
             <div className={styles.cor}>
                 <div>
-                    <Link className={styles.link2} href="./cadastrar"><Image className={styles.img} alt="img" src="/images/aaaa.png" width={40} height={40}></Image></Link>
+                    <Link className={styles.link2} href="./contatos"><Image className={styles.img} alt="img" src="/images/aaaa.png" width={40} height={40}></Image></Link>
 
                 </div>
                 <div className={styles.centro}>
@@ -135,17 +137,6 @@ export default function Filtro() {
                                     </strong>
                                 </p>
                             </div>
-                            <div className={styles.fil_sele}>
-                                <select onChange={(e) => console.log(e.target.value)}>
-                                    <option value="todos">Todos</option>
-                                    <option value="emAndamento">Em andamento</option>
-                                    <option value="naoIniciados">Não iniciados</option>
-                                    <option value="encerrados">Encerrados</option>
-                                    <option value="favoritos">Favoritos</option>
-                                    <option value="removido">Removido da visualização</option>
-                                </select>
-                            </div>
-
                         </div>
 
 
