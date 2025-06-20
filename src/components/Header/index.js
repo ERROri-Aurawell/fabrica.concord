@@ -148,7 +148,7 @@ export default function Header() {
             {notific &&
                 <section className={styles.menu}>
                     <div>
-                        <button onClick={refresh}><Image src="/images/refresh.256x256.png" width={25} height={25} alt="Refresh"></Image> </button>
+                        <button className={styles.refreshNotfc} onClick={refresh}><Image src="/images/refresh.256x256.png" width={25} height={25} alt="Refresh"></Image> </button>
                     </div>
 
                     <div className={styles.menuLinks}>
@@ -168,12 +168,17 @@ export default function Header() {
                                             }
                                             return (
                                                 <div>
-                                                    <p>Nome: {conteudoObj.nome}</p>
-                                                    <p>Foto: {conteudoObj.foto}</p>
+                                                    <div className={styles.imgContainer}>
+                                                    <p>{conteudoObj.nome}</p>
+                                                    <img className={styles.img}  src={conteudoObj.foto == 0 ? "/images/human.png" : `/images/eclipse${conteudoObj.foto}.png`} alt={conteudoObj.nome} />
+                                                    </div>
                                                     <p>Descrição: {conteudoObj.descricao}</p>
+                                                    <p>Você recebeu uma solicitação de amizade</p>
                                                     {/* Adicione outros campos conforme necessário */}
-                                                    <button onClick={() => addFriend(mensagem.conteudo)}>Adicionar Amigo</button>
-                                                    <button onClick={() => { deletarNotificacao(mensagem.id) }}>Ignorar</button>
+                                                    <div className={styles.buttonsContainer}>
+                                                    <button className={styles.botaoAceitar} onClick={() => addFriend(mensagem.conteudo)}>Adicionar Amigo</button>
+                                                    <button className={styles.botaoIgnorar} onClick={() => { deletarNotificacao(mensagem.id) }}>Ignorar</button>
+                                                    </div>
                                                 </div>
                                             );
                                         })()}

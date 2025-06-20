@@ -13,6 +13,7 @@ export default function Filtro() {
     const [filtrosSelecionados, setFiltrosSelecionados] = useState([]);
     const [usuarios, setUsuarios] = useState([]);
     const [dados, setDados] = useState(Cookies.get('userData'));
+    const [pedidosFreq, setPedidosFreq] = useState([]);
 
     const getUsuarios = async () => {
         const conteudo = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/buscar/${Cookies.get('key')}`);
@@ -75,7 +76,17 @@ export default function Filtro() {
 
 
     function adicionarAmigo(id) {
+        //se o id existe dentro dos pedidosFreq, não faz nada
+        if (pedidosFreq.includes(id)) { 
+            console.log(`O usuário com id ${id} já está na lista de pedidos frequentes.`);
+            alert("Você já enviou um pedido de amizade para esse usuário.");
+            return;
+        }
+        
+
         console.log(`vou tentar adicionar o caba com id ${id}`)
+        setPedidosFreq(prev => [...prev, id]);
+        console.log(`adicionando o caba com id ${id} na lista de pedidos frequentes.`)
         const key = Cookies.get('key')
         adicionar(id, key);
     }
@@ -154,16 +165,22 @@ export default function Filtro() {
                                 onChange={(ev) => setBusca(ev.target.value)}
                                 placeholder="Pesquisar usuário"
                             />
-                            <div className={styles.arruma2}>
-
-                                {nomesBusca.map(usuario => (
-                                    <div className={styles.divDosUsuarios} key={usuario.id}>
-                                        <p>{usuario.nome}</p>
-                                        <button className={styles.adicioarAmigo} onClick={() => { adicionarAmigo(usuario.id) }}> <Image alt="img" src="/images/amizade.png" width={40} height={40} /></button>
-                                    </div>
-                                ))}
-
-                            </div>
+<div className={styles.arruma2}>
+    {nomesBusca.map(usuario => (
+        <div className={styles.divDosUsuarios} key={usuario.id}>
+            <p>{usuario.nome}</p>
+            {/* se o usuario estiver na lista de pedidos frequentes, esse botão aqui some */}
+            {!pedidosFreq.includes(usuario.id) && (
+                <button
+                    className={styles.adicioarAmigo}
+                    onClick={() => { adicionarAmigo(usuario.id) }}
+                >
+                    <Image alt="img" src="/images/amizade.png" width={40} height={40} />
+                </button>
+            )}
+        </div>
+    ))}
+</div>
 
                         </div>
 

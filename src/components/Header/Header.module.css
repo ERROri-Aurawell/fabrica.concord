@@ -270,6 +270,8 @@
 .notificacaoAmigo {
   width: auto;
   height: 90px;
+  border-bottom: 1px solid #ccc;
+
 }
 
 .menu {
@@ -309,4 +311,54 @@
 
 .menuLinks::-webkit-scrollbar-track {
   background: linear-gradient(to top , #5EECF5, #002244);
+}
+
+.img{
+  height: 25px;
+  width: 25px;
+  display: flex;
+}
+
+.imgContainer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap : 10px;
+}
+
+.buttonsContainer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.botaoAceitar{
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.botaoIgnorar{
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.botaoAceitar:hover,
+.botaoIgnorar:hover {
+  opacity: 0.8;
+}
+
+.refreshNotfc{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
 }
