@@ -33,18 +33,19 @@ export default function Header() {
         }
     }
 
-    async function getData() {
+    async function deletarNotificacao(id) {
         const requestOptions = {
-            method: 'GET',
+            method: 'DELETE',
             headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                "id": id
+            })
         }
         try {
-            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/user/${splitKEY(isLoggedIn)[0]}`, requestOptions);
+            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/notific/${isLoggedIn}`, requestOptions);
             if (resposta.ok) {
+                refresh();
                 // mano?
-                const data = await resposta.json();
-                Cookies.set("userData", JSON.stringify(data))
-
             }
 
 
@@ -52,6 +53,7 @@ export default function Header() {
             throw new Error(error);
         }
     }
+
 
     async function adicionar() {
         try {
@@ -98,11 +100,6 @@ export default function Header() {
             setNotific(false)
         } else {
             try {
-                if (userData == undefined && isLoggedIn != undefined) {
-                    const func = async () => { await getData() };
-                    func();
-                }
-
 
                 const [a, b, c] = splitKEY(isLoggedIn)
 
@@ -112,7 +109,8 @@ export default function Header() {
                     adicionar();
                 }
             } catch {
-                Cookies.remove('key');
+                window.location.reload();
+                //Cookies.remove('key');
                 //throw new Error("Tem algum erro na Key");
 
             }
@@ -148,14 +146,14 @@ export default function Header() {
                 </div>
             </div>
             {notific &&
-                <section className={styles.menu}> 
+                <section className={styles.menu}>
                     <div>
                         <button onClick={refresh}><Image src="/images/refresh.256x256.png" width={25} height={25} alt="Refresh"></Image> </button>
                     </div>
 
-                    <div>
+                    <div className={styles.menuLinks}>
                         {ntfcs.map((mensagem, id) => (
-                            <div key={id}>
+                            <div key={id} className={styles.notificacao}>
                                 {mensagem.tipo == 1 && <p>{mensagem.conteudo}</p>}
                                 {mensagem.tipo == 2 &&
                                     <div className={styles.notificacaoAmigo}>
@@ -164,6 +162,7 @@ export default function Header() {
                                             try {
                                                 conteudoObj = JSON.parse(mensagem.conteudo);
                                                 console.log(conteudoObj);
+                                                console.log(mensagem);
                                             } catch {
                                                 conteudoObj = { erro: "Conteúdo inválido" };
                                             }
@@ -174,11 +173,16 @@ export default function Header() {
                                                     <p>Descrição: {conteudoObj.descricao}</p>
                                                     {/* Adicione outros campos conforme necessário */}
                                                     <button onClick={() => addFriend(mensagem.conteudo)}>Adicionar Amigo</button>
+                                                    <button onClick={() => { deletarNotificacao(mensagem.id) }}>Ignorar</button>
                                                 </div>
                                             );
                                         })()}
                                     </div>
-                                }
+                                }   
+                                {mensagem.tipo == 3 && <p>Você recebeu uma solicitação de chat</p>}
+                                {mensagem.tipo == 4 && <p>{mensagem.conteudo}</p>}
+
+
                             </div>
                         ))}
                     </div>

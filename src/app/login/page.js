@@ -8,12 +8,42 @@ import { useRouter } from 'next/navigation';
 
 export default function login() {
     const [afterLogin, setAfterLogin] = useState(null);
+    const [temKey , setTemKey] = useState('');
     const router = useRouter();
 
+    function splitKEY(key) {
+        const [id, ...rest] = key.split("-");
+        const after = rest.join("-");
+        const [email, ...rest2] = after.split("-");
+        const senha = rest2.join('-');
+
+        return [id, email, senha];
+    }
+
     async function search(formData) {
-        const dados = [ formData.get("email"), formData.get("senha"), formData.get("caxinhaDoDiabo")]
+        const dados = [formData.get("email"), formData.get("senha"), formData.get("caxinhaDoDiabo")]
 
         adicionar(dados)
+    }
+
+    async function getData() {
+        const requestOptions = {
+            method: 'GET',
+            headers: { "Content-Type": "application/json" },
+        }
+        try {
+            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/user/${splitKEY(temKey)[0]}`, requestOptions);
+            if (resposta.ok) {
+                // mano?
+                const data = await resposta.json();
+                Cookies.set("userData", JSON.stringify(data))
+
+            }
+
+
+        } catch (error) {
+            throw new Error(error);
+        }
     }
 
     async function adicionar(dados) {
@@ -31,22 +61,31 @@ export default function login() {
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();
-                if(dados[4] == "on"){
+                if (dados[4] == "on") {
                     Cookies.set('key', data.key)
-                }else{
+                    setTemKey(data.key);
+                } else {
                     Cookies.set('key', data.key, { expires: 1 })
+                    setTemKey(data.key);
                 }
 
                 setAfterLogin(data.newAccount);
             }
 
 
-        } catch (error) {
-            throw new Error(error);
+        } catch (Error) {
+            throw new Error(Error.message);
         }
 
 
     }
+
+    useEffect(() => {
+        if (temKey != '') {
+            getData();
+        }
+
+    }, [temKey])
 
     useEffect(() => {
         const IsLogged = !!Cookies.get('key');

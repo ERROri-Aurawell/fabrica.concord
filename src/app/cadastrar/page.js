@@ -1,6 +1,6 @@
 "use client"
 import styles from "./cadastrar.module.css";
-import React from "react";
+import React, { use } from "react";
 import { useState, useEffect } from "react";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import Cookies from 'js-cookie';
@@ -14,6 +14,7 @@ export default function Cadastrar() {
     const [usarOgoogle, setUsarGoogle] = useState(false);
     const [afterLogin, setAfterLogin] = useState(null);
     const [textoBotao, setTextoBotao] = useState("Usar Google");
+    const [temKey , setTemKey] = useState('');
 
     const girar = () => {
         setTextoBotao((prev) => prev === "Usar Google" ? "Usar Formulário" : "Usar Google");
@@ -30,13 +31,13 @@ export default function Cadastrar() {
     const router = useRouter();
 
     async function search(formData) {
-        if( formData.get("Csenha") != formData.get("senha") ){
+        if (formData.get("Csenha") != formData.get("senha")) {
             alert("As senhas não coincidem!");
             return;
         }
 
         const dados = [formData.get("nome"), formData.get("email"), formData.get("senha"), formData.get("caxinhaDoDiabo")]
-        
+
         adicionar2(dados)
     }
 
@@ -57,9 +58,13 @@ export default function Cadastrar() {
                 const data = await resposta.json();
                 if (dados[3] == "on") {
                     Cookies.set('key', data.key)
+                    setTemKey(data.key);
                 } else {
                     Cookies.set('key', data.key, { expires: 1 })
+                    setTemKey(data.key);
                 }
+
+                
 
                 setAfterLogin(data.newAccount);
             }
@@ -71,6 +76,35 @@ export default function Cadastrar() {
         }
 
 
+    }
+
+    function splitKEY(key) {
+        const [id, ...rest] = key.split("-");
+        const after = rest.join("-");
+        const [email, ...rest2] = after.split("-");
+        const senha = rest2.join('-');
+
+        return [id, email, senha];
+    }
+
+    async function getData() {
+        const requestOptions = {
+            method: 'GET',
+            headers: { "Content-Type": "application/json" },
+        }
+        try {
+            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/user/${splitKEY(temKey)[0]}`, requestOptions);
+            if (resposta.ok) {
+                // mano?
+                const data = await resposta.json();
+                Cookies.set("userData", JSON.stringify(data))
+
+            }
+
+
+        } catch (error) {
+            throw new Error(error);
+        }
     }
 
     async function adicionar(response) {
@@ -88,6 +122,8 @@ export default function Cadastrar() {
                 Cookies.set('newAccount', data.newAccount, { expires: 1 });
                 Cookies.set('key', data.key)
 
+                setTemKey(data.key);
+
                 setAfterLogin(data.newAccount);
             }
 
@@ -100,6 +136,13 @@ export default function Cadastrar() {
     }
 
     useEffect(() => {
+        if (temKey !== '') {
+            getData();
+        }
+
+    }, [temKey])
+
+    useEffect(() => {
         const IsLogged = !!Cookies.get('key');
         const newAccount = Cookies.get('newAccount');
         if (afterLogin == null) {
@@ -110,9 +153,9 @@ export default function Cadastrar() {
 
         } else {
             if (newAccount == "true") {
-                router.push('/login2'); 
-                
-            } else{
+                router.push('/login2');
+
+            } else {
                 router.push('/contatos');
             }
         }
