@@ -481,5 +481,16 @@ input:checked + .sliderNT:before {
     color: black;
 }
 
+.textoFiltro {
+    color: #ffffff; /* Altere essa cor como quiser */
+    font-weight: 500;
+    margin-left: 8px; /* espaço entre o checkbox e o texto */
+  }
+  
 
-
+  .filtrosContainer {
+    max-height: 200px; /* altura máxima da lista de filtros */
+    overflow-y: auto;
+    padding-right: 8px;
+  }
+  
