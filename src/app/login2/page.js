@@ -64,7 +64,7 @@ const Login2 = () => {
                                                             checked={filtrosSelecionados.includes(item.filtro)}
                                                             onChange={() => toggleFiltro(item.filtro)} 
                                                         />
-                                                        {item.filtro}
+                                                        <span className={styles.textoFiltro}>{item.filtro}</span>
                                                     </div>
                                                 ))}
                                             </div>
