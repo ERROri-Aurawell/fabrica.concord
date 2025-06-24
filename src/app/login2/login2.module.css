@@ -405,7 +405,7 @@ input:checked + .sliderNT:before {
 }
 
 .img {
-    margin-top: -35%;
+    margin-top: -25%;
     margin-left: 60%;
 }
 
@@ -464,6 +464,7 @@ input:checked + .sliderNT:before {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     width: 400px;
     margin-top: 5px;
+    color: white;
 }
 
 .botaoDropdown {
