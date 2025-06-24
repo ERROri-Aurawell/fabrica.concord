@@ -489,7 +489,7 @@ input:checked + .sliderNT:before {
   
 
   .filtrosContainer {
-    max-height: 200px; /* altura máxima da lista de filtros */
+    max-height: 200px; /* altura máxima da lista de filtros
     overflow-y: auto;
     padding-right: 8px;
   }
