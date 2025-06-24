@@ -35,7 +35,7 @@ export default function Filtro() {
         return [id, email, senha];
     }
 
-    const adicionar = async (id, key) => {
+    const adicionar = async (id, key, userNome) => {
         const data = JSON.parse(dados);
         
 
@@ -47,7 +47,7 @@ export default function Filtro() {
             body: JSON.stringify({
                 "id": id,
                 "tipo": 2,
-                "conteudo": `{ \"key\" : ${splitKEY(key)[0]}, \"nome\" : \"${data.nome}\", \"foto\" : ${data.foto}, \"descricao\" : \"${data.descricao}\" }`
+                "conteudo": `{ \"key\" : ${splitKEY(key)[0]}, \"nome\" : \"${data.nome}\", \"foto\" : ${data.foto}, \"descricao\" : \"${data.descricao}\", \"userNome\" : \"${userNome}\" }`
             })
         }
         const conteudo = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/notific/${key}`, requestOptions)
@@ -75,7 +75,7 @@ export default function Filtro() {
     };
 
 
-    function adicionarAmigo(id) {
+    function adicionarAmigo(id, userNome) {
         //se o id existe dentro dos pedidosFreq, não faz nada
         if (pedidosFreq.includes(id)) { 
             console.log(`O usuário com id ${id} já está na lista de pedidos frequentes.`);
@@ -84,11 +84,11 @@ export default function Filtro() {
         }
         
 
-        console.log(`vou tentar adicionar o caba com id ${id}`)
+        console.log(`vou tentar adicionar o ${userNome} com id ${id}`)
         setPedidosFreq(prev => [...prev, id]);
-        console.log(`adicionando o caba com id ${id} na lista de pedidos frequentes.`)
+        console.log(`adicionando o ${userNome} com id ${id} na lista de pedidos frequentes.`)
         const key = Cookies.get('key')
-        adicionar(id, key);
+        adicionar(id, key, userNome);
     }
 
     return (
@@ -173,7 +173,7 @@ export default function Filtro() {
             {!pedidosFreq.includes(usuario.id) && (
                 <button
                     className={styles.adicioarAmigo}
-                    onClick={() => { adicionarAmigo(usuario.id) }}
+                    onClick={() => { adicionarAmigo(usuario.id, usuario.nome) }}
                 >
                     <Image alt="img" src="/images/amizade.png" width={40} height={40} />
                 </button>
