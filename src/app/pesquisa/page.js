@@ -14,7 +14,7 @@ export default function Filtro() {
     const [usuarios, setUsuarios] = useState([]);
     const [dados, setDados] = useState(Cookies.get('userData'));
     const [pedidosFreq, setPedidosFreq] = useState([]);
-
+    
     const getUsuarios = async () => {
         const conteudo = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/buscar/${Cookies.get('key')}`);
         if (!conteudo.ok) {
@@ -57,6 +57,9 @@ export default function Filtro() {
     }
 
     useEffect(() => {
+        setDados(Cookies.get('userData'))
+        console.log("DATA : ")
+        console.log(JSON.parse(dados))
         getUsuarios();
     }, []);
 

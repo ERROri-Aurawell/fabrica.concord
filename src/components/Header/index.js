@@ -1,7 +1,7 @@
 'use client'
 import styles from "./Header.module.css"
 import Link from 'next/link';
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect} from 'react';
 import Image from "next/image"
 import Cookies from "js-cookie";
 export default function Header() {
@@ -9,10 +9,10 @@ export default function Header() {
     const [isMobile, setIsMobile] = useState(false);
     const [notific, setNotific] = useState(false)
     const [ntfcs, setNtfcs] = useState([])
-    const [userData, setUserData] = useState(Cookies.get("userData"));
     const [isLoggedIn, setIsLogged] = useState(Cookies.get("key"))
-
-    async function addFriend(conteudo) {
+    
+    async function addFriend(conteudo, id) {
+        deletarNotificacao(id)
         const requestOptions = {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
@@ -25,6 +25,35 @@ export default function Header() {
             if (resposta.ok) {
                 // mano?
 
+            }
+
+
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
+    async function getData(){
+        const data = Cookies.get('userData');
+        if(data == undefined){
+            console.log("Não tem data");
+            await getTheData()
+        }else{
+            //Cookies.remove('userData', { path: '/pesquisa' })
+            console.log("Tem data")
+        }
+    }
+
+    async function getTheData() {
+        try {
+            const id = isLoggedIn.split("-")[0];
+            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/user/${id}`);
+            if (resposta.ok) {
+                const data = await resposta.json();
+                console.log(data)
+                console.log(JSON.stringify(data))
+               
+                Cookies.set('userData',JSON.stringify(data), { expires: 5, path: '/pesquisa' })
             }
 
 
@@ -96,6 +125,7 @@ export default function Header() {
     const closeMenu = () => setMenuOpen(false);
 
     useEffect(() => {
+        getData()
         if (isLoggedIn == undefined) {
             setNotific(false)
         } else {
@@ -176,7 +206,7 @@ export default function Header() {
                                                     <p>Você recebeu uma solicitação de amizade</p>
                                                     {/* Adicione outros campos conforme necessário */}
                                                     <div className={styles.buttonsContainer}>
-                                                    <button className={styles.botaoAceitar} onClick={() => addFriend(mensagem.conteudo)}>Adicionar Amigo</button>
+                                                    <button className={styles.botaoAceitar} onClick={() => addFriend(mensagem.conteudo, mensagem.id)}>Adicionar Amigo</button>
                                                     <button className={styles.botaoIgnorar} onClick={() => { deletarNotificacao(mensagem.id) }}>Ignorar</button>
                                                     </div>
                                                 </div>
