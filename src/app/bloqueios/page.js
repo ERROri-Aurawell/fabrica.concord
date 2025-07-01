@@ -58,7 +58,8 @@ export default function filtro() {
                   placeholder="Digite o contato"
                 />
                 {/* Botão para adicionar nome */}
-                <button className={styles.bloquear} onClick={adicionarNome}><Image alt="bloqueio" src="/images/Block.png" width={60} height={60}/></button>
+                <button className={styles.bloquear} onClick={adicionarNome}><Image alt="bloqueio" 
+                src="/images/Block.png" width={60} height={60}/></button>
 
               </div>
 
