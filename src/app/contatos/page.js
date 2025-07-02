@@ -14,6 +14,7 @@ export default function filtro() {
   const [key, setKey] = useState(Cookies.get('key'));
   const [busca, setBusca] = useState('');
   const [links, setLinks] = useState(false);
+  const [dados, setDados] = useState(Cookies.get('userData'));
   const [amigosOriginal, setAmigosOriginal] = useState([]); // Store the original list
 
   async function adicionar() {
@@ -34,7 +35,7 @@ export default function filtro() {
         const data = await resposta.json();
         console.log(data)
 
-        if(data.response == "Nenhum chat encontrado."){
+        if (data.response == "Nenhum chat encontrado.") {
           setAmigos([]);
           setAmigosOriginal([]);
           setVazio(true);
@@ -103,25 +104,44 @@ export default function filtro() {
                       <p className={styles.pVazio}>Nenhum contato encontrado</p>
                     </div>
                   }
-                  {amigos.map((nome) => (
-                    <li key={nome.id}>
-
-                      <Link className={styles.link_nome} href="./chat" onClick={() => {
-                        // Set the cookie as a JSON string
-                        Cookies.set('chatID', JSON.stringify({ id: nome.id, nome: nome.chatNome, foto: nome.foto }), { expires: 0.05 });
-
-                        // Get and parse the cookie
-                        const chatID = JSON.parse(Cookies.get('chatID'));
-                        console.log("ID:", chatID.id, "Nome:", chatID.chatNome, "Foto:", chatID.foto);
-                      }} >
-
-                        <img className={styles.img}  src={nome.foto == 0 ? "/images/human.png" : `/images/eclipse${nome.foto}.png`} alt={nome.chatNome} />
-                        {nome.chatNome}
-
-                      </Link>
-
-                    </li>
-                  ))}
+                  {amigos.map((nome) => {
+                    console.log(nome);
+                    let displayName = nome.chatNome;
+                    if (nome.tipo == 2) {
+                      try {
+                        const nomesArray = JSON.parse(nome.chatNome);
+                        console.log(nomesArray);
+                        // Se 'dados' estiver definido, use-o para encontrar o nome do outro usuário
+                        const data = JSON.parse(dados);
+                        // Substitua 'seuNome' pelo nome do usuário logado
+                        console.log(nomesArray.find(n => n !== data.nome));
+                        // Exibe o nome do outro usuário no grupo
+                        displayName = nomesArray.find(n => n !== data.nome);
+                      } catch (e) {
+                        displayName = nome.chatNome;
+                      }
+                    }
+                    return (
+                      <li key={nome.id}>
+                        <Link
+                          className={styles.link_nome}
+                          href="./chat"
+                          onClick={() => {
+                            Cookies.set('chatID', JSON.stringify({ id: nome.id, nome: nome.chatNome, foto: nome.foto }), { expires: 0.05 });
+                            const chatID = JSON.parse(Cookies.get('chatID'));
+                            console.log("ID:", chatID.id, "Nome:", chatID.chatNome, "Foto:", chatID.foto);
+                          }}
+                        >
+                          <img
+                            className={styles.img}
+                            src={nome.foto == 0 ? "/images/human.png" : `/images/eclipse${nome.foto}.png`}
+                            alt={displayName}
+                          />
+                          {displayName}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
 

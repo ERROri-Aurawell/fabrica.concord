@@ -14,7 +14,7 @@ export default function Filtro() {
     const [usuarios, setUsuarios] = useState([]);
     const [dados, setDados] = useState(Cookies.get('userData'));
     const [pedidosFreq, setPedidosFreq] = useState([]);
-    
+
     const getUsuarios = async () => {
         const conteudo = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/buscar/${Cookies.get('key')}`);
         if (!conteudo.ok) {
@@ -37,7 +37,7 @@ export default function Filtro() {
 
     const adicionar = async (id, key, userNome) => {
         const data = JSON.parse(dados);
-        
+
 
         console.log(`{ \"key\" : ${splitKEY(key)[0]}, \"nome\" : ${data.nome}, \"foto\" : ${data.foto}, \"descricao\" : ${data.descricao} }`);
 
@@ -50,9 +50,12 @@ export default function Filtro() {
                 "conteudo": `{ \"key\" : ${splitKEY(key)[0]}, \"nome\" : \"${data.nome}\", \"foto\" : ${data.foto}, \"descricao\" : \"${data.descricao}\", \"userNome\" : \"${userNome}\" }`
             })
         }
-        const conteudo = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/notific/${key}`, requestOptions)
+        //const rota1 = "https://apiconcord.dev.vilhena.ifro.edu.br";
+        const rota1 = "http://localhost:9000";
+        console.log("Body : " + requestOptions.body);
+        const conteudo = await fetch(`${rota1}/notific/${key}`, requestOptions)
         if (!conteudo.ok) {
-            throw new Error('Erro ao adicionar:' + conteudo.statusText);
+            throw new Error(conteudo.response);
         }
     }
 
@@ -80,32 +83,35 @@ export default function Filtro() {
 
     function adicionarAmigo(id, userNome) {
         //se o id existe dentro dos pedidosFreq, não faz nada
-        if (pedidosFreq.includes(id)) { 
+        if (pedidosFreq.includes(id)) {
             console.log(`O usuário com id ${id} já está na lista de pedidos frequentes.`);
             alert("Você já enviou um pedido de amizade para esse usuário.");
             return;
         }
-        
+
 
         console.log(`vou tentar adicionar o ${userNome} com id ${id}`)
         setPedidosFreq(prev => [...prev, id]);
         console.log(`adicionando o ${userNome} com id ${id} na lista de pedidos frequentes.`)
         const key = Cookies.get('key')
-        adicionar(id, key, userNome);
+        if(!key) {
+            console.error("Chave não encontrada.");
+        }else{
+            adicionar(id, key, userNome);
+        }
+
     }
 
     return (
-        <ProtectedRoute>
+        <ProtectedRoute >
             <div className={styles.cor}>
-                <div>
+                <div className={styles.cabecalho}>
                     <Link className={styles.link2} href="./contatos"><Image className={styles.img} alt="img" src="/images/aaaa.png" width={40} height={40}></Image></Link>
-
                 </div>
                 <div className={styles.centro}>
                     <div className={styles.pes_filtro}>
-
-
                         <div className={styles.organiza}>
+
 
                             <input
                                 className={styles.pesquisa2}
@@ -116,7 +122,7 @@ export default function Filtro() {
                             />
 
                             <div className={styles.filtros}>
-                                <ul className={styles.fil}>
+                                <ul className={styles.osfil}>
                                     {filtroBusca.map((f, index) => (
                                         <li key={index} className={styles.itemFiltro}>
                                             <label className={styles.radioLabel}>
@@ -138,9 +144,7 @@ export default function Filtro() {
                                         </li>
                                     ))}
                                 </ul>
-                            </div>
-
-                            <div className={styles.fil_sele}>
+                                                            <div className={styles.fil_sele}>
                                 <p className={styles.text_fil}>
                                     Filtros selecionados: <strong className={styles.fil_cor}>
                                         {filtrosSelecionados.length > 0
@@ -151,14 +155,13 @@ export default function Filtro() {
                                     </strong>
                                 </p>
                             </div>
+                            </div>
+
+
                         </div>
 
 
                     </div>
-
-
-
-                    <div className={styles.borda_lista}>
 
                         <div className={styles.lista}>
                             <input
@@ -168,26 +171,27 @@ export default function Filtro() {
                                 onChange={(ev) => setBusca(ev.target.value)}
                                 placeholder="Pesquisar usuário"
                             />
-<div className={styles.arruma2}>
-    {nomesBusca.map(usuario => (
-        <div className={styles.divDosUsuarios} key={usuario.id}>
-            <p>{usuario.nome}</p>
-            {/* se o usuario estiver na lista de pedidos frequentes, esse botão aqui some */}
-            {!pedidosFreq.includes(usuario.id) && (
-                <button
-                    className={styles.adicioarAmigo}
-                    onClick={() => { adicionarAmigo(usuario.id, usuario.nome) }}
-                >
-                    <Image alt="img" src="/images/amizade.png" width={40} height={40} />
-                </button>
-            )}
-        </div>
-    ))}
-</div>
+                            <div className={styles.arruma2}>
+                                {nomesBusca.map(usuario => (
+                                    <div className={styles.divDosUsuarios} key={usuario.id}>
+                                        {/* Só aparece uma parte do nome do usuário */}
+                                        <p className={styles.nomeUsuario}>{usuario.nome.length > 20 ? usuario.nome.slice(0, 20) + '...' : usuario.nome}</p>
+                                        {/* se o usuario estiver na lista de pedidos frequentes, esse botão aqui some */}
+                                        {!pedidosFreq.includes(usuario.id) && (
+                                            <button
+                                                className={styles.adicioarAmigo}
+                                                onClick={() => { adicionarAmigo(usuario.id, usuario.nome) }}
+                                            >
+                                                <Image alt="img" src="/images/amizade.png" width={40} height={40} />
+                                            </button>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
 
                         </div>
 
-                    </div>
+
 
                 </div>
             </div>
