@@ -15,8 +15,8 @@ export default function Filtro() {
     const [dados, setDados] = useState(Cookies.get('userData'));
     const [pedidosFreq, setPedidosFreq] = useState([]);
 
-    //const rota1 = "https://apiconcord.dev.vilhena.ifro.edu.br";
-    const rota1 = "http://localhost:9000";
+    const rota1 = "https://apiconcord.dev.vilhena.ifro.edu.br";
+    //const rota1 = "http://localhost:9000";
 
     const getUsuarios = async () => {
         const conteudo = await fetch(`${rota1}/buscar/${Cookies.get('key')}`);
