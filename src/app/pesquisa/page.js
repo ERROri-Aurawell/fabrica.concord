@@ -56,7 +56,14 @@ export default function Filtro() {
         console.log("Body : " + requestOptions.body);
         const conteudo = await fetch(`${rota1}/notific/${key}`, requestOptions)
         if (!conteudo.ok) {
-            throw new Error(conteudo.response);
+
+            console.log("Resposta")
+            console.log(conteudo)
+
+            const data = await conteudo.json();
+            console.log(data.response)
+
+            alert(data.response)
         }
     }
 
