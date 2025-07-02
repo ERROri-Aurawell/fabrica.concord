@@ -1,6 +1,7 @@
 "use client"
 import styles from "./cadastrar.module.css";
-import React, { use } from "react";
+import React from "react";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import Cookies from 'js-cookie';
@@ -115,7 +116,10 @@ export default function Cadastrar() {
         }
 
         try {
-            const resposta = await fetch('https://apiconcord.dev.vilhena.ifro.edu.br/cadastrar/google', requestOptions);
+            //const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
+            const rota = "http://localhost:9000"
+
+            const resposta = await fetch(`${rota}/cadastrar/google`, requestOptions);
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();
@@ -215,7 +219,9 @@ export default function Cadastrar() {
 
                         </form>}
 
+
                     </section>
+                        <p>Já possui conta? <Link href="./login" > Faça login </Link></p>
                 </section>
 
             </div>

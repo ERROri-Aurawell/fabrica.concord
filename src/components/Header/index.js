@@ -1,7 +1,7 @@
 'use client'
 import styles from "./Header.module.css"
 import Link from 'next/link';
-import { useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Image from "next/image"
 import Cookies from "js-cookie";
 export default function Header() {
@@ -10,9 +10,9 @@ export default function Header() {
     const [notific, setNotific] = useState(false)
     const [ntfcs, setNtfcs] = useState([])
     const [isLoggedIn, setIsLogged] = useState(Cookies.get("key"))
-    
+
     async function addFriend(conteudo, id) {
-        deletarNotificacao(id)
+        await deletarNotificacao(id);
         const requestOptions = {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
@@ -33,12 +33,13 @@ export default function Header() {
         }
     }
 
-    async function getData(){
+    async function getData() {
         const data = Cookies.get('userData');
-        if(data == undefined){
+        if (data == undefined) {
             console.log("Não tem data");
             await getTheData()
-        }else{
+            window.location.reload();
+        } else {
             //Cookies.remove('userData', { path: '/pesquisa' })
             console.log("Tem data")
         }
@@ -52,8 +53,8 @@ export default function Header() {
                 const data = await resposta.json();
                 console.log(data)
                 console.log(JSON.stringify(data))
-               
-                Cookies.set('userData',JSON.stringify(data), { expires: 5, path: '/pesquisa' })
+
+                Cookies.set('userData', JSON.stringify(data), { expires: 5, path: '/pesquisa' })
             }
 
 
@@ -120,10 +121,6 @@ export default function Header() {
     }
 
 
-
-    const openMenu = () => setMenuOpen(true);
-    const closeMenu = () => setMenuOpen(false);
-
     useEffect(() => {
         getData()
         if (isLoggedIn == undefined) {
@@ -142,7 +139,6 @@ export default function Header() {
                 window.location.reload();
                 //Cookies.remove('key');
                 //throw new Error("Tem algum erro na Key");
-
             }
         }
 
@@ -199,21 +195,21 @@ export default function Header() {
                                             return (
                                                 <div>
                                                     <div className={styles.imgContainer}>
-                                                    <p>{conteudoObj.nome}</p>
-                                                    <img className={styles.img}  src={conteudoObj.foto == 0 ? "/images/human.png" : `/images/eclipse${conteudoObj.foto}.png`} alt={conteudoObj.nome} />
+                                                        <p>{conteudoObj.nome}</p>
+                                                        <img className={styles.img} src={conteudoObj.foto == 0 ? "/images/human.png" : `/images/eclipse${conteudoObj.foto}.png`} alt={conteudoObj.nome} />
                                                     </div>
                                                     <p>Descrição: {conteudoObj.descricao}</p>
                                                     <p>Você recebeu uma solicitação de amizade</p>
                                                     {/* Adicione outros campos conforme necessário */}
                                                     <div className={styles.buttonsContainer}>
-                                                    <button className={styles.botaoAceitar} onClick={() => addFriend(mensagem.conteudo, mensagem.id)}>Adicionar Amigo</button>
-                                                    <button className={styles.botaoIgnorar} onClick={() => { deletarNotificacao(mensagem.id) }}>Ignorar</button>
+                                                        <button className={styles.botaoAceitar} onClick={() => addFriend(mensagem.conteudo, mensagem.id)}>Adicionar Amigo</button>
+                                                        <button className={styles.botaoIgnorar} onClick={() => { deletarNotificacao(mensagem.id) }}>Ignorar</button>
                                                     </div>
                                                 </div>
                                             );
                                         })()}
                                     </div>
-                                }   
+                                }
                                 {mensagem.tipo == 3 && <p>Você recebeu uma solicitação de chat</p>}
                                 {mensagem.tipo == 4 && <p>{mensagem.conteudo}</p>}
 
