@@ -20,8 +20,6 @@ function App() {
             <form className={styles.form} action="/submit" method="post">
             <label className={styles.labelCN}>Nome:</label>
               <input className={styles.input} type="text" id="nome" name="nome" required />
-              <label className={styles.labelCN}>Descrição:</label>
-              <input className={styles.input} type="descrição" id="descrição" name="descrição" required />
               <button className={styles.button}>
                 Criar
               </button>
