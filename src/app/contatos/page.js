@@ -56,6 +56,7 @@ export default function filtro() {
 
   useEffect(() => {
     adicionar();
+    setDados(Cookies.get('userData'));
   }, []);
 
   useEffect(() => {
@@ -107,20 +108,18 @@ export default function filtro() {
                     console.log(nome);
                     let displayName = nome.chatNome;
 
-                    console.log(nome.tipo, nome.tipo == 1); 
-                    if (nome.tipo == 2)  { // Se for um contato normal
-                      // Separa "[1,2]" em [1,2] e pega o nome que é diferente do próprio
-                        try {
-                          const ids = JSON.parse(nome.chatNome);
-                          const userData = JSON.parse(Cookies.get('userData'));
-                          const userId = userData.id;
-                          const otherId = ids.find(id => id !== userId);
-                          displayName = otherId ? `Contato ${otherId}` : "Contato Desconhecido";  
-                        
-                        } catch (error) {
-                          console.error("Erro ao processar o nome:", error);
-                        }
-                      console.log("Nome do contato:", displayName);
+                    console.log(nome.tipo, nome.tipo == 2);
+                    if (nome.tipo == 2) { // Se for um contato normal
+                      // Separa "[\"1\"",\"2\""]" em [1,2] e pega o nome que é diferente do próprio
+                      try {
+                        const membros = JSON.parse(nome.chatNome);
+                        const userNome = JSON.parse(dados).nome;
+                        const filtrado = membros.filter(item => item !== userNome); // Filtra o nome do usuário atual
+                        displayName = filtrado[0]; // Pega o primeiro nome filtrado
+
+                      } catch (error) {
+                        console.error("Erro ao processar o nome:", error);
+                      }
                     }
                     return (
                       <li key={nome.id}>
@@ -129,8 +128,6 @@ export default function filtro() {
                           href="./chat"
                           onClick={() => {
                             Cookies.set('chatID', JSON.stringify({ id: nome.id, nome: nome.chatNome, foto: nome.foto }), { expires: 0.05 });
-                            const chatID = JSON.parse(Cookies.get('chatID'));
-                            //console.log("ID:", chatID.id, "Nome:", chatID.chatNome, "Foto:", chatID.foto);
                           }}
                         >
                           <img
