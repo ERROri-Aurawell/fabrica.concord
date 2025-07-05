@@ -4,22 +4,60 @@ import React from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+
 
 const ChatCard = () => {
 
+  const [dados, setDados] = useState({ nome: "Carregando...", foto: 0, descricao: "Carregando..." });
+
+  const searchParams = useSearchParams();
+  const id = JSON.parse(searchParams.get('id' || '{}'));
+
+  console.log(id);
+
+  async function fetchChatData() {
+    const rota = "https://apiconcord.dev.vilhena.ifro.edu.br";
+    // const rota = "http://localhost:9000";
+    const response = await fetch(`${rota}/user/${id}`, {
+      method: 'GET',
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!response.ok) {
+      alert('Erro ao buscar dados do usuário: ' + response.statusText);
+    }else{
+      const data = await response.json();
+      setDados(data);
+    }
+  }
+
+  useEffect(() => {
+    fetchChatData()
+      .then(data => {
+        console.log("Dados do usuário:", data);
+      })
+      .catch(error => {
+        console.error("Erro ao buscar dados do usuário:", error);
+      });
+  }, [id]);
+
   return (
+
     <ProtectedRoute>
       <div className={styles.card}>
         <div className={styles.chat}>
           <div className={styles.section}>
-            <h3 className={styles.h3}>Loren</h3>
+            <h3 className={styles.h3}>{dados.nome}</h3>
             <div className={styles.current}>
-              <Image className={styles.img} alt="img" src="/images/fotoDoOutro.png" width={120} height={120} />
+              <Image className={styles.img} src={dados.foto === 0 ? "/images/human.png" : `/images/eclipse${dados.foto}.png`} alt={dados.nome} width={120} height={120} />
             </div>
           </div>
 
           <p className={styles.p}>
-            Corem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit         </p>
+            {dados.descricao}
+          </p>
         </div>
 
         <div className={styles.links}>

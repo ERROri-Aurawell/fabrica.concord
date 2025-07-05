@@ -53,14 +53,14 @@ export default function Filtro() {
                 "conteudo": `{ \"key\" : ${splitKEY(key)[0]}, \"nome\" : \"${data.nome}\", \"foto\" : ${data.foto}, \"descricao\" : \"${data.descricao}\", \"userNome\" : \"${userNome}\" }`
             })
         }
-       
+
         const conteudo = await fetch(`${rota1}/notific/${key}`, requestOptions)
         if (!conteudo.ok) {
 
-          
+
 
             const data = await conteudo.json();
-         
+
 
             alert(data.response)
         }
@@ -90,15 +90,15 @@ export default function Filtro() {
     function adicionarAmigo(id, userNome) {
         //se o id existe dentro dos pedidosFreq, não faz nada
         if (pedidosFreq.includes(id)) {
-          
+
             alert("Você já enviou um pedido de amizade para esse usuário.");
             return;
         }
 
 
-    
+
         setPedidosFreq(prev => [...prev, id]);
-      
+
         const key = Cookies.get('key')
         if (!key) {
             console.error("Chave não encontrada.");
@@ -180,6 +180,9 @@ export default function Filtro() {
                         <div className={styles.arruma2}>
                             {nomesBusca.map(usuario => (
                                 <div className={styles.divDosUsuarios} key={usuario.id}>
+                                    <Link href={{ pathname: "/perfil", query: { id: usuario.id } }}>
+                                        <Image className={styles.img} src={usuario.foto === 0 ? "/images/human.png" : `/images/eclipse${usuario.foto}.png`} alt={usuario.nome} width={50} height={50} />
+                                    </Link>
                                     {/* Só aparece uma parte do nome do usuário */}
                                     <p className={styles.nomeUsuario}>{usuario.nome.length > 20 ? usuario.nome.slice(0, 20) + '...' : usuario.nome}</p>
                                     {/* se o usuario estiver na lista de pedidos frequentes, esse botão aqui some */}
