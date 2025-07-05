@@ -29,11 +29,10 @@ export default function filtro() {
       //const rota = "http://localhost:9000";
       const resposta = await fetch(`${rota}/chats/${key}`, requestOptions);
 
-      console.log("Resposta do servidor:", resposta);
 
       if (resposta.ok) {
         const data = await resposta.json();
-        console.log(data)
+
 
         if (data.response == "Nenhum chat encontrado.") {
           setAmigos([]);
@@ -107,19 +106,21 @@ export default function filtro() {
                   {amigos.map((nome) => {
                     console.log(nome);
                     let displayName = nome.chatNome;
-                    if (nome.tipo == 2) {
-                      try {
-                        const nomesArray = JSON.parse(nome.chatNome);
-                        console.log(nomesArray);
-                        // Se 'dados' estiver definido, use-o para encontrar o nome do outro usuário
-                        const data = JSON.parse(dados);
-                        // Substitua 'seuNome' pelo nome do usuário logado
-                        console.log(nomesArray.find(n => n !== data.nome));
-                        // Exibe o nome do outro usuário no grupo
-                        displayName = nomesArray.find(n => n !== data.nome);
-                      } catch (e) {
-                        displayName = nome.chatNome;
-                      }
+
+                    console.log(nome.tipo, nome.tipo == 1); 
+                    if (nome.tipo == 2)  { // Se for um contato normal
+                      // Separa "[1,2]" em [1,2] e pega o nome que é diferente do próprio
+                        try {
+                          const ids = JSON.parse(nome.chatNome);
+                          const userData = JSON.parse(Cookies.get('userData'));
+                          const userId = userData.id;
+                          const otherId = ids.find(id => id !== userId);
+                          displayName = otherId ? `Contato ${otherId}` : "Contato Desconhecido";  
+                        
+                        } catch (error) {
+                          console.error("Erro ao processar o nome:", error);
+                        }
+                      console.log("Nome do contato:", displayName);
                     }
                     return (
                       <li key={nome.id}>
@@ -129,7 +130,7 @@ export default function filtro() {
                           onClick={() => {
                             Cookies.set('chatID', JSON.stringify({ id: nome.id, nome: nome.chatNome, foto: nome.foto }), { expires: 0.05 });
                             const chatID = JSON.parse(Cookies.get('chatID'));
-                            console.log("ID:", chatID.id, "Nome:", chatID.chatNome, "Foto:", chatID.foto);
+                            //console.log("ID:", chatID.id, "Nome:", chatID.chatNome, "Foto:", chatID.foto);
                           }}
                         >
                           <img

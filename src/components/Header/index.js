@@ -36,12 +36,10 @@ export default function Header() {
     async function getData() {
         const data = Cookies.get('userData');
         if (data == undefined) {
-            console.log("Não tem data");
             await getTheData()
             window.location.reload();
         } else {
             //Cookies.remove('userData', { path: '/pesquisa' })
-            console.log("Tem data")
         }
     }
 
@@ -51,8 +49,7 @@ export default function Header() {
             const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/user/${id}`);
             if (resposta.ok) {
                 const data = await resposta.json();
-                console.log(data)
-                console.log(JSON.stringify(data))
+
 
                 Cookies.set('userData', JSON.stringify(data), { expires: 5, path: '/pesquisa' })
             }
@@ -91,7 +88,7 @@ export default function Header() {
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();
-                console.log(data)
+  
                 setNtfcs(data)
 
 
@@ -187,8 +184,6 @@ export default function Header() {
                                             let conteudoObj;
                                             try {
                                                 conteudoObj = JSON.parse(mensagem.conteudo);
-                                                console.log(conteudoObj);
-                                                console.log(mensagem);
                                             } catch {
                                                 conteudoObj = { erro: "Conteúdo inválido" };
                                             }

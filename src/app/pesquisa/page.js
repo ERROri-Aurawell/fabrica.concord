@@ -53,16 +53,14 @@ export default function Filtro() {
                 "conteudo": `{ \"key\" : ${splitKEY(key)[0]}, \"nome\" : \"${data.nome}\", \"foto\" : ${data.foto}, \"descricao\" : \"${data.descricao}\", \"userNome\" : \"${userNome}\" }`
             })
         }
-        console.log("Body : " + requestOptions.body);
-        console.log("Rota: " + `${rota1}/notific/${key}`)
+       
         const conteudo = await fetch(`${rota1}/notific/${key}`, requestOptions)
         if (!conteudo.ok) {
 
-            console.log("Resposta")
-            console.log(conteudo)
+          
 
             const data = await conteudo.json();
-            console.log(data)
+         
 
             alert(data.response)
         }
@@ -70,8 +68,7 @@ export default function Filtro() {
 
     useEffect(() => {
         setDados(Cookies.get('userData'))
-        console.log("DATA : ")
-        console.log(JSON.parse(dados))
+
         getUsuarios();
     }, []);
 
@@ -93,15 +90,15 @@ export default function Filtro() {
     function adicionarAmigo(id, userNome) {
         //se o id existe dentro dos pedidosFreq, não faz nada
         if (pedidosFreq.includes(id)) {
-            console.log(`O usuário com id ${id} já está na lista de pedidos frequentes.`);
+          
             alert("Você já enviou um pedido de amizade para esse usuário.");
             return;
         }
 
 
-        console.log(`vou tentar adicionar o ${userNome} com id ${id}`)
+    
         setPedidosFreq(prev => [...prev, id]);
-        console.log(`adicionando o ${userNome} com id ${id} na lista de pedidos frequentes.`)
+      
         const key = Cookies.get('key')
         if (!key) {
             console.error("Chave não encontrada.");
