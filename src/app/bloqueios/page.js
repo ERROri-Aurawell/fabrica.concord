@@ -1,25 +1,76 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./bloqueios.module.css";
 import ProtectedRoute from '@/components/ProtectedRoute';
 import Link from "next/link";
 import Image from "next/image";
+import Cookies from 'js-cookie';
 
 export default function filtro() {
 
-  const [nomes, setNomes] = useState(['Miguel', 'João', 'Caleb', 'Guilherme', 'Gabriel', 'Caio', 'Ana', 'Eduardo']);
-  const [busca, setBusca] = useState('');
-  const [novoNome, setNovoNome] = useState(''); // Estado para o novo nome
+  const [nomes, setNomes] = useState([]);
+  const [key, setKey] = useState(Cookies.get('key'));
 
-  const nomesBusca = nomes.filter((nome) =>
-    nome.toLowerCase().includes(busca.toLowerCase())
-  );
 
-  const adicionarNome = () => {
-    // Adiciona o novo nome à lista
-    setNomes([...nomes, novoNome]);
-    setNovoNome(''); // Limpa o campo de entrada
-  };
+async function remover(id) {
+  console.log(id)
+}
+
+    async function pegarAmigos() {
+      const requestOptions = {
+      method: 'GET',
+      headers: { "Content-Type": "application/json" },
+    }
+
+    try {
+      const rota = "https://apiconcord.dev.vilhena.ifro.edu.br/"
+      //const rota = "http://localhost:9000/";
+      const resposta = await fetch(`${rota}friends/${key}`, requestOptions);
+
+
+      if (resposta.ok) {
+        const data = await resposta.json();
+        setNomes(data)
+        console.log(data)
+      }
+
+
+    } catch (error) {
+      throw new Error(error);
+    }
+    }
+
+    useEffect(() => {pegarAmigos()}, [] )
+
+
+  
+    async function banido(id) {
+      const requestOptions = {
+      method: 'POST',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({"idBloqueado" : id})
+    }
+
+    try {
+      const rota = "https://apiconcord.dev.vilhena.ifro.edu.br/"
+      //const rota = "http://localhost:9000/";
+      const resposta = await fetch(`${rota}block/${key}`, requestOptions);
+
+
+      if (resposta.ok) {
+        const data = await resposta.json();
+        console.log(data)
+      }else{const data = await resposta.json();
+        console.log(data)}
+      
+
+      pegarAmigos()
+
+
+    } catch (error) {
+      throw new Error(error);
+    }
+    }
 
   return (
     <ProtectedRoute>
@@ -29,49 +80,18 @@ export default function filtro() {
                         
         </div>
 
-
           <div className={styles.centro}>
-
-            <div className={styles.coluna}>
-
-              <p className={styles.comentario}>Pesquise o contato <span className={styles.span}>Bloqueado</span></p>
-
-              <input
-                className={styles.pesquisa}
-                value={busca}
-                type="text"
-                onChange={(ev) => setBusca(ev.target.value)}
-                placeholder="Pesquisar contato bloqueado"
-              />
-
-              <p className={styles.comentario}> Digite o contado que deseja <span className={styles.span}>BLOQUEAR</span></p>
-
-              <div className={styles.arruma}>
-
-                {/* Campo de entrada para o novo nome */}
-                
-                <input
-                  className={styles.busca}
-                  type="text"
-                  value={novoNome}
-                  onChange={(ev) => setNovoNome(ev.target.value)}
-                  placeholder="Digite o contato"
-                />
-                {/* Botão para adicionar nome */}
-                <button className={styles.bloquear} onClick={adicionarNome}><Image alt="bloqueio" 
-                src="/images/Block.png" width={60} height={60}/></button>
-
-              </div>
-
-            </div>
             
             <div className={styles.borda}>
               <div className={styles.lista}>
                 <ul className={styles.arruma2}>
-                  {nomesBusca.map((nome, i) => (
+                  {nomes.map((nome, i) => (
                     <li key={i}>
-                      <img className={styles.img} src="/images/human.png" alt={nome} />
-                      {nome}
+
+                      <img className={styles.img} src={nome.foto == 0 ? "/images/human.png" : `/images/eclipse${nome.foto}.png`} alt={nome.foto} />
+                      {nome.nome}
+
+                      <button onClick={()=>{banido(nome.id)}}>Image Dragons</button>
                     </li>
                   ))}
                 </ul>
