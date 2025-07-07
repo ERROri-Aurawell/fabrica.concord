@@ -28,7 +28,7 @@ export default function bloqueio() {
 
                         <Link className={styles.lc} href="./contatos"><input type="submit" className={styles.bc} value="Cancelar" /></Link>
 
-                        <Link className={styles.ld} href="./"><input type="submit" className={styles.bd} value="Denunciar" /></Link>
+                        <Link className={styles.ld} href="./contatos"><input type="submit" className={styles.bd} value="Denunciar" /></Link>
 
                     </div>
 

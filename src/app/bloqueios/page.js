@@ -76,7 +76,7 @@ async function remover(id) {
     <ProtectedRoute>
       <div className={styles.cor}>
         <div>
-          <Link className={styles.link2} href="./cadastrar"><Image  className={styles.img} alt="img" src="/images/aaaa.png" width={40} height={40}></Image></Link>
+          <Link className={styles.link2} href="./contatos"><Image  className={styles.img} alt="img" src="/images/aaaa.png" width={40} height={40}></Image></Link>
                         
         </div>
 

@@ -313,12 +313,6 @@
   background: linear-gradient(to top , #5EECF5, #002244);
 }
 
-.img{
-  height: 25px;
-  width: 25px;
-  display: flex;
-}
-
 .imgContainer{
   display: flex;
   align-items: center;
