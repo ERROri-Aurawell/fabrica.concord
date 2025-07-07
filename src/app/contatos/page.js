@@ -105,10 +105,8 @@ export default function filtro() {
                     </div>
                   }
                   {amigos.map((nome) => {
-                    console.log(nome);
                     let displayName = nome.chatNome;
 
-                    console.log(nome.tipo, nome.tipo == 2);
                     if (nome.tipo == 2) { // Se for um contato normal
                       // Separa "[\"1\"",\"2\""]" em [1,2] e pega o nome que é diferente do próprio
                       try {
@@ -120,6 +118,10 @@ export default function filtro() {
                       } catch (error) {
                         console.error("Erro ao processar o nome:", error);
                       }
+                    } else {
+                      const userNome = JSON.parse(dados).nome;
+
+                      displayName = userNome[0]
                     }
                     return (
                       <li key={nome.id}>

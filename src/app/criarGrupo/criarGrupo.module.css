@@ -1,129 +1,49 @@
-.body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #505050;
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-
-.container {
-    width: 400px;
-    height: 500px;
-    margin-left: 10%;
-    margin-top: 5%;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-}
-  
-.title {
-    font-family: Arial, sans-serif;
-    color: white;
-    font-size: 30px;
-    margin-bottom: 20px;
-}
-  
-.input {
-    text-align: left;
-    margin-bottom: 15px;
-
-
-
-}
-
-.img1{
-    position: relative;
-    left: 105%;
-    bottom: 130%;
-}
-.input label {
-    color: white;
-    font-size: 20px;
-    display: block;
-    margin-top: 5%;
-}
-  
-.input input {
-    width: 99%;
-    margin-top: 8%;
-    padding: 8px;
-    background-color: #444;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-}
-  
-.button {
-    font-size: 15%;
-    width: 70%;
-    padding: 10px;
-    background-color: #555;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 150px;
-}
-  
-.button:hover {
-    background-color: #5EECF5;
-}
-.section{
-    justify-content: center;
-    align-items: center;
-    margin-left: 15%;
-    margin-top: 10%;
-}
-
-.form {
+.container{
     display: flex;
     flex-direction: column;
-    width: 80%;
-    max-width: 400px;
-    text-align: center;
-    justify-content: center;
     align-items: center;
+    padding: 20px;
+    background: linear-gradient(to bottom, #5EECF5, #002244);
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+    height: 70vh;
 }
 
-.label {
-    font-size: 30px;
-    font-weight: bold;
-    margin-top: 65%;
-    color: #070707;
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+
 }
 
-
-/* Responsividade */
-@media (max-width: 768px) {
-
-    .label {
-        font-size: 21px;
-    }
-
-
-    .button {
-        font-size: 14px;
-    }
+.contatos_lista{
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(37, 37, 37);
+    border-radius: 50px;
 }
 
-@media (max-width: 480px) {
-    .dFundo {
-        width: 90%;
-        height: auto;
-        padding: 15px;
-        border-radius: 20px;
-    }
-
-    .label {
-        font-size: 21px;
-    }
-
-    .button {
-        font-size: 12px;
-    }
+.friendsList{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

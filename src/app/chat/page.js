@@ -7,6 +7,7 @@ import ChatRoute from '@/components/chatRoute';
 import Link from "next/link";
 import Cookies from 'js-cookie';
 import socket from "./socket";
+import { fetchFriends } from "./otherThings.js";
 
 export default function Chat() {
   const [apaputaquepariu, setVTMNC] = useState(false)
@@ -16,6 +17,8 @@ export default function Chat() {
   const [nomes, setNomes] = useState([]);
   const [mensagens, setMensagens] = useState([]);
   const listaRef = useRef(null);
+
+  const [friends, setFriends] = useState([]);
 
   const [data, setData] = useState({})
 
@@ -30,12 +33,12 @@ export default function Chat() {
 
 
   socket.on("historico", async (response) => {
-    console.log("Nova mensagem recebida:", response.response);
+
     setNomes(response.response);
   });
 
   socket.on("newMessage", (response) => {
-    console.log("Nova mensagem recebida:", response.response);
+
     if (response.response.mensagem != "" && response.response.mensagem != undefined) {
       setNomes([...nomes, response.response]);
     }
@@ -51,7 +54,7 @@ export default function Chat() {
     data.mensagem = mensagens;
     if (data.mensagem.trim() !== '') {
       socket.emit("addMessage", data);
-      console.log("Mensagem enviada:", data);
+
       setMensagens("");
       setData({
         ...data,
@@ -66,7 +69,7 @@ export default function Chat() {
       window.location.href = "/contatos"; // Redireciona para a página de contatos
       return;
     }
-    console.log("ID:", chatID.id, "Nome:", chatID.nome, "Foto:", chatID.foto);
+
 
     setData({
       "key": `${Cookies.get('key')}`,
@@ -75,7 +78,7 @@ export default function Chat() {
     })
 
     socket.connect();
-    console.log("Conectado ao servidor Socket.IO");
+
 
     socket.on("argumento", (data) => {
       setResponse(data.message);
@@ -90,7 +93,7 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
-    console.log("Adicionando nome:", nomes);
+
     if (listaRef.current) {
       listaRef.current.scrollTop = listaRef.current.scrollHeight;
     }
@@ -102,16 +105,38 @@ export default function Chat() {
 
   socket.on("reconnect", (attemptNumber) => {
     socket.emit("reconnect", { key: Cookies.get('key'), chatID: chatID.id });
-    console.log("Evento 'reconnect' emitido automaticamente após reconexão", attemptNumber);
+
   });
 
+  const [menuAberto, setMenuAberto] = useState(false);
+  const toggleMenu = () => {
+    setMenuAberto(!menuAberto);
+  };
+
+  useEffect(() => {
+    const fetchFriendsData = async () => {
+      try {
+        const friendsData = await fetchFriends();
+        //console.log(friendsData)
+        setFriends(friendsData);
+      } catch (error) {
+        console.error("Erro ao buscar amigos:", error);
+      }
+    };
+
+    fetchFriendsData();
+  }, []);
+
+  useEffect(() => {
+    console.log("Amigos:", friends);
+  }, [friends])
+
   return (
-    
     <ProtectedRoute>
       <ChatRoute className={styles.divsao}>
-        
-        
-        
+
+
+
 
 
         {!conectado && (
@@ -136,8 +161,24 @@ export default function Chat() {
           <div className={styles.centro}>
             <div className={styles.funciona}>
               <div className={styles.lista}>
-                <div className={styles.img_concord}>
-                  <Image className={styles.concord} src="/images/CONCORD.png" alt="concord" width={60} height={0} />
+                <div className={styles.img_concord} >
+                  {menuAberto && (
+                    <div className={styles.menuEditar}>
+                      <p>Editar informações</p>
+
+                      <div>
+                        <p>Adicionar membros</p>
+                        <div>
+                          {friends.map((amigo) => (
+                            <div key={amigo.id}>
+                              <p>{amigo.nome}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  <Image className={styles.concord} src="/images/CONCORD.png" alt="concord" width={60} height={0} onClick={toggleMenu} />
                 </div>
                 <div className={styles.flow} ref={listaRef} style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                   <ul className={styles.arruma}>
