@@ -129,7 +129,8 @@ export default function filtro() {
                           className={styles.link_nome}
                           href="./chat"
                           onClick={() => {
-                            Cookies.set('chatID', JSON.stringify({ id: nome.id, nome: nome.chatNome, foto: nome.foto }), { expires: 0.05 });
+                            console.log(nome)
+                            Cookies.set('chatID', JSON.stringify({ id: nome.id, nome: nome.chatNome, foto: nome.foto, membros: nome.membros }), { expires: 0.05 });
                           }}
                         >
                           <img

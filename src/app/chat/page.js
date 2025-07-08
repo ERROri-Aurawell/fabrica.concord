@@ -131,14 +131,23 @@ export default function Chat() {
     console.log("Amigos:", friends);
   }, [friends])
 
+  function filtrarAmigos(){
+    //console.log("Nomes:")
+    //console.log(friends);
+    let atuais = chatID.membros
+    atuais = atuais.split(",")
+    console.log("Atuais:")
+    console.log(atuais)
+    
+    const amigosNaoAdicionados = friends.filter(id => console.log(id.id) )
+    
+    //console.log("Amigos não adicionados")
+    //console.log(amigosNaoAdicionados);
+  }
+
   return (
     <ProtectedRoute>
       <ChatRoute className={styles.divsao}>
-
-
-
-
-
         {!conectado && (
           <div>
             <p> A conexão com o servidor foi perdida. </p>
@@ -164,13 +173,15 @@ export default function Chat() {
                 <div className={styles.img_concord} >
                   {menuAberto && (
                     <div className={styles.menuEditar}>
+                      <button onClick={filtrarAmigos}>TEST</button>
                       <p>Editar informações</p>
 
                       <div>
                         <p>Adicionar membros</p>
                         <div>
                           {friends.map((amigo) => (
-                            <div key={amigo.id}>
+                            <div key={amigo.id} className={styles.divAmigosEditar}>
+                              <img className={styles.img} src={amigo.foto == 0 ? "/images/human.png" : `/images/eclipse${amigo.foto}.png`} alt={amigo.nome} />
                               <p>{amigo.nome}</p>
                             </div>
                           ))}
