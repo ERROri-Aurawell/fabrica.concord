@@ -154,7 +154,7 @@ function App() {
                   nomesBusca.map((friend) => (
                     <div key={friend.id} className={styles.friendItem}>
                       <input type="checkbox" id={`friend-${friend.id}`} name="friends" value={friend.id} />
-                      <label htmlFor={`friend-${friend.id}`}>
+                      <label className={styles.cont} htmlFor={`friend-${friend.id}`}>
                         <Image className={styles.friendImage} src={friend.foto == 0 ? "/images/human.png" : `/images/eclipse${friend.foto}.png`} alt={friend.nome} width={40} height={40} />
                         {friend.nome}
                       </label>
