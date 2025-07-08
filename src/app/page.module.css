@@ -35,6 +35,7 @@
 }
 
 .h1 {
+ 
   font-size: 2.5rem;
   font-weight: bold;
 }
@@ -42,6 +43,7 @@
 .p {
   font-size: 1.2rem;
   line-height: 1.5;
+  margin-top: 500px;
 
 }
 
@@ -54,9 +56,7 @@
 
 }
 
-.img {
- 
-}
+
 
 .VAIPROLADO{
   display: flex;
@@ -71,19 +71,20 @@
 }
 
 .description_para {
-  margin-left: 8%;
+  margin-left: 4%;
   width: 100%;
   font-size: 30px;
-  top: 54%;
-  ;
+  margin-top: 30%;
+
 }
 
 .description {
   margin-bottom: 20px;
-  margin-left: 8%;
+  margin-left: 4%;
   width: 100%;
   font-size: 30px;
   top: 50%;
+  
 }
 
 .button {
@@ -116,6 +117,8 @@
   color: aliceblue;
   font-size: 22px;
   margin: 15px;
+  display: block;
+
 
 }
 
