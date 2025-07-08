@@ -35,7 +35,7 @@
 }
 
 .h1 {
- 
+  
   font-size: 2.5rem;
   font-weight: bold;
 }
@@ -74,18 +74,12 @@
   margin-left: 4%;
   width: 100%;
   font-size: 30px;
-  margin-top: 30%;
-
-}
-
-.description {
-  margin-bottom: 20px;
-  margin-left: 4%;
-  width: 100%;
-  font-size: 30px;
-  top: 50%;
+  margin-top: 20%;
   
+
 }
+
+
 
 .button {
   margin-top: 40px;
@@ -108,19 +102,37 @@
 }
 
 .title{
-  top: 36%;
+  margin-top: 50%;
   font-size: 70px;
   margin: 15px;
+
 }
 
 .link {
-  color: aliceblue;
+  color: rgb(0, 0, 0);
   font-size: 22px;
   margin: 15px;
   display: block;
-
+  margin-top: -90px;
+  display: inline-block;
+  padding: 0.5rem 2.8rem;
+  background-color: rgb(0, 0, 0);
+  border-radius: 4rem;
+  letter-spacing: 0.3rem;
+  font-weight: 40;
+  border: 2px solid #57b1cc;
+  transition: 0.3s ease;
+  cursor: pointer;
+  width: 100px;
+  margin-left: 4%;
 
 }
+
+.link:hover{
+  background-color: rgb(106, 169, 180);
+  color: aliceblue;
+}
+
 
 .link2 {
   color: aliceblue;
@@ -128,7 +140,7 @@
 
 
 .link2:hover {
-  color: rgb(25, 118, 124);
+  color: rgb(255, 255, 255);
 }
 
 .link3 {
