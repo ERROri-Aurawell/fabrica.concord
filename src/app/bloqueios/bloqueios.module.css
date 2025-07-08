@@ -51,10 +51,24 @@
     width: 100%;
     padding-left: 10px;
     border-left: 4px dashed red;
+    display: flex;
 }
 
 .img{
-    width: 60px;
+    width: 70px;
     margin-right: 10px;
 }
 
+.bloqueados{
+    background-color: black;
+    display: flex;
+    align-items: center;
+    border: 4px solid;
+    border-image: linear-gradient(55deg, #5EECF5, #002244) 1;
+}
+
+.butao{
+    cursor: pointer;
+    background: none;
+    border: none;
+}

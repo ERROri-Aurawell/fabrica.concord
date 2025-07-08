@@ -96,19 +96,9 @@ export default function Config() {
                             Atualizar Perfil
                         </button>
                     </div>
-                    <div className={styles.Gbotoes}>
+                 
 
-                        <button onClick={() => mudardiv("2")} className={styles.botao}>
-                            Privacidade
-                        </button>
-                    </div>
-
-                    <div className={styles.Gbotoes}>
-
-                        <button onClick={() => mudardiv("4")} className={styles.botao}>
-                            Notificações
-                        </button>
-                    </div>
+                
                     <div className={styles.Gbotoes}>
 
                         <button onClick={() => mudardiv('5')} className={styles.botao}>
@@ -149,67 +139,7 @@ export default function Config() {
                         </div>
                     )}
 
-                    {div2 && (
-                        <div className={styles.divSu}>
-                            <h1>Visto por Último</h1>
-                            <h3>Quem pode ver meu "visto por último"?</h3>
-                            <label className={styles.label}>
-                                <input className={styles.label}
-                                    type="radio"
-                                    name="vistoPorUltimo"
-                                    value="todos"
-                                    checked={vistoPorUltimo === "todos"}
-                                    onChange={() => setVistoPorUltimo("todos")}
-                                />
-                                Todos
-                            </label>
-                            <label className={styles.label}>
-                                <input className={styles.label}
-                                    type="radio"
-                                    name="vistoPorUltimo"
-                                    value="contatos"
-                                    checked={vistoPorUltimo === "contatos"}
-                                    onChange={() => setVistoPorUltimo("contatos")}
-                                />
-                                Meus contatos
-                            </label>
-                            <label className={styles.label}>
-                                <input className={styles.label}
-                                    type="radio"
-                                    name="vistoPorUltimo"
-                                    value="ninguem"
-                                    checked={vistoPorUltimo === "ninguem"}
-                                    onChange={() => setVistoPorUltimo("ninguem")}
-                                />
-                                Ninguém
-                            </label >
 
-                            <hr />
-
-                            <h2>Quem pode ver quando está online?</h2>
-                            
-                            <label className={styles.label}>
-                                <input className={styles.label}
-                                    type="radio"
-                                    name="onlineVisivel"
-                                    value="todos"
-                                    checked={onlineVisivel === "todos"}
-                                    onChange={() => setOnlineVisivel("todos")}
-                                />
-                                Todos
-                            </label>
-                            <label className={styles.label}>
-                                <input className={styles.label}
-                                    type="radio"
-                                    name="onlineVisivel"
-                                    value="mesmosVistoUltimo"
-                                    checked={onlineVisivel === "mesmosVistoUltimo"}
-                                    onChange={() => setOnlineVisivel("mesmosVistoUltimo")}
-                                />
-                                Mesmo que "Visto por Último"
-                            </label>
-                        </div>
-                    )}
 
                     {div3 && (
                         <div className={styles.divSuMUD}>
@@ -246,57 +176,7 @@ export default function Config() {
                         </div>
                     )}
 
-                    {div4 && (
-                        <div className={styles.divSu}>
-                            <h1>Notificações</h1>
-                            <h2>Mensagens</h2>
-                            <label className={styles.label}>
-                                <input className={styles.label}
-                                    type="radio"
-                                    name="vistoPorUltimo"
-                                    value="todos"
-                                    checked={vistoPorUltimo === "todos"}
-                                    onChange={() => setVistoPorUltimo("todos")}
-                                />
-                                Sons de Notifição
-                            </label>
-                            <label className={styles.label}>
-                                <input className={styles.label}
-                                    type="radio"
-                                    name="vistoPorUltimo"
-                                    value="contatos"
-                                    checked={vistoPorUltimo === "contatos"}
-                                    onChange={() => setVistoPorUltimo("contatos")}
-                                />
-                                Vibração
-                            </label>
-
-                            <hr />
-
-                            <h2>Grupos</h2>
-                           
-                            <label className={styles.label}>
-                                <input className={styles.label}
-                                    type="radio"
-                                    name="onlineVisivel"
-                                    value="todos"
-                                    checked={onlineVisivel === "todos"}
-                                    onChange={() => setOnlineVisivel("todos")}
-                                />
-                                Sons de Notifição
-                            </label>
-                            <label className={styles.label}>
-                                <input className={styles.label}
-                                    type="radio"
-                                    name="onlineVisivel"
-                                    value="mesmosVistoUltimo"
-                                    checked={onlineVisivel === "mesmosVistoUltimo"}
-                                    onChange={() => setOnlineVisivel("mesmosVistoUltimo")}
-                                />
-                                Vibração
-                            </label>
-                        </div>
-                    )}
+                    
                     {div5 && (
                         <div className={styles.divSu}>
                             <div className={styles.tabela_medicDL}>

@@ -86,12 +86,12 @@ async function remover(id) {
               <div className={styles.lista}>
                 <ul className={styles.arruma2}>
                   {nomes.map((nome, i) => (
-                    <li key={i}>
+                    <li key={i} className={styles.bloqueados}>
 
                       <img className={styles.img} src={nome.foto == 0 ? "/images/human.png" : `/images/eclipse${nome.foto}.png`} alt={nome.foto} />
                       {nome.nome}
 
-                      <button onClick={()=>{banido(nome.id)}}>Image Dragons</button>
+                      <button className={styles.butao} onClick={()=>{banido(nome.id)}}><Image alt="block" src="/images/bloc.png" width={60} height={60} /></button>
                     </li>
                   ))}
                 </ul>

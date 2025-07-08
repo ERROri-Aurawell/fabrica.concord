@@ -21,11 +21,10 @@ const LoginPage = () => {
         <h1 className={styles.title}>Bem-vindo ao Concord</h1>
         <div className={styles.VAIPROLADO}>
           <div>
-            <p className={styles.description}>
-              Estamos felizes por ter você aqui! O Concord é um
+          
+            <p className={styles.description_para}>Estamos felizes por ter você aqui! O Concord é um
               espaço criado  para conectar
-              pessoas,</p>
-            <p className={styles.description_para}> e
+              pessoas, e
               tornar a comunicação mais dinâmica e interativa.
               Você encontrará um ambiente acolhedor.</p>
         <div className={styles.botoes}>
@@ -33,7 +32,7 @@ const LoginPage = () => {
             <Link className={styles.link2} href="./login">Entrar</Link>
           </p>
 
-          <p className={styles.link}>
+          <p className={styles.link1}>
             Ainda não tem conta? <Link className={styles.link2} href="./cadastrar">Cadastre-se</Link>
           </p>
         </div>
