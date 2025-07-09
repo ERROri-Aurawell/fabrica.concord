@@ -7,7 +7,7 @@ import ChatRoute from '@/components/chatRoute';
 import Link from "next/link";
 import Cookies from 'js-cookie';
 import socket from "./socket";
-import { fetchFriends } from "./otherThings.js";
+import { fetchFriends, addInChat } from "./otherThings.js";
 
 export default function Chat() {
   const [apaputaquepariu, setVTMNC] = useState(false)
@@ -19,6 +19,7 @@ export default function Chat() {
   const listaRef = useRef(null);
 
   const [friends, setFriends] = useState([]);
+  const [filterFriend, setFilterFriend] = useState([])
 
   const [data, setData] = useState({})
 
@@ -113,6 +114,14 @@ export default function Chat() {
     setMenuAberto(!menuAberto);
   };
 
+  async function check(id, id2) {
+    const response = await addInChat(id, id2);
+
+    if (response) {
+      window.location.reload();
+    }
+  }
+
   useEffect(() => {
     const fetchFriendsData = async () => {
       try {
@@ -128,22 +137,12 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
-    console.log("Amigos:", friends);
-  }, [friends])
+    const atuais = chatID.membros.split(",")
+    setFilterFriend(friends.filter(obj => !atuais.includes(String(obj.id))))
 
-  function filtrarAmigos(){
-    //console.log("Nomes:")
-    //console.log(friends);
-    let atuais = chatID.membros
-    atuais = atuais.split(",")
-    console.log("Atuais:")
-    console.log(atuais)
-    
-    const amigosNaoAdicionados = friends.filter(id => console.log(id.id) )
-    
-    //console.log("Amigos não adicionados")
-    //console.log(amigosNaoAdicionados);
-  }
+    console.log("Atuais : " + atuais)
+    console.log("filtros : " + filterFriend)
+  }, [friends])
 
   return (
     <ProtectedRoute>
@@ -173,16 +172,16 @@ export default function Chat() {
                 <div className={styles.img_concord} >
                   {menuAberto && (
                     <div className={styles.menuEditar}>
-                      <button onClick={filtrarAmigos}>TEST</button>
                       <p>Editar informações</p>
 
                       <div>
                         <p>Adicionar membros</p>
                         <div>
-                          {friends.map((amigo) => (
+                          {filterFriend.map((amigo) => (
                             <div key={amigo.id} className={styles.divAmigosEditar}>
                               <img className={styles.img} src={amigo.foto == 0 ? "/images/human.png" : `/images/eclipse${amigo.foto}.png`} alt={amigo.nome} />
                               <p>{amigo.nome}</p>
+                              <button onClick={() => { check(amigo.id, chatID.id) }} >Adicionar</button>
                             </div>
                           ))}
                         </div>

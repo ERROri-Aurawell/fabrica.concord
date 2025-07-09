@@ -1,30 +1,55 @@
-import Cookies from 'js-cookie';  
-  
+import Cookies from 'js-cookie';
+const rota = "https://apiconcord.dev.vilhena.ifro.edu.br";
+// const rota = "http://localhost:9000";
+const key = Cookies.get('key');
+
 export async function fetchFriends() {
-    const rota = "https://apiconcord.dev.vilhena.ifro.edu.br";
-    // const rota = "http://localhost:9000";
+  const requestOptions = {
+    method: 'GET',
+    headers: { "Content-Type": "application/json" },
+  };
+  try {
+    const response = await fetch(`${rota}/friends/${key}`, requestOptions);
+    if (response.ok) {
+      const data = await response.json();
+      //console.log("Amigos:", data);
 
-    const key = Cookies.get('key');
-    const requestOptions = {
-      method: 'GET',
-      headers: { "Content-Type": "application/json" },
-    };
-    try {
-      const response = await fetch(`${rota}/friends/${key}`, requestOptions);
-      if (response.ok) {
-        const data = await response.json();
-        //console.log("Amigos:", data);
-
-        if (data.length === 0) { 
-          return []; // Return an empty array if no friends found
-        } else {
-          return data; // Return the list of friends
-        }
+      if (data.length === 0) {
+        return []; // Return an empty array if no friends found
       } else {
-        console.error("Failed to fetch friends:", response);
+        return data; // Return the list of friends
       }
-    }
-    catch (error) {
-      console.error("Error fetching friends:", error);
+    } else {
+      console.error("Failed to fetch friends:", response);
     }
   }
+  catch (error) {
+    console.error("Error fetching friends:", error);
+  }
+}
+
+export async function addInChat(pessoaId, chatId) {
+  console.log(`Adicionar o ${pessoaId} no chat_${chatId}`);
+
+  const requestOptions = {
+    method: 'PATCH',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({"userID" : pessoaId, "chatID" : chatId })
+  };
+  try {
+    const response = await fetch(`${rota}/addInChat/${key}`, requestOptions);
+    if (response.ok) {
+      const data = await response.json();
+      //console.log("Amigos:", data);
+
+      return true
+
+    } else {
+      console.error("Failed to add friends:", response);
+      return false
+    }
+  }
+  catch (error) {
+    console.error("Error adding friends:", error);
+  }
+}
