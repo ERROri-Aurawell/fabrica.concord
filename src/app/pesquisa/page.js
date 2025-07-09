@@ -63,7 +63,7 @@ export default function Filtro() {
 
 
             alert(data.response)
-        }
+        } 
     }
 
     useEffect(() => {
@@ -126,7 +126,6 @@ export default function Filtro() {
                                 onChange={(ev) => setBusca2(ev.target.value)}
                                 placeholder="Pesquisar filtro"
                             />
-
                             <div className={styles.filtros}>
                                 <ul className={styles.osfil}>
                                     {filtroBusca.map((f, index) => (
@@ -150,19 +149,20 @@ export default function Filtro() {
                                         </li>
                                     ))}
                                 </ul>
-                                <div className={styles.fil_sele}>
-                                    <p className={styles.text_fil}>
-                                        Filtros selecionados: <strong className={styles.fil_cor}>
-                                            {filtrosSelecionados.length > 0
-                                                ? filtrosSelecionados
-                                                    .map(id => filtro.find(f => f.id === id)?.filtro || id)
-                                                    .join(", ")
-                                                : "Nenhum"}
-                                        </strong>
-                                    </p>
-                                </div>
+                                
                             </div>
 
+                            <div className={styles.fil_sele}>
+                                <p className={styles.text_fil}>
+                                    Filtros selecionados: <strong className={styles.fil_cor}>
+                                        {filtrosSelecionados.length > 0
+                                            ? filtrosSelecionados
+                                                .map(id => filtro.find(f => f.id === id)?.filtro || id)
+                                                .join(", ")
+                                            : "Nenhum"}
+                                        </strong>
+                                </p>
+                            </div>
 
                         </div>
 
@@ -191,7 +191,7 @@ export default function Filtro() {
                                             className={styles.adicioarAmigo}
                                             onClick={() => { adicionarAmigo(usuario.id, usuario.nome) }}
                                         >
-                                            <Image alt="img" src="/images/amizade.png" width={40} height={40} />
+                                            <Image alt="img" src="/images/amizade.png" width={50} height={50} />
                                         </button>
                                     )}
                                 </div>
