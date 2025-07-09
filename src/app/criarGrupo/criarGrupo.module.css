@@ -9,7 +9,7 @@
 .container{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center;    
     padding: 20px;
     background: black;
     border: 8px solid;
@@ -27,6 +27,7 @@
     align-items: center;
     height: auto;
     font-size: x-large;
+    margin-top: 10%;
 }
 
 .form{
@@ -55,10 +56,40 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.button{
+.friendItem{
+    cursor: pointer;
+}
+.butao{
+    cursor: pointer;
+}
+.cont{
     cursor: pointer;
 }
 
+.button{
+    cursor: pointer;
+    width: 30%;
+    height: 30px;
+    background-color: white;
+    font-weight: bolder;
+}
+.button:hover{
+    background: linear-gradient(45deg, #5EECF5, #002244);
+    color: white;
+}
+
 .searchInput{
+    font-size: large;
+}
+
+.input{
+    height: 25px;
+    width: 60%;
+    font-size: large;
+}
+
+.searchInput{
+    height: 25px;
+    width: 50%;
     font-size: large;
 }

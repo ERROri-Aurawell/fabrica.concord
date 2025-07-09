@@ -27,7 +27,7 @@ const ChatCard = () => {
     });
     if (!response.ok) {
       alert('Erro ao buscar dados do usuário: ' + response.statusText);
-    }else{
+    } else {
       const data = await response.json();
       setDados(data);
     }
@@ -46,7 +46,13 @@ const ChatCard = () => {
   return (
 
     <ProtectedRoute>
+
+
+
       <div className={styles.card}>
+        <div className={styles.cabecalho}>
+          <Link className={styles.link2} href="./pesquisa"><Image className={styles.img2} alt="img" src="/images/aaaa.png" width={40} height={40}></Image></Link>
+        </div>
         <div className={styles.chat}>
           <div className={styles.section}>
             <h3 className={styles.h3}>{dados.nome}</h3>
@@ -62,11 +68,11 @@ const ChatCard = () => {
 
         <div className={styles.links}>
           <Link className={styles.botoes} href="./bloqueios">
-            <Image className={styles.lbotao} alt="img" src="/images/Block.png" width={60} height={60} />
+            <Image className={styles.lbotao} alt="img" src="/images/Block.png" width={70} height={70} />
           </Link>
 
           <Link className={styles.botoes1} href="./bloqueio">
-            <Image className={styles.lbotao1} alt="img" src="/images/Siren.png" width={56} height={56} />
+            <Image className={styles.lbotao1} alt="img" src="/images/Siren.png" width={66} height={66} />
           </Link>
         </div>
       </div>
