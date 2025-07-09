@@ -482,22 +482,22 @@ input:checked + .sliderNT:before {
 }
 
 .textoFiltro {
-    color: #ffffff; /* Altere essa cor como quiser */
+    color: #ffffff; 
     font-weight: 500;
-    margin-left: 8px; /* espaço entre o checkbox e o texto */
+    margin-left: 8px; 
   }
   
 
   .filtrosContainer {
-    max-height: 200px; /* altura máxima da lista de filtros */
+    max-height: 200px; 
     overflow-y: auto;
     padding-right: 8px;
     overflow-y: scroll;
 
-    -ms-overflow-style: none; /* Esconde a barra de rolagem no IE e Edge */
-    scrollbar-width: none; /* Esconde a barra de rolagem no Firefox */
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
     &::-webkit-scrollbar {
-        display: none; /* Esconde a barra de rolagem no Chrome, Safari e Opera */
+        display: none; 
     }
 
   }

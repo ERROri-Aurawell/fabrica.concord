@@ -133,9 +133,9 @@ export default function Header() {
                     adicionar();
                 }
             } catch {
-                window.location.reload();
                 //Cookies.remove('key');
-                //throw new Error("Tem algum erro na Key");
+                window.location.reload();
+                throw new Error("Tem algum erro na Key");
             }
         }
 
