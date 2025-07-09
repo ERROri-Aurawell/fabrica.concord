@@ -45,11 +45,24 @@ export async function addInChat(pessoaId, chatId) {
       return true
 
     } else {
-      console.error("Failed to add friends:", response);
-      return false
+      if(response.status === 400){
+        const data = await response.json();
+        alert("Impossível adicionar um membro bloqueado! ERR: " + response.status)
+      }
     }
   }
   catch (error) {
     console.error("Error adding friends:", error);
+  }
+}
+
+export async function chatDados(chatId){
+  const response = await fetch(`${rota}/chatInfo/${key}/${chatId}`)
+  if(response.ok){
+    const data = await response.json();
+
+    return data
+  }else{
+    return []
   }
 }

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import styles from "./contatos.module.css";
 import Link from "next/link";
 import Image from "next/image";
@@ -50,8 +50,6 @@ export default function filtro() {
     } catch (error) {
       throw new Error(error);
     }
-
-
   }
 
   useEffect(() => {

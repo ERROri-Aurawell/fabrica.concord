@@ -7,7 +7,7 @@ import ChatRoute from '@/components/chatRoute';
 import Link from "next/link";
 import Cookies from 'js-cookie';
 import socket from "./socket";
-import { fetchFriends, addInChat } from "./otherThings.js";
+import { fetchFriends, addInChat, chatDados } from "./otherThings.js";
 
 export default function Chat() {
   const [apaputaquepariu, setVTMNC] = useState(false)
@@ -134,6 +134,17 @@ export default function Chat() {
     };
 
     fetchFriendsData();
+    const func = async () =>{
+      const response = await chatDados(chatID.id);
+      console.log("------------------------------------------------------------------------")
+      console.log(chatID)
+      console.log("------------------------------------------------------------------------")
+      console.log(JSON.stringify(response[0]))
+      console.log("------------------------------------------------------------------------")
+      Cookies.set('chatID', JSON.stringify(response[0]), { expires: 0.05 });
+
+    }
+    func()
   }, []);
 
   useEffect(() => {
