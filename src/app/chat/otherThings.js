@@ -34,35 +34,33 @@ export async function addInChat(pessoaId, chatId) {
   const requestOptions = {
     method: 'PATCH',
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({"userID" : pessoaId, "chatID" : chatId })
+    body: JSON.stringify({ "userID": pessoaId, "chatID": chatId })
   };
   try {
     const response = await fetch(`${rota}/addInChat/${key}`, requestOptions);
     if (response.ok) {
       const data = await response.json();
-      //console.log("Amigos:", data);
+      console.log("Amigos:", data);
 
       return true
 
     } else {
-      if(response.status === 400){
-        const data = await response.json();
-        alert("Impossível adicionar um membro bloqueado! ERR: " + response.status)
-      }
+      const data = await response.json();
+      alert(data.response +" : err "+ response.status)
     }
   }
   catch (error) {
-    console.error("Error adding friends:", error);
+    console.error("Error :", error);
   }
 }
 
-export async function chatDados(chatId){
+export async function chatDados(chatId) {
   const response = await fetch(`${rota}/chatInfo/${key}/${chatId}`)
-  if(response.ok){
+  if (response.ok) {
     const data = await response.json();
 
     return data
-  }else{
+  } else {
     return []
   }
 }

@@ -17,13 +17,7 @@
     background-color: rgb(22, 22, 22);
 }
 
-.menuEditar {
-    width: 50vw;
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-    background-color: gray;
-}
+
 
 .centro {
     display: flex;
@@ -146,7 +140,32 @@
     max-width: 60%;
 }
 
+.menuEditar {
+    width: 50vw;
+    position: absolute;
+
+    height: 65%;
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: gray;
+}
+
 .divAmigosEditar{
+    max-height: 100%;
     display: flex;
     flex-direction: row;
+    gap: 20px;
+}
+
+.buttonGrande{
+    height: 100%;
+}
+
+.divDasPessoas{
+    max-height: 100%;
+    overflow: scroll;
+}
+
+.divDasPessoas::-webkit-scrollbar {
+  width: 0px;
 }

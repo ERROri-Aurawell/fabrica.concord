@@ -88,7 +88,7 @@ export default function Header() {
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();
-  
+
                 setNtfcs(data)
 
 
@@ -119,11 +119,11 @@ export default function Header() {
 
 
     useEffect(() => {
-        getData()
         if (isLoggedIn == undefined) {
             setNotific(false)
         } else {
             try {
+                getData()
 
                 const [a, b, c] = splitKEY(isLoggedIn)
 
