@@ -61,7 +61,7 @@ export default function filtro() {
     async function filterAmigos() {
       if (amigosOriginal.length > 0) {
         const nomesBusca = amigosOriginal.filter((nome) =>
-          nome.nome.toLowerCase().includes(busca.toLowerCase())
+          nome.chatNome.toLowerCase().includes(busca.toLowerCase())
         );
         setAmigos(nomesBusca);
       } else {
@@ -117,7 +117,8 @@ export default function filtro() {
                         console.error("Erro ao processar o nome:", error);
                       }
                     } else {
-                      const userNome = JSON.parse(dados).nome;
+
+                      const userNome = JSON.parse(nome.chatNome);
 
                       displayName = userNome[0]
                     }

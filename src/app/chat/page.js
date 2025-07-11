@@ -17,6 +17,7 @@ export default function Chat() {
   const [nomes, setNomes] = useState([]);
   const [mensagens, setMensagens] = useState([]);
   const listaRef = useRef(null);
+  const [tipos, setTipos] = useState([false])
 
   const [friends, setFriends] = useState([]);
   const [filterFriend, setFilterFriend] = useState([])
@@ -65,7 +66,7 @@ export default function Chat() {
   }
 
   useEffect(() => {
-    if (!chatID) {
+    if (!chatID || chatID == undefined) {
       console.error("Chat ID não encontrado. Redirecionando para contatos.");
       window.location.href = "/contatos"; // Redireciona para a página de contatos
       return;
@@ -118,6 +119,7 @@ export default function Chat() {
     const response = await addInChat(id, id2);
 
     if (response) {
+      console.log(response)
       window.location.reload();
     }
   }
@@ -134,15 +136,17 @@ export default function Chat() {
     };
 
     fetchFriendsData();
-    const func = async () =>{
+    const func = async () => {
       const response = await chatDados(chatID.id);
       console.log("------------------------------------------------------------------------")
       console.log(chatID)
       console.log("------------------------------------------------------------------------")
-      console.log(JSON.stringify(response[0]))
+      console.log((response[0]))
       console.log("------------------------------------------------------------------------")
-      Cookies.set('chatID', JSON.stringify(response[0]), { expires: 0.05 });
+      //Cookies.set('chatID', JSON.stringify(response[0]), { expires: 0.05 });
 
+      setChatID(response[0])
+      setTipos(response[0].tipo == 1);
     }
     func()
   }, []);
@@ -183,20 +187,25 @@ export default function Chat() {
                 <div className={styles.img_concord} >
                   {menuAberto && (
                     <div className={styles.menuEditar}>
-                      <p>Editar informações</p>
-
                       <div>
-                        <p>Adicionar membros</p>
-                        <div>
-                          {filterFriend.map((amigo) => (
-                            <div key={amigo.id} className={styles.divAmigosEditar}>
-                              <img className={styles.img} src={amigo.foto == 0 ? "/images/human.png" : `/images/eclipse${amigo.foto}.png`} alt={amigo.nome} />
-                              <p>{amigo.nome}</p>
-                              <button onClick={() => { check(amigo.id, chatID.id) }} >Adicionar</button>
-                            </div>
-                          ))}
-                        </div>
+                        <button className={styles.buttonGrande} onClick={() => {toggleMenu()}}> &lt; </button>
                       </div>
+                      {tipos &&
+                        <div>
+                          <p>Adicionar membros</p>
+                          <div className={styles.divDasPessoas}>
+                            {filterFriend.map((amigo) => (
+                              <div key={amigo.id} className={styles.divAmigosEditar}>
+                                <img className={styles.img} src={amigo.foto == 0 ? "/images/human.png" : `/images/eclipse${amigo.foto}.png`} alt={amigo.nome} />
+                                <p>{amigo.nome}</p>
+                                <button onClick={() => { check(amigo.id, chatID.id) }} >Adicionar</button>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      }
+
+
                     </div>
                   )}
                   <Image className={styles.concord} src="/images/CONCORD.png" alt="concord" width={60} height={0} onClick={toggleMenu} />
