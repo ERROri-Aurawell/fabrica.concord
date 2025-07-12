@@ -29,6 +29,8 @@ export default function Config() {
   const [filtro, setFiltro] = useState([]);
   const [filtrosSelecionados, setFiltrosSelecionados] = useState([]);
   const [dropdownAberto, setDropdownAberto] = useState(false);
+  const [sucessoAvatar, setSucessoAvatar] = useState(false);
+
   const router = useRouter();
 
   const mudarDiv = (numero) => {
@@ -42,13 +44,22 @@ export default function Config() {
   };
 
   const getUsuarios = async () => {
+    const key = Cookies.get("key");
+    if (!key) {
+      router.push("/login");
+      return;
+    }
+
     try {
-      const conteudo = await fetch(
-        `https://apiconcord.dev.vilhena.ifro.edu.br/buscar/${Cookies.get("key")}`
-      );
-      if (!conteudo.ok) throw new Error("Erro ao buscar:" + conteudo.statusText);
-      const data = await conteudo.json();
+      const response = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/buscar/${key}`);
+      if (!response.ok) throw new Error("Erro ao buscar dados do usuário.");
+
+      const data = await response.json();
       setFiltro(data.filtros);
+      setNome(data.nome || "");
+      setDesc(data.desc || "");
+      setSelectedAvatar(avatars[data.foto] || avatars[0]);
+      setFiltrosSelecionados(data.filtrosSelecionados || []);
     } catch (error) {
       console.error("Erro ao buscar filtros:", error);
     }
@@ -58,12 +69,12 @@ export default function Config() {
     f?.filtro?.toLowerCase().includes(busca2.toLowerCase())
   );
 
-  async function atualizarPerfilSubmit(event) {
+  const atualizarPerfilSubmit = async (event) => {
     event.preventDefault();
     const nome = event.target.nome.value;
     const descricao = event.target.desc.value;
     const filtros = filtrosSelecionados.join(", ");
-    const foto = avatars.indexOf(selectedAvatar);
+    const foto = selectedAvatar;
 
     if (filtrosSelecionados.length === 0) {
       alert("Por favor, selecione pelo menos um filtro.");
@@ -90,7 +101,41 @@ export default function Config() {
       console.error("Erro:", error);
       alert("Erro ao se conectar com o servidor.");
     }
-  }
+  };
+
+  const atualizarAvatar = async (fotoPath) => {
+    const key = Cookies.get("key");
+    if (!key) {
+      alert("Sessão expirada. Faça login novamente.");
+      router.push("/login");
+      return;
+    }
+
+    try {
+      const fileName = fotoPath.split("/").pop(); // Apenas o nome do arquivo
+
+      const response = await fetch(
+        `https://apiconcord.dev.vilhena.ifro.edu.br/updateAvatar/${key}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ foto: fileName }),
+        }
+      );
+
+      const textoResposta = await response.text();
+      console.log("Resposta da API:", response.status, textoResposta);
+
+      if (response.ok) {
+        setSucessoAvatar(true);
+      } else {
+        alert("Erro ao atualizar avatar.");
+      }
+    } catch (err) {
+      console.error("Erro ao atualizar avatar:", err);
+      alert("Erro ao conectar com o servidor.");
+    }
+  };
 
   useEffect(() => {
     getUsuarios();
@@ -99,7 +144,6 @@ export default function Config() {
   return (
     <ProtectedRoute>
       <section className={styles.section}>
-        {/* Parte lateral esquerda */}
         <section className={styles.parteVisivel}>
           <div>
             <Link className={styles.link2} href="./cadastrar">
@@ -216,8 +260,7 @@ export default function Config() {
                         </div>
 
                         <div className={styles.selecionados}>
-                          Filtros selecionados:{" "}
-                          <strong>{filtrosSelecionados.join(", ")}</strong>
+                          Filtros selecionados: <strong>{filtrosSelecionados.join(", ")}</strong>
                         </div>
 
                         <input
@@ -236,6 +279,11 @@ export default function Config() {
           {div3 && (
             <div className={styles.divSuMUD}>
               <div className={styles.containerMUD}>
+                {sucessoAvatar && (
+                  <div className={styles.headerDL}>
+                    <span className={styles.logoDL}>✅ Avatar atualizado com sucesso!</span>
+                  </div>
+                )}
                 <div className={styles.sectionMUD}>
                   <h3 className={styles.h3MUD}>Avatar atual</h3>
                   <div className={styles.currentMUD}>
@@ -263,14 +311,8 @@ export default function Config() {
 
                 <button
                   className={styles.buttonMUD}
-                  onClick={() => {
-                    atualizarPerfilSubmit({
-                      preventDefault: () => {},
-                      target: {
-                        nome: { value: nome },
-                        desc: { value: desc },
-                      },
-                    });
+                  onClick={async () => {
+                    await atualizarAvatar(selectedAvatar);
                   }}
                 >
                   Atualizar avatar
@@ -322,14 +364,3 @@ export default function Config() {
     </ProtectedRoute>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
