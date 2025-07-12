@@ -10,6 +10,7 @@ import socket from "./socket";
 import { fetchFriends, addInChat, chatDados } from "./otherThings.js";
 
 export default function Chat() {
+  const [dados, setDados] = useState(Cookies.get('userData'));
   const [apaputaquepariu, setVTMNC] = useState(false)
   const [conectado, setConectado] = useState(true);
   const chatIDCookie = Cookies.get('chatID');
@@ -23,6 +24,8 @@ export default function Chat() {
   const [filterFriend, setFilterFriend] = useState([])
 
   const [data, setData] = useState({})
+
+  const [visivel, setVisivel] = useState(null);
 
 
   const adicionarNome = () => {
@@ -73,6 +76,8 @@ export default function Chat() {
     }
 
 
+    setDados(JSON.parse(dados))
+
     setData({
       "key": `${Cookies.get('key')}`,
       "mensagem": "",
@@ -87,6 +92,17 @@ export default function Chat() {
     });
 
     socket.emit("todas", { key: Cookies.get('key'), chatID: chatID.id });
+
+    socket.on("mensagemEditada", ({ id, novaMensagem, dataEdicao }) => {
+      console.log("Recebeu o update ai as " + dataEdicao + " Pra editar o " + id);
+
+      setNomes((prev) =>
+        prev.map((msg) =>
+          msg.mensageId === id ? { ...msg, mensagem: novaMensagem } : msg
+        )
+      );
+    });
+
 
     return () => {
       socket.disconnect();
@@ -119,7 +135,6 @@ export default function Chat() {
     const response = await addInChat(id, id2);
 
     if (response) {
-      console.log(response)
       window.location.reload();
     }
   }
@@ -128,7 +143,6 @@ export default function Chat() {
     const fetchFriendsData = async () => {
       try {
         const friendsData = await fetchFriends();
-        //console.log(friendsData)
         setFriends(friendsData);
       } catch (error) {
         console.error("Erro ao buscar amigos:", error);
@@ -138,11 +152,6 @@ export default function Chat() {
     fetchFriendsData();
     const func = async () => {
       const response = await chatDados(chatID.id);
-      console.log("------------------------------------------------------------------------")
-      console.log(chatID)
-      console.log("------------------------------------------------------------------------")
-      console.log((response[0]))
-      console.log("------------------------------------------------------------------------")
       //Cookies.set('chatID', JSON.stringify(response[0]), { expires: 0.05 });
 
       setChatID(response[0])
@@ -155,8 +164,6 @@ export default function Chat() {
     const atuais = chatID.membros.split(",")
     setFilterFriend(friends.filter(obj => !atuais.includes(String(obj.id))))
 
-    console.log("Atuais : " + atuais)
-    console.log("filtros : " + filterFriend)
   }, [friends])
 
   return (
@@ -188,7 +195,7 @@ export default function Chat() {
                   {menuAberto && (
                     <div className={styles.menuEditar}>
                       <div>
-                        <button className={styles.buttonGrande} onClick={() => {toggleMenu()}}> &lt; </button>
+                        <button className={styles.buttonGrande} onClick={() => { toggleMenu() }}> &lt; </button>
                       </div>
                       {tipos &&
                         <div>
@@ -212,12 +219,35 @@ export default function Chat() {
                 </div>
                 <div className={styles.flow} ref={listaRef} style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                   <ul className={styles.arruma}>
-                    {nomes.map((nome, i) => (
+                    {nomes.map((nome) => (
 
-                      <li className={styles.conversa} key={i}>
+                      <li className={styles.conversa} key={nome.mensageId}>
                         <p className={nome.remetente != Cookies.get('key').split("-")[0] ? styles.nomeDoCara : styles.nada}>
                           {nome.mensagem}
+                          {(nome.remetente == dados.id) &&
+                            <button onClick={() => { setVisivel(visivel === nome.mensageId ? null : nome.mensageId) }} >⭣</button>
+                          }
                         </p>
+                        {visivel === nome.mensageId && (
+                          <div className={styles.popUp}>
+                            <input
+                              type="text"
+                              defaultValue={nome.mensagem}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  console.log("Enviar o update")
+                                  socket.emit("editar", {
+                                    key: Cookies.get('key'),
+                                    mensagem: e.target.value,
+                                    chatID: chatID.id,
+                                    menssageID: nome.mensageId
+                                  });
+                                  setVisivel(null);
+                                }
+                              }}
+                            />
+                          </div>
+                        )}
 
                         <div className={styles.flowPodcast}>
                           <img className={styles.img} src={nome.foto == 0 ? "/images/human.png" : `/images/eclipse${nome.foto}.png`} alt={nome.nome} />

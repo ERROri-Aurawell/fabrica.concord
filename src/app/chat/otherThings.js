@@ -59,6 +59,9 @@ export async function chatDados(chatId) {
   if (response.ok) {
     const data = await response.json();
 
+    console.log("-------------\ndados do grupo : ")
+    console.log(data)
+
     return data
   } else {
     return []
