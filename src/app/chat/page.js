@@ -26,6 +26,7 @@ export default function Chat() {
   const [data, setData] = useState({})
 
   const [visivel, setVisivel] = useState(null);
+  const [visivel2, setVisivel2] = useState(null)
 
 
   const adicionarNome = () => {
@@ -100,6 +101,14 @@ export default function Chat() {
         prev.map((msg) =>
           msg.mensageId === id ? { ...msg, mensagem: novaMensagem } : msg
         )
+      );
+    });
+
+    socket.on("apagarMensagem", ({ id, dataEdicao }) => {
+      console.log("Recebeu o update ai as " + dataEdicao + " Pra apagar o " + id);
+
+      setNomes((prev) =>
+        prev.filter((msg) => msg.mensageId !== id)
       );
     });
 
@@ -225,27 +234,60 @@ export default function Chat() {
                         <p className={nome.remetente != Cookies.get('key').split("-")[0] ? styles.nomeDoCara : styles.nada}>
                           {nome.mensagem}
                           {(nome.remetente == dados.id) &&
-                            <button className={styles.butao} onClick={() => { setVisivel(visivel === nome.mensageId ? null : nome.mensageId) }} ><Image src="/images/editar.png" alt="concord" width={20} height={20}/></button>
+                            <button className={styles.butao} onClick={() => { setVisivel(visivel === nome.mensageId ? null : nome.mensageId) }} ><Image src="/images/editar.png" alt="concord editar" width={20} height={20} /></button>
+                          }
+                          {((nome.remetente == dados.id) || (() => {
+                            const valor = dados.id;
+                            const array = chatID.adms.split(",").map(Number);
+                            if (array.includes(valor)) {
+                              return true
+                            }
+
+                          })) &&
+                            <button className={styles.butao} onClick={() => { setVisivel2(visivel2 === nome.mensageId ? null : nome.mensageId) }} ><Image src="/images/deletar.png" alt="concord deletar" width={20} height={20} /></button>
                           }
                         </p>
                         {visivel === nome.mensageId && (
-                          <div className={styles.popUp}>
-                            <input
-                              type="text"
-                              defaultValue={nome.mensagem}
-                              onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                  console.log("Enviar o update")
-                                  socket.emit("editar", {
-                                    key: Cookies.get('key'),
-                                    mensagem: e.target.value,
-                                    chatID: chatID.id,
-                                    menssageID: nome.mensageId
-                                  });
-                                  setVisivel(null);
-                                }
-                              }}
-                            />
+                          <div>
+                            <div className={styles.popUp}>
+                              <input
+                                type="text"
+                                defaultValue={nome.mensagem}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") {
+                                    console.log("Enviar o update")
+                                    socket.emit("editar", {
+                                      key: Cookies.get('key'),
+                                      mensagem: e.target.value,
+                                      chatID: chatID.id,
+                                      menssageID: nome.mensageId
+                                    });
+                                    setVisivel(null);
+                                    setVisivel2(null);
+                                  }
+                                }}
+                              />
+                            </div>
+                          </div>
+                        )}
+
+                        {visivel2 === nome.mensageId && (
+                          <div>
+                            <div className={styles.popUp}>
+                              <button onClick={() => {
+                                console.log("Deletar o id : " + nome.menssageID);
+                                setVisivel2(null);
+                                setVisivel(null);
+                                //socket.emit("editar", {
+                                //key: Cookies.get('key'),
+                                //mensagem: e.target.value,
+                                //chatID: chatID.id,
+                                //menssageID: nome.mensageId
+                                //});
+                              }
+                              }
+                              >Deletar</button>
+                            </div>
                           </div>
                         )}
 
@@ -279,7 +321,7 @@ export default function Chat() {
           </div>
         </div>
       </ChatRoute>
-    </ProtectedRoute>
+    </ProtectedRoute >
   );
 }
 
