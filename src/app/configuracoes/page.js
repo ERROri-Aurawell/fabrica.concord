@@ -11,25 +11,12 @@ export default function Config() {
   const [avatars, setAvatars] = useState([
     "/images/eclipse1.png",
     "/images/eclipse2.png",
-    "/images/fotoDoOutro.png",
-    "/images/fotoDePerfil.png",
     "/images/eclipse3.png",
     "/images/eclipse4.png",
     "/images/eclipse5.png",
-    "/images/eclipse1.png",
-    "/images/eclipse2.png",
-    "/images/fotoDoOutro.png",
-    "/images/fotoDePerfil.png",
-    "/images/eclipse3.png",
-    "/images/eclipse4.png",
-    "/images/eclipse5.png",
-    "/images/eclipse1.png",
-    "/images/eclipse2.png",
-    "/images/fotoDoOutro.png",
-    "/images/fotoDePerfil.png",
-    "/images/eclipse3.png",
-    "/images/eclipse4.png",
-    "/images/eclipse5.png",
+    "/images/eclipse6.png",
+    "/images/eclipse7.png",
+    "/images/eclipse8.png",
   ]);
 
   const [subdiv1, setSubDiv1] = useState(true)
@@ -183,7 +170,7 @@ export default function Config() {
           </div>
 
           <div className={styles.miniPerfil}>
-            <img width={35} height={35} alt="perfil" src={avatars[fotoDePerfil]} />
+            <img width={35} height={35} alt="perfil" src={fotoDePerfil == 0 ? "/images/human.png" : `/images/eclipse${fotoDePerfil}.png`} />
             <p>{nome}</p>
           </div>
 
@@ -205,21 +192,19 @@ export default function Config() {
           {div3 && (
             <div className={styles.divSu}>
               <div className={styles.ladoEsquerdo}>
-                <p>Mudar foto</p>
-
-
+                <p>Alterar foto</p>
 
                 <section className={styles.sectionCN}>
                   {avatars.map((avatar, i) => (
                     <div key={i} >
-                      <button onClick={() => { setFotoGrande(i) }}><Image src={avatar} width={50} height={50} alt="imagem"></Image> </button>
+                      <button className={styles.botaoImg} onClick={() => { setFotoGrande(i + 1) }}><Image src={avatar} width={50} height={50} alt="imagem"></Image> </button>
                     </div>
                   ))}
                 </section>
               </div>
               <div className={styles.ladoDireito}>
                 <div className={styles.divDaImagemGrande}>
-                  <Image src={avatars[fotoGrande]} width={150} height={150} alt="imagem"></Image>
+                  <Image src={avatars[fotoGrande - 1]} width={150} height={150} alt="imagem"></Image>
                   <button onClick={() => { updateUser({ foto: fotoGrande }) }}>Mudar Avatar</button>
                 </div>
               </div>
@@ -227,34 +212,42 @@ export default function Config() {
           )}
 
           {div1 && (
-            <div className={styles.divSuMUD}>
+            <div className={styles.divSu}>
               <div className={styles.containerMUD}>
-                <div>
-                  <button onClick={() => { mudarDiv2("1") }}>Filtros</button>
-                  <button onClick={() => { mudarDiv2("2") }}>Nome e descrição</button>
 
-                  {subdiv1 &&
-                    <form onSubmit={(e) => {
-                      e.preventDefault();
-                      updateUser({ filtros: filtrosMarcados.join(",") });
-                    }}>
+                <div className={styles.botoes} >
+                  <button className={styles.botaoCN} onClick={() => { mudarDiv2("1") }}>Filtros</button>
+                  <button className={styles.botaoCN} onClick={() => { mudarDiv2("2") }}>Nome e descrição</button>
+                </div>
+                {subdiv1 &&
+                  <form onSubmit={(e) => {
+                    e.preventDefault();
 
-                      <label className={styles.labelCN}>Filtros:</label>
+                    if (filtrosMarcados.length === 0) {
+                      alert("Selecione pelo menos um filtro.");
+                      return;
+                    }
 
-                      <input
-                        type="text"
-                        placeholder="Buscar filtro..."
-                        value={busca2}
-                        onChange={(e) => setBusca2(e.target.value)}
-                        className={styles.inputBusca}
-                      />
-                      {/**filtrosMarcados*/}
+                    updateUser({ filtros: filtrosMarcados.join(",") });
+                  }} className={styles.formFiltros} >
 
+                    <label className={styles.labelCN}>Filtros:</label>
+
+                    <input
+                      type="text"
+                      placeholder="Buscar filtro..."
+                      value={busca2}
+                      onChange={(e) => setBusca2(e.target.value)}
+                      className={styles}
+                    />
+                    {/**filtrosMarcados*/}
+                    <div className={styles.filtrosContainer} >
                       {filtroBusca.map((filtro1) => (
 
                         <label key={filtro1.id}>
                           <input
                             type="checkbox"
+                            className={styles.inputBusca}
                             id={filtro1.id}
                             checked={filtrosMarcados.includes(filtro1.id)}
                             onChange={(e) => {
@@ -272,52 +265,76 @@ export default function Config() {
                           {filtro1.filtro}
                         </label>
                       ))}
+                    </div>
 
-                      <input type="submit" className={`${styles.botaoCN} ${styles.buttonAtualizarPerfil}`} value="Atualizar seu perfil" />
-                    </form>
-                  }
+                    <input type="submit" className={`${styles.botaoCN} ${styles.buttonAtualizarPerfil}`} value="Atualizar filtros" />
+                  </form>
+                }
 
-                  {subdiv2 &&
-                    <form onSubmit={(e) => {
-                      e.preventDefault();
+                {subdiv2 &&
+                  <form className={styles.formFiltros2} onSubmit={(e) => {
+                    e.preventDefault();
 
-                      const dadosAtualizados = {};
-                      if (novoNome.trim() !== "") dadosAtualizados.nome = novoNome;
-                      if (novaDescr.trim() !== "") dadosAtualizados.desc = novaDescr;
+                    if(novoNome.trim() === "" && novaDescr.trim() === ""){
+                      alert("Por favor, preencha o nome ou a descrição.");
+                      return;
+                    }
+                    
+                    const dadosAtualizados = {};
 
-                      if (Object.keys(dadosAtualizados).length > 0) {
-                        setNovoNome("");
-                        setNovaDescr("");
-                        updateUser(dadosAtualizados);
+                    if (novoNome.trim() !== ""){
+                      if (novoNome.trim().length <= 64) {
+                        dadosAtualizados.nome = novoNome;
+                      }else{
+                        alert("Nome deve ter no máximo 64 caracteres.");
+                        return; // cancela o submit
                       }
-                    }}>
-                      <label className={styles.labelCN}>
-                        Alterar Nome ou Descrição
-                      </label>
+                      
+                    } 
 
-                      <input
-                        type="text"
-                        value={novoNome}
-                        placeholder={nome}
+                    if (novaDescr.trim() !== "") {
+                      if (novaDescr.trim().length <= 512) {
+                        dadosAtualizados.desc = novaDescr;
+                      } else {
+                        alert("Descrição deve ter no máximo 512 caracteres.");
+                        return; // cancela o submit
+                      }
+                    }
 
-                        onChange={(e) => { setNovoNome(e.target.value)}}
-                        className={styles.inputBusca}
-                      />
+                    if (Object.keys(dadosAtualizados).length > 0) {
+                      setNovoNome("");
+                      setNovaDescr("");
+                      updateUser(dadosAtualizados);
+                    }
+                  }}>
+                    <label className={styles.labelCN}>
+                      Alterar Nome ou Descrição
+                    </label>
 
-                      <input
-                        type="text"
-                        value={novaDescr}
-                        placeholder={descricao}
+                    <input
+                      type="text"
+                      value={novoNome}
+                      placeholder={nome}
 
-                        onChange={(e) => { setNovaDescr(e.target.value)}}
-                        className={styles.inputBusca}
-                      />
+                      onChange={(e) => { setNovoNome(e.target.value) }}
+                      className={[styles.campoQuadrado1, styles.inputTexto].join(" ")}
+                    />
 
-                      <input type="submit" className={`${styles.botaoCN} ${styles.buttonAtualizarPerfil}`} value="Atualizar seu perfil" />
+                    <textarea
+                      type="text"
+                      value={novaDescr}
+                      placeholder={descricao}
 
-                    </form>
-                  }
-                </div>
+                      onChange={(e) => { setNovaDescr(e.target.value) }}
+                      className={[styles.campoQuadrado2, styles.inputTexto].join(" ")}
+                      rows={4}
+                    />
+
+                    <input type="submit" className={`${styles.botaoCN} ${styles.buttonAtualizarPerfil}`} value="Atualizar seu perfil" />
+
+                  </form>
+                }
+
 
               </div>
             </div>
