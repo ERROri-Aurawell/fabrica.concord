@@ -169,3 +169,11 @@
 .divDasPessoas::-webkit-scrollbar {
   width: 0px;
 }
+
+.butao{
+    right: 0;
+    top: 0;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
