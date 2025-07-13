@@ -26,6 +26,7 @@ export default function Chat() {
   const [data, setData] = useState({})
 
   const [visivel, setVisivel] = useState(null);
+  const [adm, setAdm] = useState(false)
   const [visivel2, setVisivel2] = useState(null)
 
 
@@ -113,6 +114,8 @@ export default function Chat() {
     });
 
 
+
+
     return () => {
       socket.disconnect();
     };
@@ -148,7 +151,7 @@ export default function Chat() {
     }
   }
 
-  useEffect(() => {
+  useEffect(() => { //aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     const fetchFriendsData = async () => {
       try {
         const friendsData = await fetchFriends();
@@ -165,6 +168,13 @@ export default function Chat() {
 
       setChatID(response[0])
       setTipos(response[0].tipo == 1);
+
+      const valor = JSON.parse(dados).id;
+      const array = response[0].adms.split(",").map(Number);
+
+      if (array.includes(valor)) {
+        setAdm(true)
+      }
     }
     func()
   }, []);
@@ -236,14 +246,7 @@ export default function Chat() {
                           {(nome.remetente == dados.id) &&
                             <button className={styles.butao} onClick={() => { setVisivel(visivel === nome.mensageId ? null : nome.mensageId) }} ><Image src="/images/editar.png" alt="concord editar" width={20} height={20} /></button>
                           }
-                          {((nome.remetente == dados.id) || (() => {
-                            const valor = dados.id;
-                            const array = chatID.adms.split(",").map(Number);
-                            if (array.includes(valor)) {
-                              return true
-                            }
-
-                          })) &&
+                          {((nome.remetente == dados.id) || (adm)) &&
                             <button className={styles.butao} onClick={() => { setVisivel2(visivel2 === nome.mensageId ? null : nome.mensageId) }} ><Image src="/images/deletar.png" alt="concord deletar" width={20} height={20} /></button>
                           }
                         </p>
