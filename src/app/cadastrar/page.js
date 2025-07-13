@@ -120,7 +120,7 @@ export default function Cadastrar() {
             const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
             //const rota = "http://localhost:9000"
 
-            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/cadastrar/google`, requestOptions);
+            const resposta = await fetch(`${rota}/cadastrar/google`, requestOptions);
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();
