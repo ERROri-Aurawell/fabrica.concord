@@ -116,6 +116,7 @@ export default function Cadastrar() {
         }
 
         try {
+            //Mandei essa porra atualizar
             const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
             //const rota = "http://localhost:9000"
 
@@ -135,8 +136,6 @@ export default function Cadastrar() {
         } catch (error) {
             throw new Error(error);
         }
-
-
     }
 
     useEffect(() => {
