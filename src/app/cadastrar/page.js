@@ -116,8 +116,8 @@ export default function Cadastrar() {
         }
 
         try {
-            //const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
-            const rota = "http://localhost:9000"
+            const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
+            //const rota = "http://localhost:9000"
 
             const resposta = await fetch(`${rota}/cadastrar/google`, requestOptions);
             if (resposta.ok) {

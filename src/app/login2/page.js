@@ -11,10 +11,11 @@ const Login2 = () => {
     const router = useRouter();
 
     const [busca2, setBusca2] = useState('');
-    const [filtro, setFiltro] = useState([]);
     const [filtrosSelecionados, setFiltrosSelecionados] = useState([]);
     const [dropdownAberto, setDropdownAberto] = useState(false);
-
+    
+    
+    const [filtro, setFiltro] = useState([]);
     const getUsuarios = async () => {
         const conteudo = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/buscar/${Cookies.get('key')}`);
         if (!conteudo.ok) {

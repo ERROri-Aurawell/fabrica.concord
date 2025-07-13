@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 
 export default function Config() {
-  const avatars = [
+  const [avatars, setAvatars] = useState([
     "/images/eclipse1.png",
     "/images/eclipse2.png",
     "/images/fotoDoOutro.png",
@@ -16,20 +16,73 @@ export default function Config() {
     "/images/eclipse3.png",
     "/images/eclipse4.png",
     "/images/eclipse5.png",
-  ];
+    "/images/eclipse1.png",
+    "/images/eclipse2.png",
+    "/images/fotoDoOutro.png",
+    "/images/fotoDePerfil.png",
+    "/images/eclipse3.png",
+    "/images/eclipse4.png",
+    "/images/eclipse5.png",
+    "/images/eclipse1.png",
+    "/images/eclipse2.png",
+    "/images/fotoDoOutro.png",
+    "/images/fotoDePerfil.png",
+    "/images/eclipse3.png",
+    "/images/eclipse4.png",
+    "/images/eclipse5.png",
+  ]);
 
-  const [selectedAvatar, setSelectedAvatar] = useState(avatars[6]);
+  const [subdiv1, setSubDiv1] = useState(true)
+  const [subdiv2, setSubDiv2] = useState(false)
+
+  const mudarDiv2 = (numero) => {
+    setSubDiv1(false);
+    setSubDiv2(false);
+
+    if (numero === "1") setSubDiv1(true);
+    if (numero === "2") setSubDiv2(true);
+  };
+
   const [div1, setDiv1] = useState(false);
   const [div3, setDiv3] = useState(false);
   const [div5, setDiv5] = useState(false);
+  const [key, setKey] = useState(Cookies.get("key"));
+  const [dadosUsuario, setDadosUsuario] = useState(Cookies.get('userData'))
+  const [fotoDePerfil, setFotoDePerfil] = useState(56835458925)
+  const [nome, setNome] = useState("Carregando...")
+  const [fotoGrande, setFotoGrande] = useState("1")
+  const [filtrosMarcados, setFiltrosMarcados] = useState("")
+  const [descricao, setDescricao] = useState('Carregando...')
 
-  const [nome, setNome] = useState("");
-  const [desc, setDesc] = useState("");
-  const [busca2, setBusca2] = useState("");
   const [filtro, setFiltro] = useState([]);
-  const [filtrosSelecionados, setFiltrosSelecionados] = useState([]);
-  const [dropdownAberto, setDropdownAberto] = useState(false);
-  const [sucessoAvatar, setSucessoAvatar] = useState(false);
+
+  const getUsuarios = async () => {
+    const conteudo = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/buscar/${Cookies.get('key')}`);
+    if (!conteudo.ok) {
+      throw new Error('Erro ao buscar:' + conteudo.statusText);
+    }
+    const data = await conteudo.json();
+    setFiltro(data.filtros);
+
+    console.log(data.filtros)
+  };
+
+
+  function splitKEY(key) {
+    const [id, ...rest] = key.split("-");
+    const after = rest.join("-");
+    const [email, ...rest2] = after.split("-");
+    const senha = rest2.join('-');
+
+    return [id, email, senha];
+  }
+
+  const [novoNome, setNovoNome] = useState('')
+  const [novaDescr, setNovaDescr] = useState("")
+
+  const [busca2, setBusca2] = useState("")
+
+  const filtroBusca = filtro.filter(f => f?.filtro?.toLowerCase().includes(busca2.toLowerCase()));
 
   const router = useRouter();
 
@@ -43,103 +96,75 @@ export default function Config() {
     if (numero === "5") setDiv5(true);
   };
 
-  const getUsuarios = async () => {
-    const key = Cookies.get("key");
-    if (!key) {
-      router.push("/login");
-      return;
+  async function getData() {
+    const requestOptions = {
+      method: 'GET',
+      headers: { "Content-Type": "application/json" },
     }
-
     try {
-      const response = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/buscar/${key}`);
-      if (!response.ok) throw new Error("Erro ao buscar dados do usuário.");
+      const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/user/${splitKEY(key)[0]}`, requestOptions);
+      if (resposta.ok) {
+        // mano?
+        const data = await resposta.json();
+        Cookies.set("userData", JSON.stringify(data))
 
-      const data = await response.json();
-      setFiltro(data.filtros);
-      setNome(data.nome || "");
-      setDesc(data.desc || "");
-      setSelectedAvatar(avatars[data.foto] || avatars[0]);
-      setFiltrosSelecionados(data.filtrosSelecionados || []);
-    } catch (error) {
-      console.error("Erro ao buscar filtros:", error);
-    }
-  };
+        setFotoDePerfil(data.foto)
+        setNome(data.nome)
+        setFiltrosMarcados(data.filtros ? data.filtros.split(",").map(Number) : []);
+        setDescricao(data.descricao)
 
-  const filtroBusca = filtro.filter((f) =>
-    f?.filtro?.toLowerCase().includes(busca2.toLowerCase())
-  );
+        alert("atualizado!")
 
-  const atualizarPerfilSubmit = async (event) => {
-    event.preventDefault();
-    const nome = event.target.nome.value;
-    const descricao = event.target.desc.value;
-    const filtros = filtrosSelecionados.join(", ");
-    const foto = selectedAvatar;
-
-    if (filtrosSelecionados.length === 0) {
-      alert("Por favor, selecione pelo menos um filtro.");
-      return;
-    }
-
-    try {
-      const response = await fetch(
-        `https://apiconcord.dev.vilhena.ifro.edu.br/updateUser/${Cookies.get("key")}`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ nome, desc: descricao, filtros, foto }),
-        }
-      );
-
-      if (!response.ok) {
-        alert("Erro ao atualizar perfil: " + response.statusText);
-      } else {
-        alert("Perfil atualizado com sucesso!");
-        router.push("/contatos");
       }
     } catch (error) {
-      console.error("Erro:", error);
-      alert("Erro ao se conectar com o servidor.");
+      throw new Error(error);
     }
-  };
+  }
 
-  const atualizarAvatar = async (fotoPath) => {
-    const key = Cookies.get("key");
-    if (!key) {
-      alert("Sessão expirada. Faça login novamente.");
-      router.push("/login");
-      return;
+  // { nome, foto, desc, filtros }
+
+  async function updateUser(bodyItens) {
+    const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
+    //const rota = "localhost:9000"
+
+    const requestOptions = {
+      method: 'PATCH',
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(bodyItens)
     }
 
     try {
-      const fileName = fotoPath.split("/").pop(); // Apenas o nome do arquivo
+      console.log("Opções")
+      console.log(requestOptions)
 
-      const response = await fetch(
-        `https://apiconcord.dev.vilhena.ifro.edu.br/updateAvatar/${key}`,
-        {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ foto: fileName }),
-        }
-      );
+      console.log(`${rota}/updateUser/${key}`, requestOptions)
 
-      const textoResposta = await response.text();
-      console.log("Resposta da API:", response.status, textoResposta);
+      const resposta = await fetch(`${rota}/updateUser/${key}`, requestOptions);
+      if (resposta.ok) {
+        // mano?
+        await getData();
 
-      if (response.ok) {
-        setSucessoAvatar(true);
-      } else {
-        alert("Erro ao atualizar avatar.");
       }
-    } catch (err) {
-      console.error("Erro ao atualizar avatar:", err);
-      alert("Erro ao conectar com o servidor.");
+    } catch (error) {
+      throw new Error(error);
     }
-  };
+  }
+
 
   useEffect(() => {
-    getUsuarios();
-  }, []);
+    getUsuarios()
+    const dadosjson = JSON.parse(dadosUsuario)
+    setNome(dadosjson.nome)
+
+    console.log(dadosjson)
+
+    setFotoDePerfil(dadosjson.foto)
+    setFotoGrande(dadosjson.foto)
+    setDescricao(dadosjson.descricao)
+
+    setFiltrosMarcados(dadosjson.filtros ? dadosjson.filtros.split(",").map(Number) : []);
+
+  }, [])
 
   return (
     <ProtectedRoute>
@@ -158,8 +183,8 @@ export default function Config() {
           </div>
 
           <div className={styles.miniPerfil}>
-            <img width={35} height={35} alt="perfil" src={selectedAvatar} />
-            <p>{nome || "Nome do usuário"}</p>
+            <img width={35} height={35} alt="perfil" src={avatars[fotoDePerfil]} />
+            <p>{nome}</p>
           </div>
 
           <div className={styles.Gbotoes}>
@@ -177,146 +202,123 @@ export default function Config() {
 
         {/* Parte principal dinâmica */}
         <section className={styles.parteSumivel}>
-          {div1 && (
+          {div3 && (
             <div className={styles.divSu}>
-              <div className={styles.miniperfil}>
-                <img width={90} height={90} alt="perfil" src={selectedAvatar} />
-                <p className={styles.nome}>{nome || "Nome"}</p>
+              <div className={styles.ladoEsquerdo}>
+                <p>Mudar foto</p>
 
-                <section className={styles.mainCN}>
-                  <div className={styles.dFundoCN}>
-                    <section className={styles.sectionCN}>
-                      <form className={styles.formCN} onSubmit={atualizarPerfilSubmit}>
-                        <h1 className={styles.h1CN}>Atualizar Perfil</h1>
 
-                        <label className={styles.labelCN}>Nome:</label>
-                        <input
-                          className={styles.input}
-                          type="text"
-                          id="nome"
-                          name="nome"
-                          defaultValue={nome}
-                          required
-                        />
-                        <p className={styles.noteCN}>
-                          Esse nome será exibido para seus contatos no Concord.
-                        </p>
 
-                        <label className={styles.labelCN}>Descrição:</label>
-                        <input
-                          className={styles.input}
-                          type="text"
-                          id="desc"
-                          name="desc"
-                          defaultValue={desc}
-                          required
-                        />
-
-                        <label className={styles.labelCN}>Filtros:</label>
-                        <div className={styles.dropdown}>
-                          <button
-                            type="button"
-                            onClick={() => setDropdownAberto(!dropdownAberto)}
-                            className={styles.botaoDropdown}
-                          >
-                            Selecione os filtros ▼
-                          </button>
-
-                          {dropdownAberto && (
-                            <div className={styles.menuDropdown}>
-                              <input
-                                type="text"
-                                placeholder="Buscar filtro..."
-                                value={busca2}
-                                onChange={(e) => setBusca2(e.target.value)}
-                                className={styles.inputBusca}
-                              />
-
-                              <div className={styles.filtrosContainer}>
-                                {filtroBusca.map((item) => (
-                                  <div key={item.id}>
-                                    <input
-                                      type="checkbox"
-                                      id={`filtro-${item.id}`}
-                                      name="filtro"
-                                      value={item.id}
-                                      onChange={(e) => {
-                                        const valor = e.target.value;
-                                        setFiltrosSelecionados((prev) =>
-                                          prev.includes(valor)
-                                            ? prev.filter((f) => f !== valor)
-                                            : [...prev, valor]
-                                        );
-                                      }}
-                                      checked={filtrosSelecionados.includes(String(item.id))}
-                                      className={styles.checkboxFiltro}
-                                    />
-                                    <span className={styles.textoFiltro}>{item.filtro}</span>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-
-                        <div className={styles.selecionados}>
-                          Filtros selecionados: <strong>{filtrosSelecionados.join(", ")}</strong>
-                        </div>
-
-                        <input
-                          type="submit"
-                          className={styles.botaoCN}
-                          value="Atualizar seu perfil"
-                        />
-                      </form>
-                    </section>
-                  </div>
+                <section className={styles.sectionCN}>
+                  {avatars.map((avatar, i) => (
+                    <div key={i} >
+                      <button onClick={() => { setFotoGrande(i) }}><Image src={avatar} width={50} height={50} alt="imagem"></Image> </button>
+                    </div>
+                  ))}
                 </section>
+              </div>
+              <div className={styles.ladoDireito}>
+                <div className={styles.divDaImagemGrande}>
+                  <Image src={avatars[fotoGrande]} width={150} height={150} alt="imagem"></Image>
+                  <button onClick={() => { updateUser({ foto: fotoGrande }) }}>Mudar Avatar</button>
+                </div>
               </div>
             </div>
           )}
 
-          {div3 && (
+          {div1 && (
             <div className={styles.divSuMUD}>
               <div className={styles.containerMUD}>
-                {sucessoAvatar && (
-                  <div className={styles.headerDL}>
-                    <span className={styles.logoDL}>✅ Avatar atualizado com sucesso!</span>
-                  </div>
-                )}
-                <div className={styles.sectionMUD}>
-                  <h3 className={styles.h3MUD}>Avatar atual</h3>
-                  <div className={styles.currentMUD}>
-                    <img src={selectedAvatar} alt="Avatar Atual" />
-                  </div>
-                </div>
+                <div>
+                  <button onClick={() => { mudarDiv2("1") }}>Filtros</button>
+                  <button onClick={() => { mudarDiv2("2") }}>Nome e descrição</button>
 
-                <div className={styles.sectionMUD}>
-                  <h3 className={styles.h3MUD}>Alterar avatar</h3>
-                  <div className={styles.gridMUD}>
-                    {avatars.map((avatar, index) => (
-                      <img
-                        key={index}
-                        width={105}
-                        src={avatar}
-                        alt={`avatar-${index + 1}`}
-                        className={`${styles.optionMUD} ${
-                          selectedAvatar === avatar ? styles.selectedMUD : ""
-                        }`}
-                        onClick={() => setSelectedAvatar(avatar)}
+                  {subdiv1 &&
+                    <form onSubmit={(e) => {
+                      e.preventDefault();
+                      updateUser({ filtros: filtrosMarcados.join(",") });
+                    }}>
+
+                      <label className={styles.labelCN}>Filtros:</label>
+
+                      <input
+                        type="text"
+                        placeholder="Buscar filtro..."
+                        value={busca2}
+                        onChange={(e) => setBusca2(e.target.value)}
+                        className={styles.inputBusca}
                       />
-                    ))}
-                  </div>
+                      {/**filtrosMarcados*/}
+
+                      {filtroBusca.map((filtro1) => (
+
+                        <label key={filtro1.id}>
+                          <input
+                            type="checkbox"
+                            id={filtro1.id}
+                            checked={filtrosMarcados.includes(filtro1.id)}
+                            onChange={(e) => {
+                              const { id, checked } = e.target;
+                              const idNum = parseInt(id);
+
+                              if (checked) {
+                                setFiltrosMarcados([...filtrosMarcados, idNum]);
+                              } else {
+                                setFiltrosMarcados(filtrosMarcados.filter((f) => f !== idNum));
+                              }
+                            }}
+
+                          />
+                          {filtro1.filtro}
+                        </label>
+                      ))}
+
+                      <input type="submit" className={`${styles.botaoCN} ${styles.buttonAtualizarPerfil}`} value="Atualizar seu perfil" />
+                    </form>
+                  }
+
+                  {subdiv2 &&
+                    <form onSubmit={(e) => {
+                      e.preventDefault();
+
+                      const dadosAtualizados = {};
+                      if (novoNome.trim() !== "") dadosAtualizados.nome = novoNome;
+                      if (novaDescr.trim() !== "") dadosAtualizados.desc = novaDescr;
+
+                      if (Object.keys(dadosAtualizados).length > 0) {
+                        setNovoNome("");
+                        setNovaDescr("");
+                        updateUser(dadosAtualizados);
+                      }
+                    }}>
+                      <label className={styles.labelCN}>
+                        Alterar Nome ou Descrição
+                      </label>
+
+                      <input
+                        type="text"
+                        value={novoNome}
+                        placeholder={nome}
+
+                        onChange={(e) => { setNovoNome(e.target.value)}}
+                        className={styles.inputBusca}
+                      />
+
+                      <input
+                        type="text"
+                        value={novaDescr}
+                        placeholder={descricao}
+
+                        onChange={(e) => { setNovaDescr(e.target.value)}}
+                        className={styles.inputBusca}
+                      />
+
+                      <input type="submit" className={`${styles.botaoCN} ${styles.buttonAtualizarPerfil}`} value="Atualizar seu perfil" />
+
+                    </form>
+                  }
                 </div>
 
-                <button
-                  className={styles.buttonMUD}
-                  onClick={async () => {
-                    await atualizarAvatar(selectedAvatar);
-                  }}
-                >
-                  Atualizar avatar
-                </button>
               </div>
             </div>
           )}
@@ -344,7 +346,7 @@ export default function Config() {
                       );
                       if (response.ok) {
                         alert("Conta apagada com sucesso!");
-                        window.location.href = "/login";
+                        window.location.href = "/";
                       } else {
                         alert("Erro ao apagar a conta. Tente novamente.");
                       }
