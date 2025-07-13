@@ -15,7 +15,7 @@ export default function Cadastrar() {
     const [usarOgoogle, setUsarGoogle] = useState(false);
     const [afterLogin, setAfterLogin] = useState(null);
     const [textoBotao, setTextoBotao] = useState("Usar Google");
-    const [temKey , setTemKey] = useState('');
+    const [temKey, setTemKey] = useState('');
 
     const girar = () => {
         setTextoBotao((prev) => prev === "Usar Google" ? "Usar Formulário" : "Usar Google");
@@ -65,7 +65,7 @@ export default function Cadastrar() {
                     setTemKey(data.key);
                 }
 
-                
+
 
                 setAfterLogin(data.newAccount);
             }
@@ -120,7 +120,7 @@ export default function Cadastrar() {
             const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
             //const rota = "http://localhost:9000"
 
-            const resposta = await fetch(`${rota}/cadastrar/google`, requestOptions);
+            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/cadastrar/google`, requestOptions);
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();
@@ -220,7 +220,7 @@ export default function Cadastrar() {
 
 
                     </section>
-                        <p>Já possui conta? <Link href="./login" > Faça login </Link></p>
+                    <p>Já possui conta? <Link href="./login" > Faça login </Link></p>
                 </section>
 
             </div>
