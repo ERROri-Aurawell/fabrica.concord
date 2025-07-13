@@ -288,3 +288,4 @@ export default function Chat() {
   <button onClick={() => { socket.disconnect(), setConectado(false) }}>Desconectar do servidor</button>
 </div>
 */
+/* */
