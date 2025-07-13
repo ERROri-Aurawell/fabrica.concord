@@ -88,6 +88,7 @@ export default function filtro() {
                 placeholder="Pesquisar contato"
               />
               <Image className={styles.logo} alt="logo" src="/images/logo.png" width={70} height={60} />
+
             </div>
 
 
@@ -149,14 +150,10 @@ export default function filtro() {
 
                 <div className={`${styles.botoesDenovo} ${links ? styles.expanded : styles.collapsed}`}>
 
-                  <button className={styles.butao} onClick={() => setLinks(!links)}>
-                    <Image src="/images/logo.png" alt="sim" width={90} height={80} />
-                  </button>
-
-
                   <div className={`${styles.nav} ${links ? styles.show : styles.hide}`}>
 
                     <ul className={styles.lis_bot}>
+
 
                       <Link className={styles.botoes} href="./pesquisa">
                         <Image className={styles.add} alt="img" src="/images/novoContato.png" width={70} height={65} />
@@ -177,8 +174,6 @@ export default function filtro() {
                     </ul>
 
                   </div>
-
-
 
                 </div>
               </div>

@@ -225,7 +225,7 @@ export default function Chat() {
                         <p className={nome.remetente != Cookies.get('key').split("-")[0] ? styles.nomeDoCara : styles.nada}>
                           {nome.mensagem}
                           {(nome.remetente == dados.id) &&
-                            <button onClick={() => { setVisivel(visivel === nome.mensageId ? null : nome.mensageId) }} >⭣</button>
+                            <button className={styles.butao} onClick={() => { setVisivel(visivel === nome.mensageId ? null : nome.mensageId) }} ><Image src="/images/editar.png" alt="concord" width={20} height={20}/></button>
                           }
                         </p>
                         {visivel === nome.mensageId && (
