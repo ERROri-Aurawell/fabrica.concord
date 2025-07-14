@@ -192,20 +192,20 @@ export default function Config() {
           {div3 && (
             <div className={styles.divSu}>
               <div className={styles.ladoEsquerdo}>
-                <p>Alterar foto</p>
+                <p className={styles.texto}>Alterar Foto</p>
 
                 <section className={styles.sectionCN}>
                   {avatars.map((avatar, i) => (
-                    <div key={i} >
-                      <button className={styles.botaoImg} onClick={() => { setFotoGrande(i + 1) }}><Image src={avatar} width={50} height={50} alt="imagem"></Image> </button>
+                    <div className={styles.butoes} key={i} >
+                      <button className={styles.botaoImg} onClick={() => { setFotoGrande(i + 1) }}><Image src={avatar} width={100} height={100} alt="imagem"></Image> </button>
                     </div>
                   ))}
                 </section>
               </div>
               <div className={styles.ladoDireito}>
                 <div className={styles.divDaImagemGrande}>
-                  <Image src={avatars[fotoGrande - 1]} width={150} height={150} alt="imagem"></Image>
-                  <button onClick={() => { updateUser({ foto: fotoGrande }) }}>Mudar Avatar</button>
+                  <Image src={avatars[fotoGrande - 1]} width={250} height={250} alt="imagem"></Image>
+                  <button className={styles.ava} onClick={() => { updateUser({ foto: fotoGrande }) }}>Mudar Avatar</button>
                 </div>
               </div>
             </div>
@@ -238,13 +238,13 @@ export default function Config() {
                       placeholder="Buscar filtro..."
                       value={busca2}
                       onChange={(e) => setBusca2(e.target.value)}
-                      className={styles}
+                      className={styles.fil}
                     />
                     {/**filtrosMarcados*/}
                     <div className={styles.filtrosContainer} >
                       {filtroBusca.map((filtro1) => (
 
-                        <label key={filtro1.id}>
+                        <label className={styles.pointer} key={filtro1.id}>
                           <input
                             type="checkbox"
                             className={styles.inputBusca}
@@ -315,7 +315,6 @@ export default function Config() {
                       type="text"
                       value={novoNome}
                       placeholder={nome}
-
                       onChange={(e) => { setNovoNome(e.target.value) }}
                       className={[styles.campoQuadrado1, styles.inputTexto].join(" ")}
                     />
