@@ -164,11 +164,11 @@ export default function filtro() {
                       </Link>
 
                       <Link className={styles.botoes} href="./bloqueios">
-                        <Image className={styles.lbotao} alt="img" src="/images/block.png" width={70} height={70} />
+                        <Image className={styles.lbotao} alt="bloqueios" src="/images/block.png" width={70} height={70} />
                       </Link>
 
                       <Link className={styles.botoes} href="./configuracoes">
-                        <Image className={styles.lbotao} alt="img" src="/images/config.png" width={70} height={70} />
+                        <Image className={styles.lbotao} alt="config" src="/images/config.png" width={70} height={70} />
                       </Link>
 
                     </ul>
