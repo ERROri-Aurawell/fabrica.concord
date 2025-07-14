@@ -243,7 +243,7 @@ export default function Chat() {
 
                     </div>
                   )}
-                  <Image className={styles.concord} src="/images/CONCORD.png" alt="concord" width={60} height={0} onClick={toggleMenu} />
+                  <Image className={styles.concord} src="/images/concord.png" alt="concord" width={60} height={0} onClick={toggleMenu} />
                 </div>
                 <div className={styles.flow} ref={listaRef} style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                   <ul className={styles.arruma}>
