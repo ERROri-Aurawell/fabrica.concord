@@ -1,16 +1,18 @@
 import { io } from 'socket.io-client';
 
-const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
-//const rota = "http://localhost:9000"
+const rotaDev = "http://localhost:9000";
+const rotaProd = "https://apiconcord.dev.vilhena.ifro.edu.br"; // sua URL de API/socket
 
-const URL = process.env.NODE_ENV === "production" ? undefined : rota;
+const URL = process.env.NODE_ENV === "production" ? rotaProd : rotaDev;
+
 export const socket = io(URL, {
   autoConnect: false,
-  reconnection: true,               
-  reconnectionAttempts: 3,          
-  reconnectionDelay: 5000,          
-  reconnectionDelayMax: 10000       
+  reconnection: true,
+  reconnectionAttempts: 3,
+  reconnectionDelay: 5000,
+  reconnectionDelayMax: 10000,
 });
+
 
 socket.on('connect_error', (err) => {
   console.error('Erro de conexão com o servidor Socket.IO:', err.message);
