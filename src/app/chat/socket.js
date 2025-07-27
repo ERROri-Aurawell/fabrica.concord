@@ -1,16 +1,13 @@
 import { io } from 'socket.io-client';
 
-const rotaDev = "http://localhost:9000";
-const rotaProd = "https://apiconcord.dev.vilhena.ifro.edu.br"; // sua URL de API/socket
+const rotaDev = process.env.NEXT_PUBLIC_SOCKET_URL_DEV;
+const rotaProd = process.env.NEXT_PUBLIC_SOCKET_URL_PROD;
 
-const URL = process.env.NODE_ENV === "production" ? rotaProd : rotaDev;
+const URL = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
 
 export const socket = io(URL, {
   autoConnect: false,
-  reconnection: true,
-  reconnectionAttempts: 3,
-  reconnectionDelay: 5000,
-  reconnectionDelayMax: 10000,
+  reconnection: false
 });
 
 

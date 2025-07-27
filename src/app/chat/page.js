@@ -25,6 +25,8 @@ export default function Chat() {
   const [visivel, setVisivel] = useState(null);
   const [adm, setAdm] = useState(false)
   const [visivel2, setVisivel2] = useState(null)
+  const [chatType, setChatType] = useState("msg");
+  const [mediaChatOpened, setMediaChatOpened] = useState(false);
 
 
   const adicionarNome = () => {
@@ -35,17 +37,30 @@ export default function Chat() {
     setNomes([...nomes, { mensagem: `${hora} : ${minutos} : ${segundos}`, remetente: "LocalTest" }]);
   };
 
+  function changeChatType() {
+    chatType === "msg" ? setChatType("media") : setChatType("msg");
+    console.log("Tipo de chat alterado para:", chatType);
+  }
+
 
   socket.on("historico", async (response) => {
-
     setNomes(response.response);
   });
 
-  socket.on("newMessage", (response) => {
+  socket.on("mediaChatOpened", (response) => {
+    console.log("Media chat opened:", response);
+    socket.emit("isMediaChatOpen", { key: Cookies.get('key'), chatID: chatID.id });
+  });
 
+  socket.on("newMessage", (response) => {
     if (response.response.mensagem != "" && response.response.mensagem != undefined) {
       setNomes([...nomes, response.response]);
     }
+  });
+
+  socket.on("mediaChatStatus", (response) => {
+    setMediaChatOpened(response.isOpen);
+    console.log("Media chat is open:", response.isOpen);
   });
 
   const handleKeyPress = (event) => {
@@ -65,6 +80,11 @@ export default function Chat() {
         mensagem: ""
       });
     }
+  }
+
+  function openMediaChat(key, chatID) {
+    console.log(`O ${key} tá abrindo o chat de mídia do chatID: ${chatID}`);
+    socket.emit("openMediaChat", { key: key, chatID: chatID });
   }
 
   useEffect(() => {
@@ -112,11 +132,11 @@ export default function Chat() {
           msg.mensageId === mensagem ? { ...msg, mensagem: mensagemNova } : msg
         )
       );
-
-    })
-
+    });
 
     socket.emit("todas", { key: Cookies.get('key'), chatID: chatID.id });
+
+    socket.emit("isMediaChatOpen", { key: Cookies.get('key'), chatID: chatID.id });
 
     return () => {
       socket.disconnect();
@@ -125,11 +145,8 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
-
     if (listaRef.current) {
       listaRef.current.scrollTop = listaRef.current.scrollHeight;
-
-
     }
   }, [nomes]);
 
@@ -240,12 +257,14 @@ export default function Chat() {
                         </div>
                       }
 
-
                     </div>
                   )}
                   <Image className={styles.concord} src="/images/concord.png" alt="concord" width={60} height={0} onClick={toggleMenu} />
                 </div>
-                <div className={styles.flow} ref={listaRef} style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+
+                <button onClick={() => { changeChatType() }} >MudarChat</button>
+
+                {(chatType === "msg") && <div className={styles.flow} ref={listaRef} style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
                   <ul className={styles.arruma}>
                     {nomes.map((nome) => (
 
@@ -312,7 +331,22 @@ export default function Chat() {
                       </li>
                     ))}
                   </ul>
-                </div>
+                </div>}
+                {(chatType === "media") && <div className={styles.flow} ref={listaRef} style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+                  <ul className={styles.arruma}>
+                    {!mediaChatOpened && (
+                      <div className={styles.mediaChat}>
+                        <p>Chat de mídia desligado. Ative agora!</p>
+
+                        <button onClick={() => { openMediaChat(Cookies.get("key"), chatID.id) }} > <Image width={50} height={50} alt="Abrir!" src="/images/openMedia.png" ></Image> </button>
+
+                        {/* Aqui você pode adicionar a lógica para exibir os arquivos de mídia */}
+                      </div>
+                    )}
+                  </ul>
+
+                </div>}
+
               </div>
 
 
