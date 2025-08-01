@@ -11,6 +11,11 @@ export default function Header() {
     const [ntfcs, setNtfcs] = useState([])
     const [isLoggedIn, setIsLogged] = useState(Cookies.get("key"))
 
+    const rotaDev = process.env.NEXT_PUBLIC_SOCKET_URL_DEV;
+    const rotaProd = process.env.NEXT_PUBLIC_SOCKET_URL_PROD;
+
+    const URL = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
+
     async function addFriend(conteudo, id) {
         await deletarNotificacao(id);
         const requestOptions = {
@@ -21,7 +26,7 @@ export default function Header() {
             })
         }
         try {
-            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/addfriend/${isLoggedIn}`, requestOptions);
+            const resposta = await fetch(`${URL}/addfriend/${isLoggedIn}`, requestOptions);
             if (resposta.ok) {
                 // mano?
 
@@ -46,7 +51,7 @@ export default function Header() {
     async function getTheData() {
         try {
             const id = isLoggedIn.split("-")[0];
-            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/user/${id}`);
+            const resposta = await fetch(`${URL}/user/${id}`);
             if (resposta.ok) {
                 const data = await resposta.json();
 
@@ -69,7 +74,7 @@ export default function Header() {
             })
         }
         try {
-            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/notific/${isLoggedIn}`, requestOptions);
+            const resposta = await fetch(`${URL}/notific/${isLoggedIn}`, requestOptions);
             if (resposta.ok) {
                 refresh();
                 // mano?
@@ -84,7 +89,7 @@ export default function Header() {
 
     async function adicionar() {
         try {
-            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/notific/${isLoggedIn}`);
+            const resposta = await fetch(`${URL}/notific/${isLoggedIn}`);
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();

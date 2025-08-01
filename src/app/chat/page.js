@@ -8,6 +8,7 @@ import Link from "next/link";
 import Cookies from 'js-cookie';
 import socket from "./socket";
 import { fetchFriends, addInChat, chatDados } from "./otherThings.js";
+import EnviarMidia from "./enviarMidia";
 
 export default function Chat() {
   const [apaputaquepariu, setVTMNC] = useState(false)
@@ -27,7 +28,8 @@ export default function Chat() {
   const [visivel2, setVisivel2] = useState(null)
   const [chatType, setChatType] = useState("msg");
   const [mediaChatOpened, setMediaChatOpened] = useState(false);
-
+  const [medias, setMedias] = useState([]);
+  const [inMediaChat, setInMediaChat] = useState(false);
 
   const adicionarNome = () => {
     const data = new Date();
@@ -39,29 +41,98 @@ export default function Chat() {
 
   function changeChatType() {
     chatType === "msg" ? setChatType("media") : setChatType("msg");
-    console.log("Tipo de chat alterado para:", chatType);
   }
 
+  useEffect(() => {
+    const handleHistorico = (response) => setNomes(response.response);
+    const handleMediaChatOpened = (response) => {
+      socket.emit("isMediaChatOpen", { key: Cookies.get('key'), chatID: chatID.id });
+    };
+    const handleNewMessage = (response) => {
+      if (response.response?.mensagem) {
+        setNomes((prev) => [...prev, response.response]);
+      }
+    };
+    const handleMediaChatStatus = (response) => {
+      setMediaChatOpened(response.isOpen);
+    };
+    const handleDelete = (data) => {
+      const { mensagem } = data;
+      setNomes(prev => prev.filter(nome => nome.mensageId !== mensagem));
+    };
+    const handleEdit = (data) => {
+      const { mensagem, mensagemNova } = data;
+      setNomes((prev) =>
+        prev.map((msg) =>
+          msg.mensageId === mensagem ? { ...msg, mensagem: mensagemNova } : msg
+        )
+      );
+    };
+    const handleDisconnect = () => setConectado(false);
+    const handleReconnect = () => {
+      socket.emit("reconnect", { key: Cookies.get('key'), chatID: chatID.id });
+    };
+    const handleMediaHistory = (data) => {
+      //const { arquivoNome, tipo, conteudo, criadoEm, foto, mensageId, nome, remetente } = data.response[0];
+      //console.log("Media history received:", data.response);
+      //console.log("Conteúdo:", conteudo, "Tipo:", tipo, "Nome do arquivo:", arquivoNome);
+      setMedias([]); // Limpa a lista de mídias antes de adicionar novas
 
-  socket.on("historico", async (response) => {
-    setNomes(response.response);
-  });
+      for (const media of data.response) {
+        // Reconstruir buffer → Blob
+        const byteArray = new Uint8Array(media.conteudo);
+        const blob = new Blob([byteArray], { type: media.tipo });
 
-  socket.on("mediaChatOpened", (response) => {
-    console.log("Media chat opened:", response);
-    socket.emit("isMediaChatOpen", { key: Cookies.get('key'), chatID: chatID.id });
-  });
+        // Gerar URL temporária para exibir
+        const url = URL.createObjectURL(blob);
 
-  socket.on("newMessage", (response) => {
-    if (response.response.mensagem != "" && response.response.mensagem != undefined) {
-      setNomes([...nomes, response.response]);
+        setMedias((prev) => [...prev, { nome: media.nome, mensageId: media.mensageId, url, tipo: media.tipo, foto: media.foto, arquivoNome: media.arquivoNome, remetente: media.remetente, criadoEm: media.criadoEm, membros: media.membros }]);
+      }
+
+      //setMedias(data.response);
+      const primeira = data.response[0]
+      const membros = primeira.membros.split(",");
+      // se o seu id estiver na lista de membros, então você está no chat de mídia
+      if (membros.includes(Cookies.get('key').split("-")[0])) {
+        setInMediaChat(true);
+      } else {
+        setInMediaChat(false);
+      }
     }
-  });
 
-  socket.on("mediaChatStatus", (response) => {
-    setMediaChatOpened(response.isOpen);
-    console.log("Media chat is open:", response.isOpen);
-  });
+    // Registrar listeners
+    socket.on("historico", handleHistorico);
+    socket.on("mediaChatOpened", handleMediaChatOpened);
+    socket.on("newMessage", handleNewMessage);
+    socket.on("mediaChatStatus", handleMediaChatStatus);
+    socket.on("deletar", handleDelete);
+    socket.on("editar", handleEdit);
+    socket.on("disconnect", handleDisconnect);
+
+    socket.on("disconnect", (reason) => {
+      console.warn("Socket desconectado:", reason);
+    });
+
+    socket.on("connect_error", (err) => {
+      console.error("Erro de conexão:", err.message);
+    });
+
+    socket.on("reconnect", handleReconnect);
+    socket.on("mediaHistory", handleMediaHistory);
+
+    // Limpar ao desmontar
+    return () => {
+      socket.off("historico", handleHistorico);
+      socket.off("mediaChatOpened", handleMediaChatOpened);
+      socket.off("newMessage", handleNewMessage);
+      socket.off("mediaChatStatus", handleMediaChatStatus);
+      socket.off("deletar", handleDelete);
+      socket.off("editar", handleEdit);
+      socket.off("disconnect", handleDisconnect);
+      socket.off("reconnect", handleReconnect);
+      socket.off("mediaHistory", handleMediaHistory);
+    };
+  }, [chatID]);
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
@@ -83,9 +154,10 @@ export default function Chat() {
   }
 
   function openMediaChat(key, chatID) {
-    console.log(`O ${key} tá abrindo o chat de mídia do chatID: ${chatID}`);
     socket.emit("openMediaChat", { key: key, chatID: chatID });
   }
+
+  // Verifica se o chatID está definido, caso contrário redireciona para a página de contatos
 
   useEffect(() => {
     if (!chatID || chatID == undefined) {
@@ -101,47 +173,57 @@ export default function Chat() {
       "chatID": chatID.id
     })
 
+    // Conecta ao socket
+
     socket.connect();
+    socket.emit("todas", { key: Cookies.get('key'), chatID: chatID.id });
+    socket.emit("isMediaChatOpen", { key: Cookies.get('key'), chatID: chatID.id });
+    const desconectar = () => {
+      socket.disconnect();
+    };
 
-
-    socket.on("argumento", (data) => {
+    const argumentoHandler = (data) => {
+      // lógica do handler
       setResponse(data.message);
-    });
-
-    socket.on("deletar", (data) => {
+    };
+    const deletarHandler = (data) => {
+      // lógica do handler
       const { mensagem, dataDeletado } = data;
-      console.log(`A mensagem ${mensagem} foi deletada em ${dataDeletado}`);
-
       setNomes(prev => {
         //for(const i of prev){
         //console.log(i)
         //}
         console.log("-----------")
         const novo = prev.filter(nome => { if (nome.mensageId != mensagem) return nome });
-        console.log(novo)
         return novo;
       });
-    });
+    };
 
-    socket.on("editar", (data) => {
+    const editarHandler = (data) => {
+      // lógica do handler
       const { mensagem, dataEdicao, mensagemNova } = data
-      console.log(`A mensagem ${mensagem} foi editada em ${dataEdicao}`);
-
       setNomes((prev) =>
         prev.map((msg) =>
           msg.mensageId === mensagem ? { ...msg, mensagem: mensagemNova } : msg
         )
       );
-    });
-
-    socket.emit("todas", { key: Cookies.get('key'), chatID: chatID.id });
-
-    socket.emit("isMediaChatOpen", { key: Cookies.get('key'), chatID: chatID.id });
-
-    return () => {
-      socket.disconnect();
     };
 
+    socket.on("editar", editarHandler);
+
+    socket.on("argumento", argumentoHandler);
+
+    socket.on("deletar", deletarHandler);
+
+    window.addEventListener("beforeunload", desconectar);
+
+    return () => {
+      window.removeEventListener("beforeunload", desconectar);
+      socket.off("argumento", argumentoHandler);
+      socket.off("deletar", deletarHandler);
+      socket.off("editar", editarHandler);
+      socket.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -150,15 +232,6 @@ export default function Chat() {
     }
   }, [nomes]);
 
-  socket.on('disconnect', () => {
-    setConectado(false);
-  });
-
-  socket.on("reconnect", (attemptNumber) => {
-    socket.emit("reconnect", { key: Cookies.get('key'), chatID: chatID.id });
-
-  });
-
   const [menuAberto, setMenuAberto] = useState(false);
   const toggleMenu = () => {
     setMenuAberto(!menuAberto);
@@ -166,9 +239,7 @@ export default function Chat() {
 
   async function check(id, id2) {
     const response = await addInChat(id, id2);
-
     if (response) {
-      console.log(response)
       window.location.reload();
     }
   }
@@ -188,8 +259,6 @@ export default function Chat() {
       const response = await chatDados(chatID.id);
       setChatID(response[0])
       setTipos(response[0].tipo == 1);
-
-      console.log(response[0].tipo)
       if (await response[0].tipo == 2) { // Se o chat for privado, não contém admins
         return
       }
@@ -206,9 +275,6 @@ export default function Chat() {
   useEffect(() => {
     const atuais = chatID.membros.split(",")
     setFilterFriend(friends.filter(obj => !atuais.includes(String(obj.id))))
-
-    console.log("Atuais : " + atuais)
-    console.log("filtros : " + filterFriend)
   }, [friends])
 
   return (
@@ -343,6 +409,50 @@ export default function Chat() {
                         {/* Aqui você pode adicionar a lógica para exibir os arquivos de mídia */}
                       </div>
                     )}
+                    {mediaChatOpened && (
+                      <div>
+                        {!inMediaChat && (
+                          <div>
+                            <p>Você não está no chat de mídia. Entre agora!</p>
+                            <button onClick={() => { console.log("Não fiz ainda, perai") }} > <Image width={50} height={50} alt="Abrir!" src="/images/openMedia.png" ></Image> </button>
+                          </div>
+
+                        )}
+                        {inMediaChat && (
+                          <div>
+                            {medias.map((media) => (
+                              <li className={styles.conversa} key={media.mensageId}>
+                                {media.tipo.startsWith("image/") && <img src={media.url} alt={media.arquivoNome} width={200} />}
+                                {media.tipo.startsWith("video/") && (
+                                  <video controls width={300}>
+                                    <source src={media.url} type={media.tipo} />
+                                  </video>
+                                )}
+                                {media.tipo.startsWith("audio/") && (
+                                  <audio controls>
+                                    <source src={media.url} type={media.tipo} />
+                                  </audio>
+                                )}
+                                {!media.tipo.startsWith("image/") &&
+                                  !media.tipo.startsWith("video/") &&
+                                  !media.tipo.startsWith("audio/") && (
+                                    <a href={media.url} download={media.arquivoNome}>
+                                      Baixar {media.arquivoNome}
+                                    </a>
+                                  )}
+
+                                <div className={styles.flowPodcast}>
+                                  <img className={styles.img} src={media.foto == 0 ? "/images/human.png" : `/images/eclipse${media.foto}.png`} alt={media.nome} />
+                                  <p className={styles.nomeDoUsuario}>
+                                    {media.nome.length > 10 ? media.nome.slice(0, 10) + "..." : media.nome}
+                                  </p>
+                                </div>
+                              </li>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </ul>
 
                 </div>}
@@ -350,7 +460,7 @@ export default function Chat() {
               </div>
 
 
-              {conectado && <div className={styles.arruma3}>
+              {(conectado && chatType == "msg") && <div className={styles.arruma3}>
                 <input
                   className={styles.busca}
                   type="text"
@@ -363,6 +473,11 @@ export default function Chat() {
                   <Image className={styles.enviar} src="/images/enviar.png" width={70} height={65} alt="sim" />
                 </button>
               </div>}
+
+              {(conectado && chatType == "media") && <div className={styles.arruma3}>
+                <EnviarMidia prop={{ chatID: chatID.id, key: Cookies.get("key") }} />
+              </div>}
+
             </div>
           </div>
         </div>
