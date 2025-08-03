@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, use } from "react";
 import styles from "./chat.module.css";
 import Image from "next/image";
 import ProtectedRoute from '@/components/ProtectedRoute';
@@ -30,6 +30,7 @@ export default function Chat() {
   const [mediaChatOpened, setMediaChatOpened] = useState(false);
   const [medias, setMedias] = useState([]);
   const [inMediaChat, setInMediaChat] = useState(false);
+  const [carregado, setCarregado] = useState(false);
 
   const adicionarNome = () => {
     const data = new Date();
@@ -42,6 +43,12 @@ export default function Chat() {
   function changeChatType() {
     chatType === "msg" ? setChatType("media") : setChatType("msg");
   }
+
+  useEffect(() => {
+    if (medias.length > 0) {
+      setCarregado(true);
+    }
+  }, [medias])
 
   useEffect(() => {
     const handleHistorico = (response) => setNomes(response.response);
@@ -73,10 +80,7 @@ export default function Chat() {
       socket.emit("reconnect", { key: Cookies.get('key'), chatID: chatID.id });
     };
     const handleMediaHistory = (data) => {
-      //const { arquivoNome, tipo, conteudo, criadoEm, foto, mensageId, nome, remetente } = data.response[0];
-      //console.log("Media history received:", data.response);
-      //console.log("Conteúdo:", conteudo, "Tipo:", tipo, "Nome do arquivo:", arquivoNome);
-      setMedias([]); // Limpa a lista de mídias antes de adicionar novas
+      setMedias([]);
 
       for (const media of data.response) {
         // Reconstruir buffer → Blob
@@ -100,6 +104,19 @@ export default function Chat() {
       }
     }
 
+    const handleNewMedia = (data) => {
+      console.log("Nova mídia recebida:", data);
+      const media = data.response;
+        // Reconstruir buffer → Blob
+        const byteArray = new Uint8Array(media.conteudo);
+        const blob = new Blob([byteArray], { type: media.tipo });
+
+        // Gerar URL temporária para exibir
+        const url = URL.createObjectURL(blob);
+
+        setMedias((prev) => [...prev, { nome: media.nome, mensageId: media.mensageId, url, tipo: media.tipo, foto: media.foto, arquivoNome: media.arquivoNome, remetente: media.remetente, criadoEm: media.criadoEm, membros: media.membros }]);
+    }
+
     // Registrar listeners
     socket.on("historico", handleHistorico);
     socket.on("mediaChatOpened", handleMediaChatOpened);
@@ -108,6 +125,7 @@ export default function Chat() {
     socket.on("deletar", handleDelete);
     socket.on("editar", handleEdit);
     socket.on("disconnect", handleDisconnect);
+    socket.on("newMedia", handleNewMedia)
 
     socket.on("disconnect", (reason) => {
       console.warn("Socket desconectado:", reason);
@@ -131,6 +149,7 @@ export default function Chat() {
       socket.off("disconnect", handleDisconnect);
       socket.off("reconnect", handleReconnect);
       socket.off("mediaHistory", handleMediaHistory);
+      socket.off("newMedia", handleNewMedia)
     };
   }, [chatID]);
 
@@ -474,7 +493,7 @@ export default function Chat() {
                 </button>
               </div>}
 
-              {(conectado && chatType == "media") && <div className={styles.arruma3}>
+              {(carregado && conectado && chatType == "media") && <div className={styles.arruma3}>
                 <EnviarMidia prop={{ chatID: chatID.id, key: Cookies.get("key") }} />
               </div>}
 
