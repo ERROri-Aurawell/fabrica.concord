@@ -51,7 +51,7 @@ export default function Chat() {
   }, [medias])
 
   useEffect(() => {
-    const handleHistorico = (response) => setNomes(response.response);
+    const handleHistorico = (response) => {setNomes(response.response)};
     const handleMediaChatOpened = (response) => {
       socket.emit("isMediaChatOpen", { key: Cookies.get('key'), chatID: chatID.id });
     };
