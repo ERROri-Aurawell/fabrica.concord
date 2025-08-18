@@ -14,7 +14,9 @@ export default function Header() {
     const rotaDev = process.env.NEXT_PUBLIC_SOCKET_URL_DEV;
     const rotaProd = process.env.NEXT_PUBLIC_SOCKET_URL_PROD;
 
-    const URL = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
+    //const URL = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
+
+    const URL = "https://apiconcord.dev.vilhena.ifro.edu.br"
 
     async function addFriend(conteudo, id) {
         await deletarNotificacao(id);
