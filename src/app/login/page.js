@@ -8,17 +8,12 @@ import { useRouter } from 'next/navigation';
 
 export default function login() {
     const [afterLogin, setAfterLogin] = useState(null);
-    const [temKey , setTemKey] = useState('');
+    const [temKey, setTemKey] = useState('');
     const router = useRouter();
 
-    function splitKEY(key) {
-        const [id, ...rest] = key.split("-");
-        const after = rest.join("-");
-        const [email, ...rest2] = after.split("-");
-        const senha = rest2.join('-');
-
-        return [id, email, senha];
-    }
+    const rotaDev = "http://localhost:9000"
+    const rotaProd = "https://apiconcord.dev.vilhena.ifro.edu.br"
+    const URL = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
 
     async function search(formData) {
         const dados = [formData.get("email"), formData.get("senha"), formData.get("caxinhaDoDiabo")]
@@ -32,7 +27,7 @@ export default function login() {
             headers: { "Content-Type": "application/json" },
         }
         try {
-            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/user/${splitKEY(temKey)[0]}`, requestOptions);
+            const resposta = await fetch(`${URL}/user/${temKey}`, requestOptions);
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();
@@ -57,16 +52,19 @@ export default function login() {
         }
 
         try {
-            const resposta = await fetch('https://apiconcord.dev.vilhena.ifro.edu.br/login', requestOptions);
+            const resposta = await fetch(`${URL}/login`, requestOptions);
+
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();
+                //console.log(data.key)
+
                 if (dados[4] == "on") {
-                    Cookies.set('key', data.key)
-                    setTemKey(data.key);
+                    Cookies.set('key', JSON.stringify(data.key))
+                    setTemKey(data.key.id);
                 } else {
-                    Cookies.set('key', data.key, { expires: 1 })
-                    setTemKey(data.key);
+                    Cookies.set('key', JSON.stringify(data.key), { expires: 1 })
+                    setTemKey(data.key.id);
                 }
 
                 setAfterLogin(data.newAccount);

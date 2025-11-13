@@ -1,7 +1,11 @@
 import Cookies from 'js-cookie';
-const rota = "https://apiconcord.dev.vilhena.ifro.edu.br";
-// const rota = "http://localhost:9000";
+
+const rotaDev = "http://localhost:9000"
+const rotaProd = "https://apiconcord.dev.vilhena.ifro.edu.br"
+const rota = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
+
 const key = Cookies.get('key');
+const _key = JSON.parse(key).key;
 
 export async function fetchFriends() {
   const requestOptions = {
@@ -9,7 +13,7 @@ export async function fetchFriends() {
     headers: { "Content-Type": "application/json" },
   };
   try {
-    const response = await fetch(`${rota}/friends/${key}`, requestOptions);
+    const response = await fetch(`${rota}/friends/${_key}`, requestOptions);
     if (response.ok) {
       const data = await response.json();
       //console.log("Amigos:", data);
@@ -37,7 +41,7 @@ export async function addInChat(pessoaId, chatId) {
     body: JSON.stringify({ "userID": pessoaId, "chatID": chatId })
   };
   try {
-    const response = await fetch(`${rota}/addInChat/${key}`, requestOptions);
+    const response = await fetch(`${rota}/addInChat/${_key}`, requestOptions);
     if (response.ok) {
       const data = await response.json();
       console.log("Amigos:", data);
@@ -46,7 +50,7 @@ export async function addInChat(pessoaId, chatId) {
 
     } else {
       const data = await response.json();
-      alert(data.response +" : err "+ response.status)
+      alert(data.response + " : err " + response.status)
     }
   }
   catch (error) {
@@ -55,7 +59,7 @@ export async function addInChat(pessoaId, chatId) {
 }
 
 export async function chatDados(chatId) {
-  const response = await fetch(`${rota}/chatInfo/${key}/${chatId}`)
+  const response = await fetch(`${rota}/chatInfo/${_key}/${chatId}`)
   if (response.ok) {
     const data = await response.json();
 

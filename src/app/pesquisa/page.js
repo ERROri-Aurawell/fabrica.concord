@@ -15,11 +15,14 @@ export default function Filtro() {
     const [dados, setDados] = useState(Cookies.get('userData'));
     const [pedidosFreq, setPedidosFreq] = useState([]);
 
-    const rota1 = "https://apiconcord.dev.vilhena.ifro.edu.br";
-    //const rota1 = "http://localhost:9000";
+    const rotaDev = "http://localhost:9000"
+    const rotaProd = "https://apiconcord.dev.vilhena.ifro.edu.br"
+    const URL = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
 
     const getUsuarios = async () => {
-        const conteudo = await fetch(`${rota1}/buscar/${Cookies.get('key')}`);
+        const key = Cookies.get('key')
+        const _key = JSON.parse(key).key;
+        const conteudo = await fetch(`${URL}/buscar/${_key}`);
         if (!conteudo.ok) {
             throw new Error('Erro ao buscar:' + conteudo.statusText);
         }
@@ -29,20 +32,11 @@ export default function Filtro() {
 
     };
 
-    function splitKEY(key) {
-        const [id, ...rest] = key.split("-");
-        const after = rest.join("-");
-        const [email, ...rest2] = after.split("-");
-        const senha = rest2.join('-');
-
-        return [id, email, senha];
-    }
-
-    const adicionar = async (id, key, userNome) => {
+    const adicionar = async (id, _key, userNome) => {
         const data = JSON.parse(dados);
 
 
-        console.log(`{ \"key\" : ${splitKEY(key)[0]}, \"nome\" : ${data.nome}, \"foto\" : ${data.foto}, \"descricao\" : ${data.descricao} }`);
+        console.log(`{ \"key\" : ${_key.id}, \"nome\" : ${data.nome}, \"foto\" : ${data.foto}, \"descricao\" : ${data.descricao} }`);
 
         const requestOptions = {
             method: 'POST',
@@ -50,11 +44,11 @@ export default function Filtro() {
             body: JSON.stringify({
                 "id": id,
                 "tipo": 2,
-                "conteudo": `{ \"key\" : ${splitKEY(key)[0]}, \"nome\" : \"${data.nome}\", \"foto\" : ${data.foto}, \"descricao\" : \"${data.descricao}\", \"userNome\" : \"${userNome}\" }`
+                "conteudo": `{ \"key\" : ${_key.id}, \"nome\" : \"${data.nome}\", \"foto\" : ${data.foto}, \"descricao\" : \"${data.descricao}\", \"userNome\" : \"${userNome}\" }`
             })
         }
 
-        const conteudo = await fetch(`${rota1}/notific/${key}`, requestOptions)
+        const conteudo = await fetch(`${URL}/notific/${_key.key}`, requestOptions)
         if (!conteudo.ok) {
 
 
@@ -63,7 +57,7 @@ export default function Filtro() {
 
 
             alert(data.response)
-        } 
+        }
     }
 
     useEffect(() => {
@@ -99,11 +93,13 @@ export default function Filtro() {
 
         setPedidosFreq(prev => [...prev, id]);
 
-        const key = Cookies.get('key')
-        if (!key) {
+        const key = Cookies.get('key');
+        const _key = JSON.parse(key);
+
+        if (!_key.key) {
             console.error("Chave não encontrada.");
         } else {
-            adicionar(id, key, userNome);
+            adicionar(id, _key, userNome);
         }
 
     }
@@ -149,7 +145,7 @@ export default function Filtro() {
                                         </li>
                                     ))}
                                 </ul>
-                                
+
                             </div>
 
                             <div className={styles.fil_sele}>
@@ -160,7 +156,7 @@ export default function Filtro() {
                                                 .map(id => filtro.find(f => f.id === id)?.filtro || id)
                                                 .join(", ")
                                             : "Nenhum"}
-                                        </strong>
+                                    </strong>
                                 </p>
                             </div>
 

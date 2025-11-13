@@ -1,6 +1,5 @@
 'use client'
 import styles from "./Header.module.css"
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Image from "next/image"
 import Cookies from "js-cookie";
@@ -9,14 +8,14 @@ export default function Header() {
     const [isMobile, setIsMobile] = useState(false);
     const [notific, setNotific] = useState(false)
     const [ntfcs, setNtfcs] = useState([])
-    const [isLoggedIn, setIsLogged] = useState(Cookies.get("key"))
+    const [isLoggedIn, setIsLogged] = useState(Cookies.get("key"));
 
-    const rotaDev = process.env.NEXT_PUBLIC_SOCKET_URL_DEV;
-    const rotaProd = process.env.NEXT_PUBLIC_SOCKET_URL_PROD;
+    const rotaDev = "http://localhost:9000"
+    const rotaProd ="https://apiconcord.dev.vilhena.ifro.edu.br"
 
-    //const URL = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
+    const URL = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
 
-    const URL = "https://apiconcord.dev.vilhena.ifro.edu.br"
+    //const URL = "https://apiconcord.dev.vilhena.ifro.edu.br"
 
     async function addFriend(conteudo, id) {
         await deletarNotificacao(id);
@@ -28,7 +27,7 @@ export default function Header() {
             })
         }
         try {
-            const resposta = await fetch(`${URL}/addfriend/${isLoggedIn}`, requestOptions);
+            const resposta = await fetch(`${URL}/addfriend/${JSON.parse(isLoggedIn).key}`, requestOptions);
             if (resposta.ok) {
                 // mano?
 
@@ -42,6 +41,7 @@ export default function Header() {
 
     async function getData() {
         const data = Cookies.get('userData');
+        //console.log(data)
         if (data == undefined) {
             await getTheData()
             window.location.reload();
@@ -52,7 +52,7 @@ export default function Header() {
 
     async function getTheData() {
         try {
-            const id = isLoggedIn.split("-")[0];
+            const id = JSON.parse(isLoggedIn).id;
             const resposta = await fetch(`${URL}/user/${id}`);
             if (resposta.ok) {
                 const data = await resposta.json();
@@ -76,7 +76,7 @@ export default function Header() {
             })
         }
         try {
-            const resposta = await fetch(`${URL}/notific/${isLoggedIn}`, requestOptions);
+            const resposta = await fetch(`${URL}/notific/${JSON.parse(isLoggedIn).key}`, requestOptions);
             if (resposta.ok) {
                 refresh();
                 // mano?
@@ -91,14 +91,15 @@ export default function Header() {
 
     async function adicionar() {
         try {
-            const resposta = await fetch(`${URL}/notific/${isLoggedIn}`);
+            const key = JSON.parse(isLoggedIn);
+
+            console.log(key.id)
+            const resposta = await fetch(`${URL}/notific/${key.key}`);
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();
 
                 setNtfcs(data)
-
-
 
             }
         } catch (error) {
@@ -108,15 +109,6 @@ export default function Header() {
 
     function refresh() {
         adicionar();
-    }
-
-    function splitKEY(key) {
-        const [id, ...rest] = key.split("-");
-        const after = rest.join("-");
-        const [email, ...rest2] = after.split("-");
-        const senha = rest2.join('-');
-
-        return [id, email, senha];
     }
 
     function validateEmail(email) {
@@ -131,17 +123,21 @@ export default function Header() {
         } else {
             try {
                 getData()
+                
+                const key = JSON.parse(isLoggedIn)
+                
+                //console.log(key)
 
-                const [a, b, c] = splitKEY(isLoggedIn)
+                //console.log(key.key.length)
 
-                if (!Number.isNaN(a), validateEmail(b), c.length > 1) {
+                if (key.key.length > 100) {
                     setNotific(true)
 
                     adicionar();
                 }
             } catch {
                 //Cookies.remove('key');
-                window.location.reload();
+                //window.location.reload();
                 throw new Error("Tem algum erro na Key");
             }
         }

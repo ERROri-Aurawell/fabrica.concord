@@ -5,17 +5,19 @@ import Link from "next/link";
 import Image from "next/image";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Cookies from 'js-cookie';
-import { useRouter } from 'next/navigation';
 
 export default function filtro() {
 
   const [amigos, setAmigos] = useState([]);
   const [vazio, setVazio] = useState(false);
-  const [key, setKey] = useState(Cookies.get('key'));
   const [busca, setBusca] = useState('');
   const [links, setLinks] = useState(false);
   const [dados, setDados] = useState(Cookies.get('userData'));
   const [amigosOriginal, setAmigosOriginal] = useState([]); // Store the original list
+
+  const rotaDev = "http://localhost:9000"
+  const rotaProd = "https://apiconcord.dev.vilhena.ifro.edu.br"
+  const URL = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
 
   async function adicionar() {
 
@@ -25,9 +27,12 @@ export default function filtro() {
     }
 
     try {
-      const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
-      //const rota = "http://localhost:9000";
-      const resposta = await fetch(`${rota}/chats/${key}`, requestOptions);
+      const key = Cookies.get('key');
+      const _key = JSON.parse(key).key;
+
+      console.log(_key)
+
+      const resposta = await fetch(`${URL}/chats/${_key}`, requestOptions);
 
 
       if (resposta.ok) {

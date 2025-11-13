@@ -1,9 +1,8 @@
 import { io } from 'socket.io-client';
 
-const rotaDev = process.env.NEXT_PUBLIC_SOCKET_URL_DEV;
-const rotaProd = process.env.NEXT_PUBLIC_SOCKET_URL_PROD;
-
-const URL = "https://apiconcord.dev.vilhena.ifro.edu.br"
+const rotaDev = "http://localhost:9000"
+const rotaProd = "https://apiconcord.dev.vilhena.ifro.edu.br"
+const URL = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
 
 //const URL = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
 

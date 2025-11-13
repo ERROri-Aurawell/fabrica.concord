@@ -58,34 +58,23 @@ export default function Cadastrar() {
             if (resposta.ok) {
                 const data = await resposta.json();
                 if (dados[3] == "on") {
-                    Cookies.set('key', data.key)
-                    setTemKey(data.key);
+                    Cookies.set('key',JSON.stringify(data.key))
+                    setTemKey(data.key.id);
                 } else {
-                    Cookies.set('key', data.key, { expires: 1 })
-                    setTemKey(data.key);
+                    Cookies.set('key', JSON.stringify(data.key), { expires: 1 })
+                    setTemKey(data.key.id);
                 }
-
-
 
                 setAfterLogin(data.newAccount);
             }
 
 
         } catch (error) {
-            console.log(error);
+            //console.log(error);
             throw new Error(error);
         }
 
 
-    }
-
-    function splitKEY(key) {
-        const [id, ...rest] = key.split("-");
-        const after = rest.join("-");
-        const [email, ...rest2] = after.split("-");
-        const senha = rest2.join('-');
-
-        return [id, email, senha];
     }
 
     async function getData() {
@@ -94,7 +83,7 @@ export default function Cadastrar() {
             headers: { "Content-Type": "application/json" },
         }
         try {
-            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/user/${splitKEY(temKey)[0]}`, requestOptions);
+            const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/user/${temKey}`, requestOptions);
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();
@@ -116,18 +105,19 @@ export default function Cadastrar() {
         }
 
         try {
-            //Mandei essa porra atualizar
-            const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
-            //const rota = "http://localhost:9000"
+            //const rota = "https://apiconcord.dev.vilhena.ifro.edu.br"
+            const rota = "http://localhost:9000"
 
             const resposta = await fetch(`${rota}/cadastrar/google`, requestOptions);
             if (resposta.ok) {
                 // mano?
                 const data = await resposta.json();
-                Cookies.set('newAccount', data.newAccount, { expires: 1 });
-                Cookies.set('key', data.key)
 
-                setTemKey(data.key);
+                //console.log(data.key)
+                Cookies.set('newAccount', data.newAccount, { expires: 1 });
+                Cookies.set('key', JSON.stringify(data.key))
+
+                setTemKey(data.key.id);
 
                 setAfterLogin(data.newAccount);
             }
@@ -190,7 +180,7 @@ export default function Cadastrar() {
                                 <GoogleOAuthProvider clientId="427290146113-nv1kvo2d9e9iqk0g62n6pkkjoq2rp387.apps.googleusercontent.com">
                                     <GoogleLogin
                                         onSuccess={(response) => { adicionar(response) }}
-                                        onError={() => { console.log("Login Failed.") }}
+                                        onError={() => { throw new Error("Login Failed.") }}
                                     />
                                 </GoogleOAuthProvider>
                             </React.StrictMode>

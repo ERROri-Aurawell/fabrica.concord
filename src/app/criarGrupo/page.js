@@ -16,6 +16,10 @@ function App() {
     friend.nome.toLowerCase().includes(busca.toLowerCase())
   );
 
+  const rotaDev = "http://localhost:9000"
+  const rotaProd = "https://apiconcord.dev.vilhena.ifro.edu.br"
+  const URL = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
+
   function handleSubmit(event) {
     event.preventDefault();
     const groupName = event.target.groupName.value;
@@ -38,8 +42,6 @@ function App() {
   }
 
   async function createChat(usersID, name) {
-    const rota = "https://apiconcord.dev.vilhena.ifro.edu.br";
-    // const rota = "http://localhost:9000";
     const requestOptions = {
       method: 'POST',
       headers: { "Content-Type": "application/json" },
@@ -51,7 +53,8 @@ function App() {
     };
     try {
       const key = Cookies.get('key');
-      const response = await fetch(`${rota}/createChat/${key}`, requestOptions);
+      const _key = JSON.parse(key).key;
+      const response = await fetch(`${URL}/createChat/${_key}`, requestOptions);
       if (response.ok) {
         const data = await response.json();
         if (data.response) {
@@ -65,7 +68,7 @@ function App() {
       }
       else {
         console.error("Failed to create group:", response);
-      // se 401, grupo contem usuário bloqueado
+        // se 401, grupo contem usuário bloqueado
         if (response.status === 401) {
           alert("Você não pode criar um grupo com usuários bloqueados.");
         }
@@ -79,7 +82,7 @@ function App() {
           alert("Erro interno do servidor. Tente novamente mais tarde.");
         }
         else {
-        alert("Erro ao criar grupo. Verifique os dados e tente novamente.");
+          alert("Erro ao criar grupo. Verifique os dados e tente novamente.");
         }
       }
     }
@@ -91,16 +94,14 @@ function App() {
 
 
   async function fetchFriends() {
-    const rota = "https://apiconcord.dev.vilhena.ifro.edu.br";
-    // const rota = "http://localhost:9000";
-
     const key = Cookies.get('key');
+    const _key = JSON.parse(key).key;
     const requestOptions = {
       method: 'GET',
       headers: { "Content-Type": "application/json" },
     };
     try {
-      const response = await fetch(`${rota}/friends/${key}`, requestOptions);
+      const response = await fetch(`${URL}/friends/${_key}`, requestOptions);
       if (response.ok) {
         const data = await response.json();
         if (data.response == []) {

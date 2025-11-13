@@ -11,7 +11,6 @@ import { fetchFriends, addInChat, chatDados } from "./otherThings.js";
 import EnviarMidia from "./enviarMidia";
 
 export default function Chat() {
-  const [apaputaquepariu, setVTMNC] = useState(false)
   const [dados, setDados] = useState(Cookies.get('userData'));
   const [conectado, setConectado] = useState(true);
   const chatIDCookie = Cookies.get('chatID');
@@ -51,9 +50,12 @@ export default function Chat() {
   }, [medias])
 
   useEffect(() => {
-    const handleHistorico = (response) => {setNomes(response.response)};
+    const handleHistorico = (response) => { setNomes(response.response) };
     const handleMediaChatOpened = (response) => {
-      socket.emit("isMediaChatOpen", { key: Cookies.get('key'), chatID: chatID.id });
+      const key = Cookies.get('key');
+      const _key = JSON.parse(key).key;
+      // 1-
+      socket.emit("isMediaChatOpen", { key: _key, chatID: chatID.id });
     };
     const handleNewMessage = (response) => {
       if (response.response?.mensagem) {
@@ -77,10 +79,20 @@ export default function Chat() {
     };
     const handleDisconnect = () => setConectado(false);
     const handleReconnect = () => {
-      socket.emit("reconnect", { key: Cookies.get('key'), chatID: chatID.id });
+      // 2- 
+      const key = Cookies.get('key');
+      const _key = JSON.parse(key).key;
+      socket.emit("reconnect", { key: _key, chatID: chatID.id });
     };
     const handleMediaHistory = (data) => {
       setMedias([]);
+
+      console.log("O que chegou: ")
+      console.log(data.response)
+
+      if(data.response.length == 0){
+        return
+      }
 
       for (const media of data.response) {
         // Reconstruir buffer → Blob
@@ -97,7 +109,11 @@ export default function Chat() {
       const primeira = data.response[0]
       const membros = primeira.membros.split(",");
       // se o seu id estiver na lista de membros, então você está no chat de mídia
-      if (membros.includes(Cookies.get('key').split("-")[0])) {
+
+      // 3- 
+      const key = Cookies.get('key');
+      const _key = JSON.parse(key).id;
+      if (membros.includes(_key)) {
         setInMediaChat(true);
       } else {
         setInMediaChat(false);
@@ -107,14 +123,14 @@ export default function Chat() {
     const handleNewMedia = (data) => {
       console.log("Nova mídia recebida:", data);
       const media = data.response;
-        // Reconstruir buffer → Blob
-        const byteArray = new Uint8Array(media.conteudo);
-        const blob = new Blob([byteArray], { type: media.tipo });
+      // Reconstruir buffer → Blob
+      const byteArray = new Uint8Array(media.conteudo);
+      const blob = new Blob([byteArray], { type: media.tipo });
 
-        // Gerar URL temporária para exibir
-        const url = URL.createObjectURL(blob);
+      // Gerar URL temporária para exibir
+      const url = URL.createObjectURL(blob);
 
-        setMedias((prev) => [...prev, { nome: media.nome, mensageId: media.mensageId, url, tipo: media.tipo, foto: media.foto, arquivoNome: media.arquivoNome, remetente: media.remetente, criadoEm: media.criadoEm, membros: media.membros }]);
+      setMedias((prev) => [...prev, { nome: media.nome, mensageId: media.mensageId, url, tipo: media.tipo, foto: media.foto, arquivoNome: media.arquivoNome, remetente: media.remetente, criadoEm: media.criadoEm, membros: media.membros }]);
     }
 
     // Registrar listeners
@@ -186,8 +202,11 @@ export default function Chat() {
     }
     setDados(JSON.parse(dados))
 
+    const key = Cookies.get('key');
+    const _key = JSON.parse(key).key;
+
     setData({
-      "key": `${Cookies.get('key')}`,
+      "key": `${_key}`,
       "mensagem": "",
       "chatID": chatID.id
     })
@@ -195,8 +214,8 @@ export default function Chat() {
     // Conecta ao socket
 
     socket.connect();
-    socket.emit("todas", { key: Cookies.get('key'), chatID: chatID.id });
-    socket.emit("isMediaChatOpen", { key: Cookies.get('key'), chatID: chatID.id });
+    socket.emit("todas", { key: _key, chatID: chatID.id });
+    socket.emit("isMediaChatOpen", { key: _key, chatID: chatID.id });
     const desconectar = () => {
       socket.disconnect();
     };
@@ -354,7 +373,7 @@ export default function Chat() {
                     {nomes.map((nome) => (
 
                       <li className={styles.conversa} key={nome.mensageId}>
-                        <p className={nome.remetente != Cookies.get('key').split("-")[0] ? styles.nomeDoCara : styles.nada}>
+                        <p className={nome.remetente != JSON.parse(Cookies.get('key')).id ? styles.nomeDoCara : styles.nada}>
                           {nome.mensagem}
                           {(nome.remetente == dados.id) &&
                             <button className={styles.butao} onClick={() => { setVisivel(visivel === nome.mensageId ? null : nome.mensageId) }} ><Image src="/images/editar.png" alt="concord editar" width={20} height={20} /></button>
@@ -373,8 +392,10 @@ export default function Chat() {
                                   if (e.key === "Enter") {
                                     console.log("Enviar o update")
                                     // key, mensagem, chatID, menssageID
+                                    const key = Cookies.get('key');
+                                    const _key = JSON.parse(key).key;
                                     socket.emit("editar", {
-                                      key: Cookies.get('key'),
+                                      key: _key,
                                       mensagem: e.target.value,
                                       chatID: chatID.id,
                                       menssageID: nome.mensageId
@@ -395,8 +416,11 @@ export default function Chat() {
                                 console.log("Deletar o id : " + nome.mensageId);
                                 setVisivel2(null);
                                 setVisivel(null);
+
+                                const key = Cookies.get('key');
+                                const _key = JSON.parse(key).key;
                                 socket.emit("deletar", {
-                                  key: Cookies.get('key'),
+                                  key: _key,
                                   chatID: chatID.id,
                                   menssageID: nome.mensageId
                                 })
@@ -423,7 +447,11 @@ export default function Chat() {
                       <div className={styles.mediaChat}>
                         <p>Chat de mídia desligado. Ative agora!</p>
 
-                        <button onClick={() => { openMediaChat(Cookies.get("key"), chatID.id) }} > <Image width={50} height={50} alt="Abrir!" src="/images/openMedia.png" ></Image> </button>
+                        <button onClick={() => {
+                          const key = Cookies.get('key');
+                          const _key = JSON.parse(key).key;
+                          openMediaChat(_key, chatID.id)
+                        }} > <Image width={50} height={50} alt="Abrir!" src="/images/openMedia.png" ></Image> </button>
 
                         {/* Aqui você pode adicionar a lógica para exibir os arquivos de mídia */}
                       </div>
@@ -494,7 +522,7 @@ export default function Chat() {
               </div>}
 
               {(carregado && conectado && chatType == "media") && <div className={styles.arruma3}>
-                <EnviarMidia prop={{ chatID: chatID.id, key: Cookies.get("key") }} />
+                <EnviarMidia prop={{ chatID: chatID.id, key: JSON.parse(Cookies.get("key")).key }} />
               </div>}
 
             </div>

@@ -7,17 +7,20 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
 const Login2 = () => {
-
     const router = useRouter();
-
     const [busca2, setBusca2] = useState('');
     const [filtrosSelecionados, setFiltrosSelecionados] = useState([]);
     const [dropdownAberto, setDropdownAberto] = useState(false);
-    
-    
     const [filtro, setFiltro] = useState([]);
+
+    const rotaDev = "http://localhost:9000"
+    const rotaProd = "https://apiconcord.dev.vilhena.ifro.edu.br"
+    const URL = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
+
     const getUsuarios = async () => {
-        const conteudo = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/buscar/${Cookies.get('key')}`);
+        const key = Cookies.get('key');
+        const _key = JSON.parse(key).key;
+        const conteudo = await fetch(`${URL}/buscar/${_key}`);
         if (!conteudo.ok) {
             throw new Error('Erro ao buscar:' + conteudo.statusText);
         }
@@ -44,11 +47,10 @@ const Login2 = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nome, "desc": descricao, filtros })
         };
-        const rota = "https://apiconcord.dev.vilhena.ifro.edu.br";
-        // const rota = "http://localhost:9000";
 
-
-        const response = await fetch(`${rota}/updateUser/${Cookies.get('key')}`, requestOptions);
+        const key = Cookies.get('key');
+        const _key = JSON.parse(key).key;
+        const response = await fetch(`${URL}/updateUser/${_key}`, requestOptions);
         if (!response.ok) {
             alert('Erro ao atualizar perfil: ' + response.statusText);
         }
@@ -58,8 +60,6 @@ const Login2 = () => {
         }
 
     }
-
-
 
     useEffect(() => {
         getUsuarios();

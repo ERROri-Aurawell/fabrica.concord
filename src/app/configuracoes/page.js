@@ -40,38 +40,29 @@ export default function Config() {
   const [fotoGrande, setFotoGrande] = useState("1")
   const [filtrosMarcados, setFiltrosMarcados] = useState("")
   const [descricao, setDescricao] = useState('Carregando...')
-
   const [filtro, setFiltro] = useState([]);
 
+  const rotaDev = "http://localhost:9000"
+  const rotaProd = "https://apiconcord.dev.vilhena.ifro.edu.br"
+  const URL = process.env.NODE_ENV === "development" ? rotaDev : rotaProd;
+
   const getUsuarios = async () => {
-    const conteudo = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/buscar/${Cookies.get('key')}`);
+    const _key = JSON.parse(key).key;
+    const conteudo = await fetch(`${URL}/buscar/${_key}`);
     if (!conteudo.ok) {
       throw new Error('Erro ao buscar:' + conteudo.statusText);
     }
     const data = await conteudo.json();
     setFiltro(data.filtros);
 
-    console.log(data.filtros)
+    //console.log(data.filtros)
   };
 
 
-  function splitKEY(key) {
-    const [id, ...rest] = key.split("-");
-    const after = rest.join("-");
-    const [email, ...rest2] = after.split("-");
-    const senha = rest2.join('-');
-
-    return [id, email, senha];
-  }
-
   const [novoNome, setNovoNome] = useState('')
   const [novaDescr, setNovaDescr] = useState("")
-
   const [busca2, setBusca2] = useState("")
-
   const filtroBusca = filtro.filter(f => f?.filtro?.toLowerCase().includes(busca2.toLowerCase()));
-
-  const router = useRouter();
 
   const mudarDiv = (numero) => {
     setDiv1(false);
@@ -89,7 +80,8 @@ export default function Config() {
       headers: { "Content-Type": "application/json" },
     }
     try {
-      const resposta = await fetch(`https://apiconcord.dev.vilhena.ifro.edu.br/user/${splitKEY(key)[0]}`, requestOptions);
+      const _key = JSON.parse(key);
+      const resposta = await fetch(`${URL}/user/${_key.id}`, requestOptions);
       if (resposta.ok) {
         // mano?
         const data = await resposta.json();
@@ -121,12 +113,9 @@ export default function Config() {
     }
 
     try {
-      console.log("Opções")
-      console.log(requestOptions)
+      const _key = JSON.parse(key).key;
 
-      console.log(`${rota}/updateUser/${key}`, requestOptions)
-
-      const resposta = await fetch(`${rota}/updateUser/${key}`, requestOptions);
+      const resposta = await fetch(`${URL}/updateUser/${_key}`, requestOptions);
       if (resposta.ok) {
         // mano?
         await getData();
@@ -143,7 +132,7 @@ export default function Config() {
     const dadosjson = JSON.parse(dadosUsuario)
     setNome(dadosjson.nome)
 
-    console.log(dadosjson)
+    //console.log(dadosjson)
 
     setFotoDePerfil(dadosjson.foto)
     setFotoGrande(dadosjson.foto)
@@ -275,22 +264,22 @@ export default function Config() {
                   <form className={styles.formFiltros2} onSubmit={(e) => {
                     e.preventDefault();
 
-                    if(novoNome.trim() === "" && novaDescr.trim() === ""){
+                    if (novoNome.trim() === "" && novaDescr.trim() === "") {
                       alert("Por favor, preencha o nome ou a descrição.");
                       return;
                     }
-                    
+
                     const dadosAtualizados = {};
 
-                    if (novoNome.trim() !== ""){
+                    if (novoNome.trim() !== "") {
                       if (novoNome.trim().length <= 64) {
                         dadosAtualizados.nome = novoNome;
-                      }else{
+                      } else {
                         alert("Nome deve ter no máximo 64 caracteres.");
                         return; // cancela o submit
                       }
-                      
-                    } 
+
+                    }
 
                     if (novaDescr.trim() !== "") {
                       if (novaDescr.trim().length <= 512) {
@@ -356,8 +345,9 @@ export default function Config() {
                   );
                   if (confirmar) {
                     try {
+                      const _key = JSON.parse(key).key;
                       const response = await fetch(
-                        `https://apiconcord.dev.vilhena.ifro.edu.br/deleteUser/${Cookies.get("key")}`,
+                        `${URL}/deleteUser/${_key}`,
                         { method: "DELETE" }
                       );
                       if (response.ok) {
